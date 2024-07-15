@@ -1,0 +1,35 @@
+{
+  "name": "@motionwindui/provider",
+  "version": "1.0.0",
+  "description": "A React context provider for the Motion Wind UI library. This provider is used to provide the theme to the rest of the components in the library.",
+  "main": "src/index.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src --dts",
+    "build:fast": "tsup src",
+    "dev": "pnpm build:fast --watch",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist/"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "tsup": {
+    "clean": true,
+    "target": "es2019",
+    "format": [
+      "cjs",
+      "esm"
+    ]
+  },
+  "keywords": [],
+  "author": "Kyle Gagnon",
+  "license": "ISC",
+  "devDependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  }
+}

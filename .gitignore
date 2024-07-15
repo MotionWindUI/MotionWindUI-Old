@@ -1,0 +1,9 @@
+# Node Modules
+node_modules/
+
+# Build Artifacts
+dist/
+
+# Turbo
+.turbo/
+*storybook.log

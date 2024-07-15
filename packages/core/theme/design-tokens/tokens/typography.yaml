@@ -1,0 +1,29 @@
+typography-tokens:
+  text-size:
+    values:
+      12: 12px
+      14: 14px
+      16: 16px
+      18: 18px
+      20: 20px
+      24: 24px
+      30: 30px
+      36: 36px
+      48: 48px
+      60: 60px
+      72: 72px
+  line-height:
+    12: 2
+    14: 2
+    16: 1.5
+    20: 1.5
+    24: 1.5
+    30: 1.5
+    36: 1.5
+    48: 1.5
+    60: 1.5
+    72: 1
+  font:
+    sans: 'Inter, sans-serif'
+    serif: 'Merriweather, serif'
+    mono: 'Roboto Mono, monospace'

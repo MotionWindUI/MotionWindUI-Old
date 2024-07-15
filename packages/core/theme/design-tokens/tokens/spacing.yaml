@@ -1,0 +1,30 @@
+spacing-tokens:
+  spacing:
+    values:
+      0: 0
+      2: 0.125rem
+      4: 0.25rem
+      8: 0.5rem
+      12: 0.75rem
+      16: 1rem
+      20: 1.25rem
+      24: 1.5rem
+      32: 2rem
+      48: 3rem
+      64: 4rem
+      96: 6rem
+      128: 8rem
+      192: 12rem
+      256: 16rem
+      384: 24rem
+      512: 32rem
+      640: 40rem
+      768: 48rem
+  radius:
+    values:
+      none: 0
+      sm: 0.125rem
+      md: 0.25rem
+      lg: 0.5rem
+      xl: 1rem
+      full: 9999px

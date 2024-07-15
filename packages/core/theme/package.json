@@ -1,0 +1,56 @@
+{
+  "name": "@motionwindui/theme",
+  "version": "1.0.0",
+  "description": "The main theme for all MotionWindUI components",
+  "main": "src/index.ts",
+  "keywords": [
+    "theme"
+  ],
+  "author": "Kyle Gagnon",
+  "license": "ISC",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MotionWindUI/MotionWindUI.git",
+    "directory": "packages/core/theme"
+  },
+  "homepage": "https://github.com/MotionWindUI/MotionWindUI#readme",
+  "tsup": {
+    "clean": true,
+    "target": "es2019",
+    "format": [
+      "cjs",
+      "esm"
+    ]
+  },
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "plugin.js",
+    "plugin.d.ts"
+  ],
+  "scripts": {
+    "build": "tsup src --dts && cp -r design-tokens dist/design-tokens",
+    "build:fast": "tsup src",
+    "dev": "pnpm build:fast --watch",
+    "clean": "rm -rf dist",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint . --ext .ts"
+  },
+  "peerDependencies": {
+    "tailwindcss": ">=3.4.4"
+  },
+  "devDependencies": {
+    "@types/color": "^3.0.6",
+    "tailwindcss": "^3.4.4",
+    "yaml": "^2.4.5"
+  },
+  "dependencies": {
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "color": "^4.2.3",
+    "tailwind-merge": "^2.4.0"
+  }
+}
