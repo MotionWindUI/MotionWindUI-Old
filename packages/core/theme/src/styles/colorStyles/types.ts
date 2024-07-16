@@ -171,11 +171,3 @@ export interface TextColors {
     "on-danger-subtle": ModeValue;
     "on-danger-subtle-subtle": ModeValue;
 }
-
-export interface ColorStyleTheme {
-    background?: Partial<BackgroundColors>;
-    surface?: Partial<SurfaceColors>;
-    accent?: Partial<AccentColors>;
-    border?: Partial<BorderColors>;
-    text?: Partial<TextColors>;
-}

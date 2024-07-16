@@ -1,21 +1,18 @@
 import plugin from "tailwindcss/plugin";
-import {
-    BaseColors,
-    ModeValue,
-    MotionWindUIPluginConfig,
-    StylesTheme,
-    ThemeCreator,
-} from "./types";
+import { BaseColors, ModeValue, MotionWindUIPluginConfig } from "./types";
 import { themeColors } from "./colors/colors";
 import { CSSColorVarScale } from "./colors/types";
 import { colorScaleToCssVars } from "./utils/colors";
-import { ColorStyleTheme } from "./styles/colorStyles/types";
 import { ThemeMode } from "../../provider/src/MotionWindUIProvider";
 import { backgroundColors } from "./styles/colorStyles/background";
 import { surfaceColors } from "./styles/colorStyles/surface";
 import { accentColors } from "./styles/colorStyles/accent";
 import { borderColors } from "./styles/colorStyles/border";
 import { textColors } from "./styles/colorStyles/text";
+import { Styles } from "./styles/types";
+import { loadYaml } from "./utils/yaml";
+import path from "path";
+import { generateCss } from "./utils/components";
 
 const DEFAULT_THEME = "default";
 
@@ -28,7 +25,7 @@ const defaultBaseColors: BaseColors = {
     danger: themeColors.danger,
 };
 
-const defaultColorStyles: ColorStyleTheme = {
+const defaultStyles: Styles = {
     background: backgroundColors,
     surface: surfaceColors,
     accent: accentColors,
@@ -44,7 +41,7 @@ const defaultColorStyles: ColorStyleTheme = {
  * @returns The map of color variables to their values
  */
 const generateColorStyleVars = (
-    colorStyles?: ColorStyleTheme,
+    colorStyles?: Styles,
     mode: ThemeMode = "light",
 ) => {
     // Skip if there are no themes present
@@ -70,74 +67,14 @@ const generateColorStyleVars = (
     return vars;
 };
 
-const mergeModeValues = (
-    defaultValues: ModeValue,
-    userValues?: Partial<ModeValue>,
-): ModeValue => ({
-    light: userValues?.light || defaultValues.light,
-    dark: userValues?.dark || defaultValues.dark,
-});
-
-const mergeColors = (
-    defaultColors: { [key: string]: ModeValue },
-    userColors?: Partial<{ [key: string]: ModeValue }>,
-) => {
-    return Object.keys(defaultColors).reduce(
-        (acc, key) => {
-            acc[key] = mergeModeValues(defaultColors[key], userColors?.[key]);
-            return acc;
-        },
-        {} as { [key: string]: ModeValue },
-    );
-};
-
-const mergeThemes = (
-    defaultTheme: ColorStyleTheme,
-    userTheme?: Partial<ColorStyleTheme>,
-): ColorStyleTheme => {
-    return {
-        background: userTheme?.background
-            ? mergeColors(defaultTheme.background!, userTheme.background)
-            : defaultTheme.background,
-        surface: userTheme?.surface
-            ? mergeColors(defaultTheme.surface!, userTheme.surface)
-            : defaultTheme.surface,
-        accent: userTheme?.accent
-            ? mergeColors(defaultTheme.accent!, userTheme.accent)
-            : defaultTheme.accent,
-        border: userTheme?.border
-            ? mergeColors(defaultTheme.border!, userTheme.border)
-            : defaultTheme.border,
-        text: userTheme?.text
-            ? mergeColors(defaultTheme.text!, userTheme.text)
-            : defaultTheme.text,
-    };
-};
-
-const processThemes = (themes: ThemeCreator) => {
-    return Object.entries(themes).reduce(
-        (acc, [themeName, themeValues]) => {
-            const mergedLightTheme = mergeThemes(
-                defaultColorStyles,
-                themeValues.light?.styleTheme,
-            );
-            const mergedDarkTheme = mergeThemes(
-                defaultColorStyles,
-                themeValues.dark?.styleTheme,
-            );
-
-            acc[`:root[data-theme="${themeName}-light"]`] =
-                generateColorStyleVars(mergedLightTheme, "light");
-            acc[`:root[data-theme="${themeName}-dark"]`] =
-                generateColorStyleVars(mergedDarkTheme, "dark");
-            return acc;
-        },
-        {} as { [key: string]: { [key: string]: string } },
-    );
-};
-
 const corePlugin = (config: MotionWindUIPluginConfig) => {
     const userThemes = config.themes || {};
+
+    const tokens = loadYaml(
+        path.resolve(__dirname, "../design-tokens/tokens/components.yaml"),
+    );
+
+    const componentCss = generateCss(tokens);
 
     const colorStyles: CSSColorVarScale = {
         ...colorScaleToCssVars("neutral", defaultBaseColors.neutral, false),
@@ -148,21 +85,19 @@ const corePlugin = (config: MotionWindUIPluginConfig) => {
         ...colorScaleToCssVars("danger", defaultBaseColors.danger, false),
     };
 
-    const proccessedThemes = processThemes(userThemes);
-
     return plugin(
         ({ addBase }) => {
             addBase({
                 [":root"]: {
                     ...colorStyles,
+                    ...componentCss,
                 },
                 [`:root[data-theme="${DEFAULT_THEME}-light"]`]: {
-                    ...generateColorStyleVars(defaultColorStyles, "light"),
+                    ...generateColorStyleVars(defaultStyles, "light"),
                 },
                 [`:root[data-theme="${DEFAULT_THEME}-dark"]`]: {
-                    ...generateColorStyleVars(defaultColorStyles, "dark"),
+                    ...generateColorStyleVars(defaultStyles, "dark"),
                 },
-                ...proccessedThemes,
             });
         },
         {

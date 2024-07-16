@@ -1,5 +1,5 @@
 import { ColorScale } from "./colors/types";
-import { ColorStyleTheme } from "./styles/colorStyles/types";
+import { Styles } from "./styles/types";
 
 export type ModeValue = {
     light: string;
@@ -15,15 +15,12 @@ export interface BaseColors {
     danger: ColorScale;
 }
 
-export interface StylesTheme {
-    styleTheme?: Partial<ColorStyleTheme>;
-}
-
 export interface ThemeCreator {
     [key: string]: {
+        /* The neutral, primary, secondary, success, warning, or danger colors */
         baseColors?: Partial<BaseColors>;
-        light?: StylesTheme;
-        dark?: StylesTheme;
+        /* The overall design system */
+        styleTheme?: Partial<Styles>;
     };
 }
 
