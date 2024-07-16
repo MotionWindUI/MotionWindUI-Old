@@ -7,23 +7,21 @@ export type ModeValue = {
 };
 
 export interface BaseColors {
-    baseColors: Partial<{
-        neutral: ColorScale;
-        primary: ColorScale;
-        secondary: ColorScale;
-        success: ColorScale;
-        warning: ColorScale;
-        danger: ColorScale;
-    }>;
+    neutral: ColorScale;
+    primary: ColorScale;
+    secondary: ColorScale;
+    success: ColorScale;
+    warning: ColorScale;
+    danger: ColorScale;
 }
 
 export interface StylesTheme {
-    baseColors?: BaseColors;
     styleTheme?: Partial<ColorStyleTheme>;
 }
 
 export interface ThemeCreator {
     [key: string]: {
+        baseColors?: Partial<BaseColors>;
         light?: StylesTheme;
         dark?: StylesTheme;
     };

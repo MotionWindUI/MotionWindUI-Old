@@ -1,5 +1,11 @@
 import plugin from "tailwindcss/plugin";
-import { ModeValue, MotionWindUIPluginConfig } from "./types";
+import {
+    BaseColors,
+    ModeValue,
+    MotionWindUIPluginConfig,
+    StylesTheme,
+    ThemeCreator,
+} from "./types";
 import { themeColors } from "./colors/colors";
 import { CSSColorVarScale } from "./colors/types";
 import { colorScaleToCssVars } from "./utils/colors";
@@ -7,8 +13,28 @@ import { ColorStyleTheme } from "./styles/colorStyles/types";
 import { ThemeMode } from "../../provider/src/MotionWindUIProvider";
 import { backgroundColors } from "./styles/colorStyles/background";
 import { surfaceColors } from "./styles/colorStyles/surface";
+import { accentColors } from "./styles/colorStyles/accent";
+import { borderColors } from "./styles/colorStyles/border";
+import { textColors } from "./styles/colorStyles/text";
 
 const DEFAULT_THEME = "default";
+
+const defaultBaseColors: BaseColors = {
+    neutral: themeColors.neutral,
+    primary: themeColors.primary,
+    secondary: themeColors.secondary,
+    success: themeColors.success,
+    warning: themeColors.warning,
+    danger: themeColors.danger,
+};
+
+const defaultColorStyles: ColorStyleTheme = {
+    background: backgroundColors,
+    surface: surfaceColors,
+    accent: accentColors,
+    border: borderColors,
+    text: textColors,
+};
 
 /**
  * Given the default color styles (if present), go through each style (if present) and generate the appropiate CSS variable.
@@ -65,22 +91,64 @@ const mergeColors = (
     );
 };
 
+const mergeThemes = (
+    defaultTheme: ColorStyleTheme,
+    userTheme?: Partial<ColorStyleTheme>,
+): ColorStyleTheme => {
+    return {
+        background: userTheme?.background
+            ? mergeColors(defaultTheme.background!, userTheme.background)
+            : defaultTheme.background,
+        surface: userTheme?.surface
+            ? mergeColors(defaultTheme.surface!, userTheme.surface)
+            : defaultTheme.surface,
+        accent: userTheme?.accent
+            ? mergeColors(defaultTheme.accent!, userTheme.accent)
+            : defaultTheme.accent,
+        border: userTheme?.border
+            ? mergeColors(defaultTheme.border!, userTheme.border)
+            : defaultTheme.border,
+        text: userTheme?.text
+            ? mergeColors(defaultTheme.text!, userTheme.text)
+            : defaultTheme.text,
+    };
+};
+
+const processThemes = (themes: ThemeCreator) => {
+    return Object.entries(themes).reduce(
+        (acc, [themeName, themeValues]) => {
+            const mergedLightTheme = mergeThemes(
+                defaultColorStyles,
+                themeValues.light?.styleTheme,
+            );
+            const mergedDarkTheme = mergeThemes(
+                defaultColorStyles,
+                themeValues.dark?.styleTheme,
+            );
+
+            acc[`:root[data-theme="${themeName}-light"]`] =
+                generateColorStyleVars(mergedLightTheme, "light");
+            acc[`:root[data-theme="${themeName}-dark"]`] =
+                generateColorStyleVars(mergedDarkTheme, "dark");
+            return acc;
+        },
+        {} as { [key: string]: { [key: string]: string } },
+    );
+};
+
 const corePlugin = (config: MotionWindUIPluginConfig) => {
     const userThemes = config.themes || {};
 
     const colorStyles: CSSColorVarScale = {
-        ...colorScaleToCssVars("neutral", themeColors.neutral, false),
-        ...colorScaleToCssVars("primary", themeColors.primary, false),
-        ...colorScaleToCssVars("secondary", themeColors.secondary, false),
-        ...colorScaleToCssVars("success", themeColors.success, false),
-        ...colorScaleToCssVars("warning", themeColors.warning, false),
-        ...colorScaleToCssVars("danger", themeColors.danger, false),
+        ...colorScaleToCssVars("neutral", defaultBaseColors.neutral, false),
+        ...colorScaleToCssVars("primary", defaultBaseColors.primary, false),
+        ...colorScaleToCssVars("secondary", defaultBaseColors.secondary, false),
+        ...colorScaleToCssVars("success", defaultBaseColors.success, false),
+        ...colorScaleToCssVars("warning", defaultBaseColors.warning, false),
+        ...colorScaleToCssVars("danger", defaultBaseColors.danger, false),
     };
 
-    const baseStyles: ColorStyleTheme = {
-        background: backgroundColors,
-        surface: surfaceColors,
-    };
+    const proccessedThemes = processThemes(userThemes);
 
     return plugin(
         ({ addBase }) => {
@@ -89,11 +157,12 @@ const corePlugin = (config: MotionWindUIPluginConfig) => {
                     ...colorStyles,
                 },
                 [`:root[data-theme="${DEFAULT_THEME}-light"]`]: {
-                    ...generateColorStyleVars(baseStyles, "light"),
+                    ...generateColorStyleVars(defaultColorStyles, "light"),
                 },
                 [`:root[data-theme="${DEFAULT_THEME}-dark"]`]: {
-                    ...generateColorStyleVars(baseStyles, "dark"),
+                    ...generateColorStyleVars(defaultColorStyles, "dark"),
                 },
+                ...proccessedThemes,
             });
         },
         {

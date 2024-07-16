@@ -67,7 +67,7 @@ export interface AccentColors {
     "danger-subtle-active": ModeValue;
 }
 
-export interface BorderColor {
+export interface BorderColors {
     neutral: ModeValue;
     "neutral-hover": ModeValue;
     "neutral-active": ModeValue;
@@ -106,7 +106,7 @@ export interface BorderColor {
     "danger-negative-active": ModeValue;
 }
 
-export interface TextColor {
+export interface TextColors {
     default: ModeValue;
     subtle: ModeValue;
     disabled: ModeValue;
@@ -175,7 +175,7 @@ export interface TextColor {
 export interface ColorStyleTheme {
     background?: Partial<BackgroundColors>;
     surface?: Partial<SurfaceColors>;
-    accent?: Partial<SurfaceColors>;
-    border?: Partial<SurfaceColors>;
-    text?: Partial<TextColor>;
+    accent?: Partial<AccentColors>;
+    border?: Partial<BorderColors>;
+    text?: Partial<TextColors>;
 }
