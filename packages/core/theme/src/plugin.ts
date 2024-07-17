@@ -12,7 +12,6 @@ import { textColors } from "./styles/colorStyles/text";
 import { Styles } from "./styles/types";
 import { loadYaml } from "./utils/yaml";
 import path from "path";
-import { generateCss } from "./utils/components";
 import { borderRadius } from "./styles/spacingStyles/borderRadius";
 
 const DEFAULT_THEME = "default";
@@ -44,6 +43,7 @@ const defaultStyles: Styles = {
 const generateColorStyleVars = (
     colorStyles?: Styles,
     mode: ThemeMode = "light",
+    isTailwind: boolean = false,
 ) => {
     // Skip if there are no themes present
     if (!colorStyles) return {};
@@ -54,7 +54,11 @@ const generateColorStyleVars = (
     // A function that prefixes any given string using the given mode key
     const addVars = (prefix: string, colors: { [key: string]: ModeValue }) => {
         Object.entries(colors).forEach(([key, value]) => {
-            vars[`--${prefix}-${key}`] = value[mode];
+            if (!isTailwind) {
+                vars[`--${prefix}-${key}`] = value[mode];
+            } else {
+                vars[`${prefix}-${key}`] = `var(--${prefix}-${key})`;
+            }
         });
     };
 
@@ -75,8 +79,6 @@ const corePlugin = (config: MotionWindUIPluginConfig) => {
         path.resolve(__dirname, "../design-tokens/tokens/components.yaml"),
     );
 
-    const componentCss = generateCss(tokens);
-
     const colorStyles: CSSColorVarScale = {
         ...colorScaleToCssVars("neutral", defaultBaseColors.neutral, false),
         ...colorScaleToCssVars("primary", defaultBaseColors.primary, false),
@@ -91,7 +93,6 @@ const corePlugin = (config: MotionWindUIPluginConfig) => {
             addBase({
                 [":root"]: {
                     ...colorStyles,
-                    ...componentCss,
                 },
                 [`:root[data-theme="${DEFAULT_THEME}-light"]`]: {
                     ...generateColorStyleVars(defaultStyles, "light"),
@@ -183,6 +184,9 @@ const corePlugin = (config: MotionWindUIPluginConfig) => {
                             900: "var(--danger-900)",
                             950: "var(--danger-950)",
                         },
+                        "accent-primary": "var(--accent-primary)",
+                        "text-on-primary": "var(--text-on-primary)",
+                        //...generateColorStyleVars(defaultStyles, "light", true),
                     },
                 },
                 borderRadius: {

@@ -1,8 +1,12 @@
 /** @type { import('@storybook/react').Preview } */
 import React from "react";
 import "./styles.css";
-import { withThemeByDataAttribute } from "@storybook/addon-themes";
 import { MotionWindUIProvider, useTheme } from "@motionwindui/provider";
+import { useEffect } from "react";
+
+const ThemeWrapper = (children) => {
+    return <MotionWindUIProvider>{children}</MotionWindUIProvider>;
+};
 
 const preview = {
     parameters: {
@@ -46,10 +50,19 @@ const preview = {
             const theme = context.globals.theme || "default";
             const mode = context.globals.mode || "dark";
 
+            const { setCurrentTheme, setCurrentMode } = useTheme();
+
+            useEffect(() => {
+                setCurrentTheme(theme);
+                setCurrentMode(mode);
+            }, [theme, mode]);
+
             return (
-                <MotionWindUIProvider theme={theme} mode={mode}>
-                    <Story />
-                </MotionWindUIProvider>
+                <div>
+                    <MotionWindUIProvider.Context>
+                        <Story />
+                    </MotionWindUIProvider.Context>
+                </div>
             );
         },
     ],
