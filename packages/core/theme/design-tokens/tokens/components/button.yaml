@@ -122,7 +122,7 @@ components:
           values: "var(--accent-primary)"
         text:
           description: "The default text color of a primary button."
-          values: "var(--text-primary)"
+          values: "var(--text-on-primary)"
         hover:
           background:
             description: "The hover background color of a primary button."
@@ -709,8 +709,8 @@ components:
             description: "The vertical padding of a large button."
             values: "var(--spacing-8)"
     border:
-      size:
-        description: "The border size of a button."
+      width:
+        description: "The border width of a button."
         values: "var(--border-width)"
       radius:
         sm:

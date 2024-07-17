@@ -1,3 +1,4 @@
+import { twMerge } from "tailwind-merge";
 import { Tokens } from "../colors/types";
 
 export function generateCss(
@@ -43,3 +44,7 @@ export function generateCss(
 
     return cssOutput;
 }
+
+export const combineStyles = (...styles: (string | undefined)[]) => {
+    return twMerge(styles.filter(Boolean).join(" "));
+};

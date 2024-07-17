@@ -5,9 +5,9 @@ import { BorderRadius } from "./types";
  */
 export const borderRadius: BorderRadius = {
     none: "0",
-    sm: "0.125rem",
-    md: "0.25rem",
-    lg: "0.5rem",
-    xl: "1rem",
+    small: "0.125rem",
+    medium: "0.25rem",
+    large: "0.5rem",
+    xlarge: "1rem",
     full: "9999px",
 };

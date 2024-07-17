@@ -13,6 +13,7 @@ import { Styles } from "./styles/types";
 import { loadYaml } from "./utils/yaml";
 import path from "path";
 import { generateCss } from "./utils/components";
+import { borderRadius } from "./styles/spacingStyles/borderRadius";
 
 const DEFAULT_THEME = "default";
 
@@ -183,6 +184,14 @@ const corePlugin = (config: MotionWindUIPluginConfig) => {
                             950: "var(--danger-950)",
                         },
                     },
+                },
+                borderRadius: {
+                    none: borderRadius.none,
+                    small: borderRadius.small,
+                    medium: borderRadius.medium,
+                    large: borderRadius.large,
+                    xlarge: borderRadius.xlarge,
+                    full: borderRadius.full,
                 },
             },
         },

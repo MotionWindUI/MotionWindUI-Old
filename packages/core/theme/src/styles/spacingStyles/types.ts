@@ -3,9 +3,9 @@
  */
 export interface BorderRadius {
     none: string;
-    sm: string;
-    md: string;
-    lg: string;
-    xl: string;
+    small: string;
+    medium: string;
+    large: string;
+    xlarge: string;
     full: string;
 }
