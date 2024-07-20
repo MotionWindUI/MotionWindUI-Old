@@ -74,6 +74,9 @@ importers:
       '@motionwindui/theme':
         specifier: workspace:*
         version: link:../../core/theme
+      class-variance-authority:
+        specifier: ^0.7.0
+        version: 0.7.0
       react:
         specifier: ^18.3.1
         version: 18.3.1

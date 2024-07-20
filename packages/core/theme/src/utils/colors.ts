@@ -47,6 +47,7 @@ export const colorScaleToCssVars = (
     colorName: string,
     colorScale: ColorScale,
     dropSpaceFunction: boolean,
+    valueAsCssVar: boolean = false,
 ): Record<string, string> => {
     // If the color scale is a string, return the color name as the CSS variable
     if (typeof colorScale === "string") {
@@ -62,9 +63,17 @@ export const colorScaleToCssVars = (
         const colorValue = colorScale[shade as unknown as keyof ColorShades];
         if (colorValue) {
             const cssVarName = `--${colorName}-${shade}`;
-            cssVars[cssVarName] = dropSpaceFunction
-                ? hexToHslCssStr(colorValue)
-                : colorValue;
+            let varValue: string;
+
+            if (valueAsCssVar) {
+                varValue = `var(${cssVarName})`;
+            } else {
+                varValue = dropSpaceFunction
+                    ? hexToHslCssStr(colorValue)
+                    : colorValue;
+            }
+
+            cssVars[cssVarName] = varValue;
         }
     });
 

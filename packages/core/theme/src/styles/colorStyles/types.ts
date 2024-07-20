@@ -1,14 +1,24 @@
 import { ModeValue } from "../../types";
 
+export type BackgroundColorsKeys = ["subtle", "default"];
+
 export interface BackgroundColors {
     subtle: ModeValue;
     default: ModeValue;
 }
 
+export type BackgroundColorsPlugin = {
+    [K in keyof BackgroundColors]: string;
+};
+
 export interface SurfaceColors {
     subtle: ModeValue;
     default: ModeValue;
 }
+
+export type SurfaceColorsPlugin = {
+    [K in keyof SurfaceColors]: string;
+};
 
 export interface AccentColors {
     neutral: ModeValue;
@@ -67,6 +77,10 @@ export interface AccentColors {
     "danger-subtle-active": ModeValue;
 }
 
+export type AccentColorsPlugin = {
+    [K in keyof AccentColors]: string;
+};
+
 export interface BorderColors {
     neutral: ModeValue;
     "neutral-hover": ModeValue;
@@ -105,6 +119,10 @@ export interface BorderColors {
     "danger-negative-hover": ModeValue;
     "danger-negative-active": ModeValue;
 }
+
+export type BorderColorsPlugin = {
+    [K in keyof BorderColors]: string;
+};
 
 export interface TextColors {
     default: ModeValue;
@@ -171,3 +189,7 @@ export interface TextColors {
     "on-danger-subtle": ModeValue;
     "on-danger-subtle-subtle": ModeValue;
 }
+
+export type TextColorsPlugin = {
+    [K in keyof TextColors]: string;
+};

@@ -1,4 +1,4 @@
-import { BorderColors } from "./types";
+import { BorderColors, BorderColorsPlugin } from "./types";
 
 export const borderColors: BorderColors = {
     neutral: {
@@ -145,4 +145,43 @@ export const borderColors: BorderColors = {
         light: "var(--danger-200)",
         dark: "var(--danger-900)",
     },
+};
+
+export const borderColorsPlugin: BorderColorsPlugin = {
+    neutral: "var(--border-neutral)",
+    "neutral-hover": "var(--border-neutral-hover)",
+    "neutral-active": "var(--border-neutral-active)",
+    "neutral-negative": "var(--border-neutral-negative)",
+    "neutral-negative-hover": "var(--border-neutral-negative-hover)",
+    "neutral-negative-active": "var(--border-neutral-negative-active)",
+    primary: "var(--border-primary)",
+    "primary-hover": "var(--border-primary-hover)",
+    "primary-active": "var(--border-primary-active)",
+    "primary-negative": "var(--border-primary-negative)",
+    "primary-negative-hover": "var(--border-primary-negative-hover)",
+    "primary-negative-active": "var(--border-primary-negative-active)",
+    secondary: "var(--border-secondary)",
+    "secondary-hover": "var(--border-secondary-hover)",
+    "secondary-active": "var(--border-secondary-active)",
+    "secondary-negative": "var(--border-secondary-negative)",
+    "secondary-negative-hover": "var(--border-secondary-negative-hover)",
+    "secondary-negative-active": "var(--border-secondary-negative-active)",
+    success: "var(--border-success)",
+    "success-hover": "var(--border-success-hover)",
+    "success-active": "var(--border-success-active)",
+    "success-negative": "var(--border-success-negative)",
+    "success-negative-hover": "var(--border-success-negative-hover)",
+    "success-negative-active": "var(--border-success-negative-active)",
+    warning: "var(--border-warning)",
+    "warning-hover": "var(--border-warning-hover)",
+    "warning-active": "var(--border-warning-active)",
+    "warning-negative": "var(--border-warning-negative)",
+    "warning-negative-hover": "var(--border-warning-negative-hover)",
+    "warning-negative-active": "var(--border-warning-negative-active)",
+    danger: "var(--border-danger)",
+    "danger-hover": "var(--border-danger-hover)",
+    "danger-active": "var(--border-danger-active)",
+    "danger-negative": "var(--border-danger-negative)",
+    "danger-negative-hover": "var(--border-danger-negative-hover)",
+    "danger-negative-active": "var(--border-danger-negative-active)",
 };

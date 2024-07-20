@@ -20,12 +20,13 @@
   "author": "Kyle Gagnon",
   "license": "ISC",
   "peerDependencies": {
+    "@motionwindui/theme": ">=1.0.0",
     "react": ">=18",
-    "react-dom": ">=18",
-    "@motionwindui/theme": ">=1.0.0"
+    "react-dom": ">=18"
   },
   "devDependencies": {
     "@motionwindui/theme": "workspace:*",
+    "class-variance-authority": "^0.7.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   }

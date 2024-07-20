@@ -1,18 +1,23 @@
 import plugin from "tailwindcss/plugin";
 import { BaseColors, ModeValue, MotionWindUIPluginConfig } from "./types";
 import { themeColors } from "./colors/colors";
-import { CSSColorVarScale } from "./colors/types";
+import { ColorShadeKeys, ColorShades, CSSColorVarScale } from "./colors/types";
 import { colorScaleToCssVars } from "./utils/colors";
 import { ThemeMode } from "../../provider/src/MotionWindUIProvider";
-import { backgroundColors } from "./styles/colorStyles/background";
-import { surfaceColors } from "./styles/colorStyles/surface";
-import { accentColors } from "./styles/colorStyles/accent";
-import { borderColors } from "./styles/colorStyles/border";
-import { textColors } from "./styles/colorStyles/text";
+import {
+    backgroundColors,
+    backgroundColorsPlugin,
+} from "./styles/colorStyles/background";
+import {
+    surfaceColors,
+    surfaceColorsPlugin,
+} from "./styles/colorStyles/surface";
+import { accentColors, accentColorsPlugin } from "./styles/colorStyles/accent";
+import { borderColors, borderColorsPlugin } from "./styles/colorStyles/border";
+import { textColors, textColorsPlugin } from "./styles/colorStyles/text";
 import { Styles } from "./styles/types";
-import { loadYaml } from "./utils/yaml";
-import path from "path";
 import { borderRadius } from "./styles/spacingStyles/borderRadius";
+import { borderWidth } from "./styles/spacingStyles/borderWidth";
 
 const DEFAULT_THEME = "default";
 
@@ -75,10 +80,6 @@ const generateColorStyleVars = (
 const corePlugin = (config: MotionWindUIPluginConfig) => {
     const userThemes = config.themes || {};
 
-    const tokens = loadYaml(
-        path.resolve(__dirname, "../design-tokens/tokens/components.yaml"),
-    );
-
     const colorStyles: CSSColorVarScale = {
         ...colorScaleToCssVars("neutral", defaultBaseColors.neutral, false),
         ...colorScaleToCssVars("primary", defaultBaseColors.primary, false),
@@ -87,6 +88,30 @@ const corePlugin = (config: MotionWindUIPluginConfig) => {
         ...colorScaleToCssVars("warning", defaultBaseColors.warning, false),
         ...colorScaleToCssVars("danger", defaultBaseColors.danger, false),
     };
+
+    const colorKeys = [
+        "neutral",
+        "primary",
+        "secondary",
+        "success",
+        "warning",
+        "danger",
+    ];
+
+    const colorShadeKeys: ColorShadeKeys[] = [
+        50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950,
+    ];
+
+    const tailwindColors = colorKeys.reduce(
+        (acc, key) => {
+            acc[key] = colorShadeKeys.reduce((scale, shade) => {
+                scale[shade] = `var(--${key}-${shade})`;
+                return scale;
+            }, {} as Partial<ColorShades>);
+            return acc;
+        },
+        {} as { [key: string]: Partial<ColorShades> },
+    );
 
     return plugin(
         ({ addBase }) => {
@@ -105,97 +130,28 @@ const corePlugin = (config: MotionWindUIPluginConfig) => {
         {
             theme: {
                 extend: {
+                    /* Colors for the plugin */
                     colors: {
-                        neutral: {
-                            50: "var(--neutral-50)",
-                            100: "var(--neutral-100)",
-                            200: "var(--neutral-200)",
-                            300: "var(--neutral-300)",
-                            400: "var(--neutral-400)",
-                            500: "var(--neutral-500)",
-                            600: "var(--neutral-600)",
-                            700: "var(--neutral-700)",
-                            800: "var(--neutral-800)",
-                            900: "var(--neutral-900)",
-                            950: "var(--neutral-950)",
-                        },
-                        primary: {
-                            50: "var(--primary-50)",
-                            100: "var(--primary-100)",
-                            200: "var(--primary-200)",
-                            300: "var(--primary-300)",
-                            400: "var(--primary-400)",
-                            500: "var(--primary-500)",
-                            600: "var(--primary-600)",
-                            700: "var(--primary-700)",
-                            800: "var(--primary-800)",
-                            900: "var(--primary-900)",
-                            950: "var(--primary-950)",
-                        },
-                        secondary: {
-                            50: "var(--secondary-50)",
-                            100: "var(--secondary-100)",
-                            200: "var(--secondary-200)",
-                            300: "var(--secondary-300)",
-                            400: "var(--secondary-400)",
-                            500: "var(--secondary-500)",
-                            600: "var(--secondary-600)",
-                            700: "var(--secondary-700)",
-                            800: "var(--secondary-800)",
-                            900: "var(--secondary-900)",
-                            950: "var(--secondary-950)",
-                        },
-                        success: {
-                            50: "var(--success-50)",
-                            100: "var(--success-100)",
-                            200: "var(--success-200)",
-                            300: "var(--success-300)",
-                            400: "var(--success-400)",
-                            500: "var(--success-500)",
-                            600: "var(--success-600)",
-                            700: "var(--success-700)",
-                            800: "var(--success-800)",
-                            900: "var(--success-900)",
-                            950: "var(--success-950)",
-                        },
-                        warning: {
-                            50: "var(--warning-50)",
-                            100: "var(--warning-100)",
-                            200: "var(--warning-200)",
-                            300: "var(--warning-300)",
-                            400: "var(--warning-400)",
-                            500: "var(--warning-500)",
-                            600: "var(--warning-600)",
-                            700: "var(--warning-700)",
-                            800: "var(--warning-800)",
-                            900: "var(--warning-900)",
-                            950: "var(--warning-950)",
-                        },
-                        danger: {
-                            50: "var(--danger-50)",
-                            100: "var(--danger-100)",
-                            200: "var(--danger-200)",
-                            300: "var(--danger-300)",
-                            400: "var(--danger-400)",
-                            500: "var(--danger-500)",
-                            600: "var(--danger-600)",
-                            700: "var(--danger-700)",
-                            800: "var(--danger-800)",
-                            900: "var(--danger-900)",
-                            950: "var(--danger-950)",
-                        },
-                        "accent-primary": "var(--accent-primary)",
-                        "text-on-primary": "var(--text-on-primary)",
-                        //...generateColorStyleVars(defaultStyles, "light", true),
+                        ...tailwindColors,
                     },
-                },
-                borderRadius: {
-                    none: borderRadius.none,
-                    small: borderRadius.small,
-                    medium: borderRadius.medium,
-                    large: borderRadius.large,
-                    xlarge: borderRadius.xlarge,
-                    full: borderRadius.full,
+                    borderColor: {
+                        ...borderColorsPlugin,
+                    },
+                    textColor: {
+                        ...textColorsPlugin,
+                    },
+                    backgroundColor: {
+                        ...backgroundColorsPlugin,
+                        ...accentColorsPlugin,
+                        ...surfaceColorsPlugin,
+                    },
+                    /* Spacing for the plugin */
+                    borderRadius: {
+                        ...borderRadius,
+                    },
+                    borderWidth: {
+                        ...borderWidth,
+                    },
                 },
             },
         },

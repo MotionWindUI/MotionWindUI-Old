@@ -1,4 +1,4 @@
-import { BackgroundColors } from "./types";
+import { BackgroundColors, BackgroundColorsPlugin } from "./types";
 
 export const backgroundColors: BackgroundColors = {
     default: {
@@ -9,4 +9,9 @@ export const backgroundColors: BackgroundColors = {
         light: "var(--neutral-100)",
         dark: "var(--neutral-900)",
     },
+};
+
+export const backgroundColorsPlugin: Record<string, string> = {
+    default: "var(--background-default)",
+    subtle: "var(--background-subtle)",
 };
