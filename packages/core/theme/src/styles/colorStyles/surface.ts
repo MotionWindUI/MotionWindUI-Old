@@ -1,5 +1,7 @@
 import { SurfaceColors, SurfaceColorsPlugin } from "./types";
 
+export const SURFACE_CONSTANT = "surface";
+
 export const surfaceColors: SurfaceColors = {
     subtle: {
         light: "var(--neutral-100)",
@@ -12,6 +14,6 @@ export const surfaceColors: SurfaceColors = {
 };
 
 export const surfaceColorsPlugin: SurfaceColorsPlugin = {
-    subtle: "var(--surface-subtle)",
-    default: "var(--surface-default)",
+    subtle: `var(--${SURFACE_CONSTANT}-subtle)`,
+    default: `var(--${SURFACE_CONSTANT}-default)`,
 };

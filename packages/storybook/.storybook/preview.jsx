@@ -20,6 +20,8 @@ const preview = {
             themes: {
                 "Default Light": "default-light",
                 "Default Dark": "default-dark",
+                "Custom Light": "custom-light",
+                "Custom Dark": "custom-dark",
             },
         }),
     ],

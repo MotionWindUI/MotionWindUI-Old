@@ -18,12 +18,19 @@ export interface BaseColors {
 export interface ThemeCreator {
     [key: string]: {
         /* The neutral, primary, secondary, success, warning, or danger colors */
-        baseColors?: Partial<BaseColors>;
+        colors?: Partial<BaseColors>;
         /* The overall design system */
-        styleTheme?: Partial<Styles>;
+        style?: Partial<Styles>;
+        /* Whether to darken the colors on hover */
+        darkenOnHover?: boolean;
     };
 }
 
 export interface MotionWindUIPluginConfig {
+    theme?: {
+        colors?: Partial<BaseColors>;
+        style?: Partial<Styles>;
+        darkenOnHover?: boolean;
+    };
     themes?: ThemeCreator;
 }

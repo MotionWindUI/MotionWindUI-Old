@@ -23,6 +23,12 @@ export type ThemeColors = {
     danger: ColorScale;
 };
 
+export type ColorShadesList = ColorShadeKeys[];
+
+export const DEFAULT_COLOR_SHADES: ColorShadesList = [
+    50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950,
+];
+
 /**
  * A type representing a CSS color scale. The key is CSS variable name and the value is the color value.
  */

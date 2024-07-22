@@ -1,5 +1,11 @@
 import Color from "color";
-import { ColorScale, ColorShades } from "../colors/types";
+import {
+    ColorScale,
+    ColorShadeKeys,
+    ColorShades,
+    ColorShadesList,
+    DEFAULT_COLOR_SHADES,
+} from "../colors/types";
 
 /**
  * Converts a hex color into an HSL CSS string in the format of `hdeg s% l%` to be used by Tailwind CSS.
@@ -78,4 +84,37 @@ export const colorScaleToCssVars = (
     });
 
     return cssVars;
+};
+
+/**
+ * Adjusts the shade of a color to get the hover and active shades.
+ *
+ * @param shade The base shade
+ * @param darkenOnHover Whether to darken the shade on hover
+ * @param allShades The list of all shades
+ * @returns The hover and active shades
+ */
+export const adjustShade = (
+    shade: ColorShadeKeys,
+    darkenOnHover: boolean = true,
+    allShades: ColorShadesList = DEFAULT_COLOR_SHADES,
+) => {
+    const shadeIndex = allShades.indexOf(shade);
+    if (shadeIndex === -1) return {};
+
+    let hoverShade: ColorShadeKeys;
+    let activeShade: ColorShadeKeys;
+
+    if (darkenOnHover) {
+        hoverShade = allShades[Math.min(shadeIndex + 1, allShades.length - 1)];
+        activeShade = allShades[Math.min(shadeIndex + 2, allShades.length - 1)];
+    } else {
+        hoverShade = allShades[Math.max(shadeIndex - 1, 0)];
+        activeShade = allShades[Math.max(shadeIndex - 2, 0)];
+    }
+
+    return {
+        hoverShade,
+        activeShade,
+    };
 };

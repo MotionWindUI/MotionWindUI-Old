@@ -11,6 +11,9 @@ importers:
       '@eslint/js':
         specifier: ^9.7.0
         version: 9.7.0
+      '@storybook/react':
+        specifier: ^8.2.2
+        version: 8.2.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.2.2(@babel/preset-env@7.24.8(@babel/core@7.24.8)))(typescript@5.5.3)
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
@@ -84,6 +87,12 @@ importers:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
 
+  packages/core/icons:
+    dependencies:
+      '@heroicons/react':
+        specifier: ^2.1.5
+        version: 2.1.5(react@18.3.1)
+
   packages/core/provider:
     devDependencies:
       react:
@@ -120,6 +129,9 @@ importers:
 
   packages/storybook:
     dependencies:
+      '@motionwindui/heroicons-icons':
+        specifier: workspace:*
+        version: link:../core/icons
       '@motionwindui/provider':
         specifier: workspace:*
         version: link:../core/provider
@@ -181,6 +193,14 @@ importers:
       vite:
         specifier: ^5.3.3
         version: 5.3.3(@types/node@20.14.10)(less@4.2.0)(terser@5.31.2)
+
+  packages/utils/react-utils:
+    devDependencies:
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+
+  packages/utils/storybook-utils: {}
 
 packages:
 
@@ -993,6 +1013,11 @@ packages:
   '@eslint/js@9.7.0':
     resolution: {integrity: sha512-ChuWDQenef8OSFnvuxv0TCVxEwmu3+hPNKvM9B34qpM0rDRbjL8t5QkQeHHeAfsKQjuH9wS82WeCi1J/owatng==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@heroicons/react@2.1.5':
+    resolution: {integrity: sha512-FuzFN+BsHa+7OxbvAERtgBTNeZpUjgM/MIizfVkSCL2/edriN0Hx/DWRCR//aPYwO5QX/YlgLGXk+E3PcfZwjA==}
+    peerDependencies:
+      react: '>= 16'
 
   '@humanwhocodes/config-array@0.11.14':
     resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}
@@ -5651,6 +5676,10 @@ snapshots:
   '@eslint/js@8.57.0': {}
 
   '@eslint/js@9.7.0': {}
+
+  '@heroicons/react@2.1.5(react@18.3.1)':
+    dependencies:
+      react: 18.3.1
 
   '@humanwhocodes/config-array@0.11.14':
     dependencies:

@@ -1,0 +1,27 @@
+{
+  "name": "@motionwindui/storybook-utils",
+  "version": "1.0.0",
+  "description": "Storybook utilities for Motion Wind UI",
+  "main": "src/index.ts",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup src --dts",
+    "build:fast": "tsup src",
+    "dev": "pnpm build:fast --watch",
+    "clean": "rm -rf dist/"
+  },
+  "keywords": [],
+  "author": "Kyle Gagnon",
+  "license": "ISC",
+  "tsup": {
+    "clean": true,
+    "target": "es2019",
+    "format": [
+      "cjs",
+      "esm"
+    ]
+  }
+}

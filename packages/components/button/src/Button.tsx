@@ -26,6 +26,12 @@ export interface ButtonProps
     /** The radius of the button */
     radius?: "none" | "sm" | "md" | "lg" | "full";
 
+    /** The icon to display before the content */
+    startContent?: React.ReactNode;
+
+    /** The icon to display after the content */
+    endContent?: React.ReactNode;
+
     /** Is in a button group */
     isInGroup?: boolean;
 
@@ -38,6 +44,11 @@ function Button({
     variant = "solid",
     size = "md",
     radius = "md",
+    disabled = false,
+    startContent,
+    endContent,
+    children,
+    ...props
 }: ButtonProps) {
     return (
         <button
@@ -50,8 +61,12 @@ function Button({
                     radius,
                 }),
             )}
+            disabled={disabled}
+            {...props}
         >
-            Click Me
+            {startContent}
+            {children}
+            {endContent}
         </button>
     );
 }

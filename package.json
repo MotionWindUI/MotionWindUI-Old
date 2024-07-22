@@ -5,17 +5,18 @@
 	"private": true,
 	"author": "Kyle Gagnon",
 	"license": "ISC",
-    "scripts": {
-        "build": "turbo build --filter=!@motionwindui/storybook",
-        "build:fast": "turbo build:fast --filter=!@motionwindui/storybook",
-        "dev": "turbo dev --filter=!@motionwindui/storybook",
-        "test": "turbo test --filter=!@motionwindui/storybook",
-        "lint": "turbo lint --filter=!@motionwindui/storybook",
-        "type-check": "turbo type-check --filter=!@motionwindui/storybook",
-        "sb": "pnpm --filter @motionwindui/storybook dev"
-    },
+	"scripts": {
+		"build": "turbo build --filter=!@motionwindui/storybook",
+		"build:fast": "turbo build:fast --filter=!@motionwindui/storybook",
+		"dev": "turbo dev --filter=!@motionwindui/storybook",
+		"test": "turbo test --filter=!@motionwindui/storybook",
+		"lint": "turbo lint --filter=!@motionwindui/storybook",
+		"type-check": "turbo type-check --filter=!@motionwindui/storybook",
+		"sb": "pnpm --filter @motionwindui/storybook dev"
+	},
 	"devDependencies": {
 		"@eslint/js": "^9.7.0",
+		"@storybook/react": "^8.2.2",
 		"@types/jest": "^29.5.12",
 		"@types/node": "^20.14.10",
 		"@types/react": "^18.3.3",
@@ -36,5 +37,5 @@
 		"typescript": "^5.5.3",
 		"typescript-eslint": "^7.16.0"
 	},
-    "packageManager": "pnpm@9.5.0"
+	"packageManager": "pnpm@9.5.0"
 }

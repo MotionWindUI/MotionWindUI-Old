@@ -13,7 +13,8 @@
   "license": "ISC",
   "dependencies": {
     "@motionwindui/provider": "workspace:*",
-    "@motionwindui/theme": "workspace:*"
+    "@motionwindui/theme": "workspace:*",
+    "@motionwindui/heroicons-icons": "workspace:*"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.6.1",

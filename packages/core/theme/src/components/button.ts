@@ -74,8 +74,8 @@ const buttonVariants: ButtonVariants = {
         },
         ghost: {
             default: "border-primary text-primary",
-            hover: "hover:bg-primary-hover hover:text-on-primary-hover",
-            active: "active:bg-primary-active active:text-on-primary-active",
+            hover: "hover:bg-primary-hover hover:text-on-primary-hover hover:border-primary-hover",
+            active: "active:bg-primary-active active:text-on-primary-hover active:border-primary-active",
             disabled: "disabled:border-primary disabled:text-primary",
         },
     },
@@ -200,7 +200,6 @@ export const buttonStyles = cva(
         "focus-visible::outline[--focus-outline-color]",
         "focus-visible:outline-offset-[--focus-outline-offset]",
         "disabled:opacity-[--disabled-opacity]",
-        "disabled:cursor-not-allowed",
         "data-[pressed=true]:scale-95",
     ],
     {
@@ -220,9 +219,9 @@ export const buttonStyles = cva(
                 danger: "",
             },
             size: {
-                sm: "",
-                md: "",
-                lg: "",
+                sm: "px-2 py-1 gap-2 text-sm",
+                md: "px-3 py-2 gap-3 text-base",
+                lg: "px-4 py-3 gap-4 text-lg",
             },
             radius: {
                 none: "rounded-none",

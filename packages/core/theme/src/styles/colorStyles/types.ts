@@ -81,6 +81,31 @@ export type AccentColorsPlugin = {
     [K in keyof AccentColors]: string;
 };
 
+/**
+ * Base accent colors. Accent colors are used on top of surfaces and backgrounds. The base accent colors
+ * are colors that are accent colors without any hover or active states.
+ */
+export type BaseAccentColors = {
+    neutral: ModeValue;
+    "neutral-negative": ModeValue;
+    "neutral-subtle": ModeValue;
+    primary: ModeValue;
+    "primary-negative": ModeValue;
+    "primary-subtle": ModeValue;
+    secondary: ModeValue;
+    "secondary-negative": ModeValue;
+    "secondary-subtle": ModeValue;
+    success: ModeValue;
+    "success-negative": ModeValue;
+    "success-subtle": ModeValue;
+    warning: ModeValue;
+    "warning-negative": ModeValue;
+    "warning-subtle": ModeValue;
+    danger: ModeValue;
+    "danger-negative": ModeValue;
+    "danger-subtle": ModeValue;
+};
+
 export interface BorderColors {
     neutral: ModeValue;
     "neutral-hover": ModeValue;
@@ -192,4 +217,12 @@ export interface TextColors {
 
 export type TextColorsPlugin = {
     [K in keyof TextColors]: string;
+};
+
+export interface Opacity {
+    disabled?: string;
+}
+
+export type OpacityPlugin = {
+    [K in keyof Opacity]: string;
 };

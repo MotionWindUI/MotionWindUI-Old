@@ -1,4 +1,127 @@
-import { AccentColors, AccentColorsPlugin } from "./types";
+import { ColorShadeKeys } from "../../colors/types";
+import { adjustShade } from "../../utils/colors";
+import { AccentColors, AccentColorsPlugin, BaseAccentColors } from "./types";
+
+export const ACCENT_CONSTANT = "accent";
+
+export const baseAccentColors: BaseAccentColors = {
+    neutral: {
+        light: "var(--neutral-600)",
+        dark: "var(--neutral-300)",
+    },
+    "neutral-negative": {
+        light: "var(--neutral-300)",
+        dark: "var(--netural-700)",
+    },
+    "neutral-subtle": {
+        light: "var(--neutral-100)",
+        dark: "var(--neutral-950)",
+    },
+    primary: {
+        light: "var(--primary-700)",
+        dark: "var(--primary-400)",
+    },
+    "primary-negative": {
+        light: "var(--primary-400)",
+        dark: "var(--primary-700)",
+    },
+    "primary-subtle": {
+        light: "var(--primary-100)",
+        dark: "var(--primary-950)",
+    },
+    secondary: {
+        light: "var(--secondary-600)",
+        dark: "var(--secondary-400)",
+    },
+    "secondary-negative": {
+        light: "var(--secondary-400)",
+        dark: "var(--secondary-600)",
+    },
+    "secondary-subtle": {
+        light: "var(--secondary-50)",
+        dark: "var(--secondary-950)",
+    },
+    success: {
+        light: "var(--success-600)",
+        dark: "var(--success-400)",
+    },
+    "success-negative": {
+        light: "var(--success-400)",
+        dark: "var(--success-600)",
+    },
+    "success-subtle": {
+        light: "var(--success-50)",
+        dark: "var(--success-950)",
+    },
+    warning: {
+        light: "var(--warning-700)",
+        dark: "var(--warning-400)",
+    },
+    "warning-negative": {
+        light: "var(--warning-400)",
+        dark: "var(--warning-700)",
+    },
+    "warning-subtle": {
+        light: "var(--warning-50)",
+        dark: "var(--warning-950)",
+    },
+    danger: {
+        light: "var(--danger-700)",
+        dark: "var(--danger-400)",
+    },
+    "danger-negative": {
+        light: "var(--danger-400)",
+        dark: "var(--danger-700)",
+    },
+    "danger-subtle": {
+        light: "var(--danger-50)",
+        dark: "var(--danger-950)",
+    },
+};
+
+export const generateAccentColors = (
+    baseColors: BaseAccentColors = baseAccentColors,
+    darkenOnHover: boolean = true,
+): AccentColors => {
+    const baseColorKeys = Object.keys(baseColors) as Array<
+        keyof BaseAccentColors
+    >;
+
+    const accentColors: AccentColors = {} as AccentColors;
+
+    baseColorKeys.forEach((key) => {
+        const lightBaseShade = parseInt(
+            baseColors[key].light.split("-").at(-1) as string,
+            10,
+        );
+        const darkBaseShade = parseInt(
+            baseColors[key].dark.split("-").at(-1) as string,
+            10,
+        );
+
+        const { hoverShade: lightHoverShade, activeShade: lightActiveShade } =
+            adjustShade(lightBaseShade as ColorShadeKeys, darkenOnHover);
+        const { hoverShade: darkHoverShade, activeShade: darkActiveShade } =
+            adjustShade(darkBaseShade as ColorShadeKeys, darkenOnHover);
+
+        accentColors[key] = {
+            light: baseColors[key].light,
+            dark: baseColors[key].dark,
+        };
+
+        accentColors[`${key}-hover`] = {
+            light: `var(--${key}-${lightHoverShade})`,
+            dark: `var(--${key}-${darkHoverShade})`,
+        };
+
+        accentColors[`${key}-active`] = {
+            light: `var(--${key}-${lightActiveShade})`,
+            dark: `var(--${key}-${darkActiveShade})`,
+        };
+    });
+
+    return accentColors;
+};
 
 export const accentColors: AccentColors = {
     neutral: {
@@ -220,58 +343,58 @@ export const accentColors: AccentColors = {
 };
 
 export const accentColorsPlugin: AccentColorsPlugin = {
-    neutral: "var(--accent-neutral)",
-    "neutral-hover": "var(--accent-neutral-hover)",
-    "neutral-active": "var(--accent-neutral-active)",
-    "neutral-negative": "var(--accent-neutral-negative)",
-    "neutral-negative-hover": "var(--accent-neutral-negative-hover)",
-    "neutral-negative-active": "var(--accent-neutral-negative-active)",
-    "neutral-subtle": "var(--accent-neutral-subtle)",
-    "neutral-subtle-hover": "var(--accent-neutral-subtle-hover)",
-    "neutral-subtle-active": "var(--accent-neutral-subtle-active)",
-    primary: "var(--accent-primary)",
-    "primary-hover": "var(--accent-primary-hover)",
-    "primary-active": "var(--accent-primary-active)",
-    "primary-negative": "var(--accent-primary-negative)",
-    "primary-negative-hover": "var(--accent-primary-negative-hover)",
-    "primary-negative-active": "var(--accent-primary-negative-active)",
-    "primary-subtle": "var(--accent-primary-subtle)",
-    "primary-subtle-hover": "var(--accent-primary-subtle-hover)",
-    "primary-subtle-active": "var(--accent-primary-subtle-active)",
-    secondary: "var(--accent-secondary)",
-    "secondary-hover": "var(--accent-secondary-hover)",
-    "secondary-active": "var(--accent-secondary-active)",
-    "secondary-negative": "var(--accent-secondary-negative)",
-    "secondary-negative-hover": "var(--accent-secondary-negative-hover)",
-    "secondary-negative-active": "var(--accent-secondary-negative-active)",
-    "secondary-subtle": "var(--accent-secondary-subtle)",
-    "secondary-subtle-hover": "var(--accent-secondary-subtle-hover)",
-    "secondary-subtle-active": "var(--accent-secondary-subtle-active)",
-    success: "var(--accent-success)",
-    "success-hover": "var(--accent-success-hover)",
-    "success-active": "var(--accent-success-active)",
-    "success-negative": "var(--accent-success-negative)",
-    "success-negative-hover": "var(--accent-success-negative-hover)",
-    "success-negative-active": "var(--accent-success-negative-active)",
-    "success-subtle": "var(--accent-success-subtle)",
-    "success-subtle-hover": "var(--accent-success-subtle-hover)",
-    "success-subtle-active": "var(--accent-success-subtle-active)",
-    warning: "var(--accent-warning)",
-    "warning-hover": "var(--accent-warning-hover)",
-    "warning-active": "var(--accent-warning-active)",
-    "warning-negative": "var(--accent-warning-negative)",
-    "warning-negative-hover": "var(--accent-warning-negative-hover)",
-    "warning-negative-active": "var(--accent-warning-negative-active)",
-    "warning-subtle": "var(--accent-warning-subtle)",
-    "warning-subtle-hover": "var(--accent-warning-subtle-hover)",
-    "warning-subtle-active": "var(--accent-warning-subtle-active)",
-    danger: "var(--accent-danger)",
-    "danger-hover": "var(--accent-danger-hover)",
-    "danger-active": "var(--accent-danger-active)",
-    "danger-negative": "var(--accent-danger-negative)",
-    "danger-negative-hover": "var(--accent-danger-negative-hover)",
-    "danger-negative-active": "var(--accent-danger-negative-active)",
-    "danger-subtle": "var(--accent-danger-subtle)",
-    "danger-subtle-hover": "var(--accent-danger-subtle-hover)",
-    "danger-subtle-active": "var(--accent-danger-subtle-active)",
+    neutral: `var(--${ACCENT_CONSTANT}-neutral)`,
+    "neutral-hover": `var(--${ACCENT_CONSTANT}-neutral-hover)`,
+    "neutral-active": `var(--${ACCENT_CONSTANT}-neutral-active)`,
+    "neutral-negative": `var(--${ACCENT_CONSTANT}-neutral-negative)`,
+    "neutral-negative-hover": `var(--${ACCENT_CONSTANT}-neutral-negative-hover)`,
+    "neutral-negative-active": `var(--${ACCENT_CONSTANT}-neutral-negative-active)`,
+    "neutral-subtle": `var(--${ACCENT_CONSTANT}-neutral-subtle)`,
+    "neutral-subtle-hover": `var(--${ACCENT_CONSTANT}-neutral-subtle-hover)`,
+    "neutral-subtle-active": `var(--${ACCENT_CONSTANT}-neutral-subtle-active)`,
+    primary: `var(--${ACCENT_CONSTANT}-primary)`,
+    "primary-hover": `var(--${ACCENT_CONSTANT}-primary-hover)`,
+    "primary-active": `var(--${ACCENT_CONSTANT}-primary-active)`,
+    "primary-negative": `var(--${ACCENT_CONSTANT}-primary-negative)`,
+    "primary-negative-hover": `var(--${ACCENT_CONSTANT}-primary-negative-hover)`,
+    "primary-negative-active": `var(--${ACCENT_CONSTANT}-primary-negative-active)`,
+    "primary-subtle": `var(--${ACCENT_CONSTANT}-primary-subtle)`,
+    "primary-subtle-hover": `var(--${ACCENT_CONSTANT}-primary-subtle-hover)`,
+    "primary-subtle-active": `var(--${ACCENT_CONSTANT}-primary-subtle-active)`,
+    secondary: `var(--${ACCENT_CONSTANT}-secondary)`,
+    "secondary-hover": `var(--${ACCENT_CONSTANT}-secondary-hover)`,
+    "secondary-active": `var(--${ACCENT_CONSTANT}-secondary-active)`,
+    "secondary-negative": `var(--${ACCENT_CONSTANT}-secondary-negative)`,
+    "secondary-negative-hover": `var(--${ACCENT_CONSTANT}-secondary-negative-hover)`,
+    "secondary-negative-active": `var(--${ACCENT_CONSTANT}-secondary-negative-active)`,
+    "secondary-subtle": `var(--${ACCENT_CONSTANT}-secondary-subtle)`,
+    "secondary-subtle-hover": `var(--${ACCENT_CONSTANT}-secondary-subtle-hover)`,
+    "secondary-subtle-active": `var(--${ACCENT_CONSTANT}-secondary-subtle-active)`,
+    success: `var(--${ACCENT_CONSTANT}-success)`,
+    "success-hover": `var(--${ACCENT_CONSTANT}-success-hover)`,
+    "success-active": `var(--${ACCENT_CONSTANT}-success-active)`,
+    "success-negative": `var(--${ACCENT_CONSTANT}-success-negative)`,
+    "success-negative-hover": `var(--${ACCENT_CONSTANT}-success-negative-hover)`,
+    "success-negative-active": `var(--${ACCENT_CONSTANT}-success-negative-active)`,
+    "success-subtle": `var(--${ACCENT_CONSTANT}-success-subtle)`,
+    "success-subtle-hover": `var(--${ACCENT_CONSTANT}-success-subtle-hover)`,
+    "success-subtle-active": `var(--${ACCENT_CONSTANT}-success-subtle-active)`,
+    warning: `var(--${ACCENT_CONSTANT}-warning)`,
+    "warning-hover": `var(--${ACCENT_CONSTANT}-warning-hover)`,
+    "warning-active": `var(--${ACCENT_CONSTANT}-warning-active)`,
+    "warning-negative": `var(--${ACCENT_CONSTANT}-warning-negative)`,
+    "warning-negative-hover": `var(--${ACCENT_CONSTANT}-warning-negative-hover)`,
+    "warning-negative-active": `var(--${ACCENT_CONSTANT}-warning-negative-active)`,
+    "warning-subtle": `var(--${ACCENT_CONSTANT}-warning-subtle)`,
+    "warning-subtle-hover": `var(--${ACCENT_CONSTANT}-warning-subtle-hover)`,
+    "warning-subtle-active": `var(--${ACCENT_CONSTANT}-warning-subtle-active)`,
+    danger: `var(--${ACCENT_CONSTANT}-danger)`,
+    "danger-hover": `var(--${ACCENT_CONSTANT}-danger-hover)`,
+    "danger-active": `var(--${ACCENT_CONSTANT}-danger-active)`,
+    "danger-negative": `var(--${ACCENT_CONSTANT}-danger-negative)`,
+    "danger-negative-hover": `var(--${ACCENT_CONSTANT}-danger-negative-hover)`,
+    "danger-negative-active": `var(--${ACCENT_CONSTANT}-danger-negative-active)`,
+    "danger-subtle": `var(--${ACCENT_CONSTANT}-danger-subtle)`,
+    "danger-subtle-hover": `var(--${ACCENT_CONSTANT}-danger-subtle-hover)`,
+    "danger-subtle-active": `var(--${ACCENT_CONSTANT}-danger-subtle-active)`,
 };

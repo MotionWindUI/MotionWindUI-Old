@@ -1,0 +1,30 @@
+{
+  "name": "@motionwindui/heroicons-icons",
+  "version": "1.0.0",
+  "description": "A reexport of Heroicons used for MotionWindUI",
+  "main": "src/index.ts",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup src --dts",
+    "build:fast": "tsup src",
+    "dev": "pnpm build:fast --watch",
+    "clean": "rm -rf dist/"
+  },
+  "keywords": [],
+  "author": "Kyle Gagnon",
+  "license": "ISC",
+  "tsup": {
+    "clean": true,
+    "target": "es2019",
+    "format": [
+      "cjs",
+      "esm"
+    ]
+  },
+  "dependencies": {
+    "@heroicons/react": "^2.1.5"
+  }
+}
