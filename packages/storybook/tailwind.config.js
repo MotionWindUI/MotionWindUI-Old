@@ -16,7 +16,6 @@ module.exports = {
                 accent: {
                     primary: {
                         light: "var(--primary-600)",
-                        dark: "var(--primary-300)"
                     }
                 }
             }

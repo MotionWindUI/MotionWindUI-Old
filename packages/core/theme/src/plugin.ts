@@ -1,4 +1,5 @@
 import plugin from "tailwindcss/plugin";
+import deepmerge from "deepmerge";
 import { BaseColors, ModeValue, MotionWindUIPluginConfig } from "./types";
 import { themeColors } from "./colors/colors";
 import { ColorShadeKeys, ColorShades, CSSColorVarScale } from "./colors/types";
@@ -16,7 +17,6 @@ import {
 } from "./styles/colorStyles/surface";
 import {
     ACCENT_CONSTANT,
-    accentColors,
     accentColorsPlugin,
     baseAccentColors,
     filterBaseAccentColors,
@@ -25,7 +25,6 @@ import {
 import {
     baseBorderColors,
     BORDER_CONSTANT,
-    borderColors,
     borderColorsPlugin,
     filterBaseBorderColors,
     generateBorderColors,
@@ -61,13 +60,7 @@ import {
     borderWidth,
     borderWidthPlugin,
 } from "./styles/spacingStyles/borderWidth";
-import {
-    AccentColors,
-    BaseAccentColors,
-    BaseBorderColors,
-    BorderColors,
-    TextColors,
-} from "./styles/colorStyles/types";
+import { TextColors } from "./styles/colorStyles/types";
 
 const DEFAULT_THEME = "default";
 
@@ -128,9 +121,13 @@ const generateVarsWithoutMode = (styles: Styles) => {
 };
 
 const corePlugin = (config: MotionWindUIPluginConfig) => {
+    // Get the user theme (this is the theme that overrides the defaults and sets it as the base for all other themes)
     const userTheme = config.theme || {};
+
+    // Get the user themes (these are the themes that the user has defined)
     const userThemes = config.themes || {};
 
+    // Set up the default base colors (neutral, primary, secondary, success, warning, danger)
     const defaultBaseColors: BaseColors = {
         neutral: themeColors.neutral,
         primary: themeColors.primary,
@@ -140,39 +137,45 @@ const corePlugin = (config: MotionWindUIPluginConfig) => {
         danger: themeColors.danger,
     };
 
+    // Set up the default styles
+    // This is done by merging the default style that MotionWindUI provides with the user's style (if present)
+    // This is done for each style (background, surface, accent, border, text)
+    // If the user has not provided a style, the default style is used
+    // This is used as the base for all other user defined themes
+    // For example, if the primary color was overridden in the default theme, that primary color will be used in all other themes (unless overridden)
     const defaultStyles: Styles = {
         background: backgroundColors,
         surface: surfaceColors,
         accent: generateAccentColors(
-            { ...baseAccentColors, ...userTheme.style?.accent },
+            deepmerge(baseAccentColors, userTheme.style?.accent || {}),
             userTheme.darkenOnHover,
         ),
         border: generateBorderColors(
-            { ...baseBorderColors, ...userTheme.style?.border },
+            deepmerge(baseBorderColors, userTheme.style?.border || {}),
             userTheme.darkenOnHover,
         ),
         text: generateTextColors(
             textColors,
-            { ...baseTextColors, ...userTheme.style?.text },
+            deepmerge(baseTextColors, userTheme.style?.text || {}),
             userTheme.darkenOnHover,
         ),
-        borderRadius: borderRadius,
-        borderWidth: borderWidth,
-        opacity: opacity,
-        fontSize: fontSize,
-        lineHeight: lineHeight,
+        borderRadius: deepmerge(
+            borderRadius,
+            userTheme.style?.borderRadius || {},
+        ),
+        borderWidth: deepmerge(borderWidth, userTheme.style?.borderWidth || {}),
+        opacity: deepmerge(opacity, userTheme.style?.opacity || {}),
+        fontSize: deepmerge(fontSize, userTheme.style?.fontSize || {}),
+        lineHeight: deepmerge(lineHeight, userTheme.style?.lineHeight || {}),
     };
 
-    const mergedBaseColors: BaseColors = {
-        ...defaultBaseColors,
-        ...userTheme.colors,
-    };
+    // Merge the default base colors with the user's base
+    const mergedBaseColors: BaseColors = deepmerge(
+        defaultBaseColors,
+        userTheme.colors || {},
+    );
 
-    const mergedStyes: Styles = {
-        ...defaultStyles,
-        ...userTheme.style,
-    };
-
+    // Generate the CSS variables for the color scales
     const colorStyles: CSSColorVarScale = {
         ...colorScaleToCssVars("neutral", mergedBaseColors.neutral, false),
         ...colorScaleToCssVars("primary", mergedBaseColors.primary, false),
@@ -182,6 +185,7 @@ const corePlugin = (config: MotionWindUIPluginConfig) => {
         ...colorScaleToCssVars("danger", mergedBaseColors.danger, false),
     };
 
+    // List of base colors
     const colorKeys = [
         "neutral",
         "primary",
@@ -191,10 +195,12 @@ const corePlugin = (config: MotionWindUIPluginConfig) => {
         "danger",
     ];
 
+    // List of color shades
     const colorShadeKeys: ColorShadeKeys[] = [
         50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950,
     ];
 
+    // Generate the TailwindCSS colors to use in the theme
     const tailwindColors = colorKeys.reduce(
         (acc, key) => {
             acc[key] = colorShadeKeys.reduce((scale, shade) => {
@@ -208,32 +214,42 @@ const corePlugin = (config: MotionWindUIPluginConfig) => {
 
     return plugin(
         ({ addBase }) => {
+            // Add the base colors
             addBase({
+                // Add the base colors (neutral, primary, secondary, success, warning, danger)
                 [":root"]: {
                     ...colorStyles,
                 },
+
+                // Add the default theme's light mode (:root[data-theme="default-light"])
                 [`:root[data-theme="${DEFAULT_THEME}-light"]`]: {
-                    ...generateVars(mergedStyes, "light"),
-                    ...generateVarsWithoutMode(mergedStyes),
+                    ...generateVars(defaultStyles, "light"),
+                    ...generateVarsWithoutMode(defaultStyles),
                 },
+
+                // Add the default theme's dark mode (:root[data-theme="default-dark"])
                 [`:root[data-theme="${DEFAULT_THEME}-dark"]`]: {
-                    ...generateVars(mergedStyes, "dark"),
-                    ...generateVarsWithoutMode(mergedStyes),
+                    ...generateVars(defaultStyles, "dark"),
+                    ...generateVarsWithoutMode(defaultStyles),
                 },
             });
 
+            // Go through each user defined theme and generate the CSS variables for each and add them to the base
             Object.keys(userThemes).forEach((themeName) => {
+                // Get the theme configuration
                 const themeConfig = userThemes[themeName];
-                const themeBaseColors = {
-                    ...mergedBaseColors,
-                    ...themeConfig.colors,
-                };
+
+                // Merge the base colors with the theme's colors
+                const themeBaseColors = deepmerge(
+                    mergedBaseColors,
+                    themeConfig.colors || {},
+                );
                 const themeStyles = {
-                    ...mergedStyes,
+                    ...defaultStyles,
                     ...themeConfig.style,
                     accent: generateAccentColors(
                         filterBaseAccentColors({
-                            ...mergedStyes.accent,
+                            ...defaultStyles.accent,
                             ...themeConfig.style?.accent,
                         }),
                         userTheme.darkenOnHover !== undefined
@@ -242,7 +258,7 @@ const corePlugin = (config: MotionWindUIPluginConfig) => {
                     ),
                     border: generateBorderColors(
                         filterBaseBorderColors({
-                            ...mergedStyes.border,
+                            ...defaultStyles.border,
                             ...themeConfig.style?.border,
                         }),
                         userTheme.darkenOnHover !== undefined
@@ -252,7 +268,7 @@ const corePlugin = (config: MotionWindUIPluginConfig) => {
                     text: generateTextColors(
                         textColors,
                         filterBaseTextColors({
-                            ...mergedStyes.text,
+                            ...defaultStyles.text,
                             ...themeConfig.style?.text,
                         } as TextColors),
                         userTheme.darkenOnHover !== undefined
