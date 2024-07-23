@@ -1,7 +1,12 @@
-import { BorderColors, BorderColorsPlugin } from "./types";
+import { ColorShadeKeys } from "../../colors/types";
+import { adjustShade } from "../../utils/colors";
+import { BaseBorderColors, BorderColors, BorderColorsPlugin } from "./types";
 
 export const BORDER_CONSTANT = "border";
 
+/**
+ * The default border colors for the theme
+ */
 export const borderColors: BorderColors = {
     neutral: {
         light: "var(--neutral-600)",
@@ -147,6 +152,139 @@ export const borderColors: BorderColors = {
         light: "var(--danger-200)",
         dark: "var(--danger-900)",
     },
+};
+
+export const baseBorderColors: BaseBorderColors = {
+    neutral: {
+        light: "var(--neutral-600)",
+        dark: "var(--neutral-300)",
+    },
+    "neutral-negative": {
+        light: "var(--neutral-300)",
+        dark: "var(--netural-700)",
+    },
+    primary: {
+        light: "var(--primary-700)",
+        dark: "var(--primary-400)",
+    },
+    "primary-negative": {
+        light: "var(--primary-400)",
+        dark: "var(--primary-700)",
+    },
+    secondary: {
+        light: "var(--secondary-600)",
+        dark: "var(--secondary-400)",
+    },
+    "secondary-negative": {
+        light: "var(--secondary-400)",
+        dark: "var(--secondary-600)",
+    },
+    success: {
+        light: "var(--success-600)",
+        dark: "var(--success-400)",
+    },
+    "success-negative": {
+        light: "var(--success-400)",
+        dark: "var(--success-600)",
+    },
+    warning: {
+        light: "var(--warning-700)",
+        dark: "var(--warning-400)",
+    },
+    "warning-negative": {
+        light: "var(--warning-400)",
+        dark: "var(--warning-700)",
+    },
+    danger: {
+        light: "var(--danger-700)",
+        dark: "var(--danger-400)",
+    },
+    "danger-negative": {
+        light: "var(--danger-400)",
+        dark: "var(--danger-700)",
+    },
+};
+
+/**
+ * Generate border colors based on the base border colors
+ * @param baseBorderColors The base border colors to generate the border colors from
+ * @param darkenOnHover Whether to darken the border colors on hover
+ */
+export const generateBorderColors = (
+    baseBorderColors: BaseBorderColors,
+    darkenOnHover: boolean = true,
+): BorderColors => {
+    // Set a return object to avoid mutating the original object
+    // Set the return object to the original object, so that we can modify existing props but leave others
+    const returnBorderColors = borderColors;
+
+    // Get the keys of the baseBorderColors object
+    const baseBorderColorsKeys = Object.keys(baseBorderColors) as Array<
+        keyof BaseBorderColors
+    >;
+
+    // For each base border colors key, grab the light and dark shade
+    // Then adjust the shade for hover and active states
+    baseBorderColorsKeys.forEach((key) => {
+        const lightBaseShade = parseInt(
+            baseBorderColors[key].light.split("-").at(-1) as string,
+            10,
+        ) as ColorShadeKeys;
+
+        const darkBaseShade = parseInt(
+            baseBorderColors[key].dark.split("-").at(-1) as string,
+            10,
+        ) as ColorShadeKeys;
+
+        const { hoverShade: lightHoverShade, activeShade: lightActiveShade } =
+            adjustShade(lightBaseShade, darkenOnHover);
+        const { hoverShade: darkHoverShade, activeShade: darkActiveShade } =
+            adjustShade(darkBaseShade, darkenOnHover);
+
+        returnBorderColors[`${key}-hover`] = {
+            light: `var(--${key.split("-")[0]}-${lightHoverShade})`,
+            dark: `var(--${key.split("-")[0]}-${darkHoverShade})`,
+        };
+
+        returnBorderColors[`${key}-active`] = {
+            light: `var(--${key.split("-")[0]}-${lightActiveShade})`,
+            dark: `var(--${key.split("-")[0]}-${darkActiveShade})`,
+        };
+    });
+
+    // Return the modified object
+    return returnBorderColors;
+};
+
+/**
+ * Filter the base border colors from the border colors
+ * @param borderColors The border colors to filter
+ * @return Returns the base border colors from the list of border colors
+ */
+export const filterBaseBorderColors = (
+    borderColors: Partial<BorderColors>,
+): BaseBorderColors => {
+    const keys: (keyof BaseBorderColors)[] = [
+        "neutral",
+        "neutral-negative",
+        "primary",
+        "primary-negative",
+        "secondary",
+        "secondary-negative",
+        "success",
+        "success-negative",
+        "warning",
+        "warning-negative",
+        "danger",
+        "danger-negative",
+    ];
+
+    return keys.reduce((acc, key) => {
+        if (key in borderColors && borderColors[key]) {
+            acc[key] = borderColors[key];
+        }
+        return acc;
+    }, {} as BaseBorderColors);
 };
 
 export const borderColorsPlugin: BorderColorsPlugin = {

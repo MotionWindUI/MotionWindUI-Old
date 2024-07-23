@@ -1,5 +1,5 @@
 import { ColorScale } from "./colors/types";
-import { Styles } from "./styles/types";
+import { PluginStyles, Styles } from "./styles/types";
 
 export type ModeValue = {
     light: string;
@@ -20,7 +20,7 @@ export interface ThemeCreator {
         /* The neutral, primary, secondary, success, warning, or danger colors */
         colors?: Partial<BaseColors>;
         /* The overall design system */
-        style?: Partial<Styles>;
+        style?: Partial<PluginStyles>;
         /* Whether to darken the colors on hover */
         darkenOnHover?: boolean;
     };
@@ -29,7 +29,7 @@ export interface ThemeCreator {
 export interface MotionWindUIPluginConfig {
     theme?: {
         colors?: Partial<BaseColors>;
-        style?: Partial<Styles>;
+        style?: Partial<PluginStyles>;
         darkenOnHover?: boolean;
     };
     themes?: ThemeCreator;

@@ -1,4 +1,5 @@
 import { ModeValue } from "../../types";
+import { neutral } from "../../colors/neutral";
 
 export type BackgroundColorsKeys = ["subtle", "default"];
 
@@ -149,6 +150,21 @@ export type BorderColorsPlugin = {
     [K in keyof BorderColors]: string;
 };
 
+export interface BaseBorderColors {
+    neutral: ModeValue;
+    "neutral-negative": ModeValue;
+    primary: ModeValue;
+    "primary-negative": ModeValue;
+    secondary: ModeValue;
+    "secondary-negative": ModeValue;
+    success: ModeValue;
+    "success-negative": ModeValue;
+    warning: ModeValue;
+    "warning-negative": ModeValue;
+    danger: ModeValue;
+    "danger-negative": ModeValue;
+}
+
 export interface TextColors {
     default: ModeValue;
     subtle: ModeValue;
@@ -218,6 +234,21 @@ export interface TextColors {
 export type TextColorsPlugin = {
     [K in keyof TextColors]: string;
 };
+
+export interface BaseTextColors {
+    neutral: ModeValue;
+    "on-neutral": ModeValue;
+    primary: ModeValue;
+    "on-primary": ModeValue;
+    secondary: ModeValue;
+    "on-secondary": ModeValue;
+    success: ModeValue;
+    "on-success": ModeValue;
+    warning: ModeValue;
+    "on-warning": ModeValue;
+    danger: ModeValue;
+    "on-danger": ModeValue;
+}
 
 export interface Opacity {
     disabled?: string;

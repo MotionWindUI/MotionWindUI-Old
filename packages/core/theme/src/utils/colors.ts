@@ -96,7 +96,7 @@ export const colorScaleToCssVars = (
  */
 export const adjustShade = (
     shade: ColorShadeKeys,
-    darkenOnHover: boolean = true,
+    darkenOnHover: boolean,
     allShades: ColorShadesList = DEFAULT_COLOR_SHADES,
 ) => {
     const shadeIndex = allShades.indexOf(shade);

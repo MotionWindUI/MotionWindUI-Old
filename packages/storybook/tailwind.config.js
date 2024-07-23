@@ -11,8 +11,19 @@ module.exports = {
     },
     variants: {},
     plugins: [motionWindUIPlugin({
+        theme: {
+            style: {
+                accent: {
+                    primary: {
+                        light: "var(--primary-600)",
+                        dark: "var(--primary-300)"
+                    }
+                }
+            }
+        },
         themes: {
             "custom": {
+                darkenOnHover: true,
                 baseColors: {
                     primary: {
                         50: "#f9f8ff",

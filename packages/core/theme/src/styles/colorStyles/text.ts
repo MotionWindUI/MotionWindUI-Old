@@ -1,4 +1,6 @@
-import { TextColors, TextColorsPlugin } from "./types";
+import { ColorShadeKeys } from "../../colors/types";
+import { adjustShade } from "../../utils/colors";
+import { BaseTextColors, TextColors, TextColorsPlugin } from "./types";
 
 export const TEXT_CONSTANT = "text";
 
@@ -255,6 +257,133 @@ export const textColors: TextColors = {
         light: "var(--danger-400)",
         dark: "var(--danger-700)",
     },
+};
+
+export const baseTextColors: BaseTextColors = {
+    neutral: {
+        light: "var(--neutral-700)",
+        dark: "var(--neutral-100)",
+    },
+    "on-neutral": {
+        light: "var(--neutral-50)",
+        dark: "var(--neutral-950)",
+    },
+    primary: {
+        light: "var(--primary-700)",
+        dark: "var(--primary-500)",
+    },
+    "on-primary": {
+        light: "var(--primary-50)",
+        dark: "var(--primary-900)",
+    },
+    secondary: {
+        light: "var(--secondary-700)",
+        dark: "var(--secondary-500)",
+    },
+    "on-secondary": {
+        light: "var(--secondary-50)",
+        dark: "var(--secondary-800)",
+    },
+    success: {
+        light: "var(--success-700)",
+        dark: "var(--success-500)",
+    },
+    "on-success": {
+        light: "var(--success-50)",
+        dark: "var(--success-900)",
+    },
+    warning: {
+        light: "var(--warning-700)",
+        dark: "var(--warning-500)",
+    },
+    "on-warning": {
+        light: "var(--warning-50)",
+        dark: "var(--warning-900)",
+    },
+    danger: {
+        light: "var(--danger-700)",
+        dark: "var(--danger-500)",
+    },
+    "on-danger": {
+        light: "var(--danger-50)",
+        dark: "var(--danger-900)",
+    },
+};
+
+export const generateTextColors = (
+    defaultTextColors: TextColors,
+    textColors: BaseTextColors,
+    darkenOnHover: boolean = true,
+): TextColors => {
+    // Set a return object to avoid mutating the default text colors
+    // The default text colors are used as a fallback if the text colors are not provided
+    const returnTextColors = defaultTextColors;
+
+    // Get the keys of the base text colors
+    const baseTextColorKeys = Object.keys(textColors) as Array<
+        keyof BaseTextColors
+    >;
+
+    // For each text colors key, grab the light and dark shade
+    // Then adjust the shade for hover and active states
+    baseTextColorKeys.forEach((key) => {
+        const lightBaseShade = parseInt(
+            textColors[key].light.split("-").at(-1) as string,
+            10,
+        ) as ColorShadeKeys;
+
+        const darkBaseShade = parseInt(
+            textColors[key].dark.split("-").at(-1) as string,
+            10,
+        ) as ColorShadeKeys;
+
+        const { hoverShade: lightHoverShade, activeShade: lightActiveShade } =
+            adjustShade(lightBaseShade, darkenOnHover);
+        const { hoverShade: darkHoverShade, activeShade: darkActiveShade } =
+            adjustShade(darkBaseShade, darkenOnHover);
+
+        let adjustedKey = key;
+
+        if (key.match(/on-/)) {
+            adjustedKey = key.replace("on-", "") as keyof BaseTextColors;
+        }
+
+        returnTextColors[`${key}-hover`] = {
+            light: `var(--${adjustedKey}-${lightHoverShade})`,
+            dark: `var(--${adjustedKey}-${darkHoverShade})`,
+        };
+
+        returnTextColors[`${key}-active`] = {
+            light: `var(--${adjustedKey}-${lightActiveShade})`,
+            dark: `var(--${adjustedKey}-${darkActiveShade})`,
+        };
+    });
+
+    return returnTextColors;
+};
+
+export const filterBaseTextColors = (
+    textColors: TextColors,
+): BaseTextColors => {
+    const keys: (keyof BaseTextColors)[] = [
+        "neutral",
+        "on-neutral",
+        "primary",
+        "on-primary",
+        "secondary",
+        "on-secondary",
+        "success",
+        "on-success",
+        "warning",
+        "on-warning",
+        "danger",
+        "on-danger",
+    ];
+
+    return keys.reduce((acc, key) => {
+        acc[key] = textColors[key];
+        return acc;
+    }, {} as TextColors);
 };
 
 export const textColorsPlugin: TextColorsPlugin = {

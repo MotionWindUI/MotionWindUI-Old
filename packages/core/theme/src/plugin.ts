@@ -19,19 +19,26 @@ import {
     accentColors,
     accentColorsPlugin,
     baseAccentColors,
+    filterBaseAccentColors,
     generateAccentColors,
 } from "./styles/colorStyles/accent";
 import {
+    baseBorderColors,
     BORDER_CONSTANT,
     borderColors,
     borderColorsPlugin,
+    filterBaseBorderColors,
+    generateBorderColors,
 } from "./styles/colorStyles/border";
 import {
+    filterBaseTextColors,
+    generateTextColors,
     TEXT_CONSTANT,
     textColors,
     textColorsPlugin,
 } from "./styles/colorStyles/text";
 import { Styles } from "./styles/types";
+import { baseTextColors } from "./styles/colorStyles/text";
 import {
     opacity,
     OPACITY_CONSTANT,
@@ -54,6 +61,13 @@ import {
     borderWidth,
     borderWidthPlugin,
 } from "./styles/spacingStyles/borderWidth";
+import {
+    AccentColors,
+    BaseAccentColors,
+    BaseBorderColors,
+    BorderColors,
+    TextColors,
+} from "./styles/colorStyles/types";
 
 const DEFAULT_THEME = "default";
 
@@ -129,9 +143,19 @@ const corePlugin = (config: MotionWindUIPluginConfig) => {
     const defaultStyles: Styles = {
         background: backgroundColors,
         surface: surfaceColors,
-        accent: generateAccentColors(baseAccentColors, userTheme.darkenOnHover),
-        border: borderColors,
-        text: textColors,
+        accent: generateAccentColors(
+            { ...baseAccentColors, ...userTheme.style?.accent },
+            userTheme.darkenOnHover,
+        ),
+        border: generateBorderColors(
+            { ...baseBorderColors, ...userTheme.style?.border },
+            userTheme.darkenOnHover,
+        ),
+        text: generateTextColors(
+            textColors,
+            { ...baseTextColors, ...userTheme.style?.text },
+            userTheme.darkenOnHover,
+        ),
         borderRadius: borderRadius,
         borderWidth: borderWidth,
         opacity: opacity,
@@ -207,6 +231,34 @@ const corePlugin = (config: MotionWindUIPluginConfig) => {
                 const themeStyles = {
                     ...mergedStyes,
                     ...themeConfig.style,
+                    accent: generateAccentColors(
+                        filterBaseAccentColors({
+                            ...mergedStyes.accent,
+                            ...themeConfig.style?.accent,
+                        }),
+                        userTheme.darkenOnHover !== undefined
+                            ? userTheme.darkenOnHover
+                            : true,
+                    ),
+                    border: generateBorderColors(
+                        filterBaseBorderColors({
+                            ...mergedStyes.border,
+                            ...themeConfig.style?.border,
+                        }),
+                        userTheme.darkenOnHover !== undefined
+                            ? userTheme.darkenOnHover
+                            : true,
+                    ),
+                    text: generateTextColors(
+                        textColors,
+                        filterBaseTextColors({
+                            ...mergedStyes.text,
+                            ...themeConfig.style?.text,
+                        } as TextColors),
+                        userTheme.darkenOnHover !== undefined
+                            ? userTheme.darkenOnHover
+                            : true,
+                    ),
                 };
                 const themeColorStyles: CSSColorVarScale = {
                     ...colorScaleToCssVars(

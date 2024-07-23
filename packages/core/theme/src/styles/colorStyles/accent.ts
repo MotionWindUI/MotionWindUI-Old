@@ -110,17 +110,56 @@ export const generateAccentColors = (
         };
 
         accentColors[`${key}-hover`] = {
-            light: `var(--${key}-${lightHoverShade})`,
-            dark: `var(--${key}-${darkHoverShade})`,
+            light: `var(--${key.split("-")[0]}-${lightHoverShade})`,
+            dark: `var(--${key.split("-")[0]}-${darkHoverShade})`,
         };
 
         accentColors[`${key}-active`] = {
-            light: `var(--${key}-${lightActiveShade})`,
-            dark: `var(--${key}-${darkActiveShade})`,
+            light: `var(--${key.split("-")[0]}-${lightActiveShade})`,
+            dark: `var(--${key.split("-")[0]}-${darkActiveShade})`,
         };
     });
 
     return accentColors;
+};
+
+/**
+ * Filter the base accent colors (colors without hover and active states) from the accent colors
+ * @param baseColors The accent colors to filter
+ * @returns The list of base accent colors
+ */
+export const filterBaseAccentColors = (
+    baseColors: Partial<AccentColors>,
+): BaseAccentColors => {
+    // Get the list of keys from the base accent colors
+    const keys: (keyof BaseAccentColors)[] = [
+        "neutral",
+        "neutral-negative",
+        "neutral-subtle",
+        "primary",
+        "primary-negative",
+        "primary-subtle",
+        "secondary",
+        "secondary-negative",
+        "secondary-subtle",
+        "success",
+        "success-negative",
+        "success-subtle",
+        "warning",
+        "warning-negative",
+        "warning-subtle",
+        "danger",
+        "danger-negative",
+        "danger-subtle",
+    ];
+
+    // Return the filtered base accent
+    return keys.reduce((acc, key) => {
+        if (key in baseColors && baseColors[key]) {
+            acc[key] = baseColors[key];
+        }
+        return acc;
+    }, {} as BaseAccentColors);
 };
 
 export const accentColors: AccentColors = {
