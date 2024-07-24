@@ -79,60 +79,20 @@ export const baseAccentColors: BaseAccentColors = {
     },
 };
 
+/**
+ * Generate accent colors based on the base accent colors. They will generate the shade for the hover and active states.
+ * @param accentColors The list of default accent colors to use (so that any keys not provided will use the default values)
+ * @param baseColors The list of base accent colors to generate the accent colors from
+ * @param darkenOnHover Whether to darken the accent colors on hover (in dark mode it will lighten)
+ * @returns The list of fully generated accent colors
+ */
 export const generateAccentColors = (
+    accentColors: AccentColors,
     baseColors: BaseAccentColors = baseAccentColors,
     darkenOnHover: boolean = true,
 ): AccentColors => {
-    const baseColorKeys = Object.keys(baseColors) as Array<
-        keyof BaseAccentColors
-    >;
-
-    const accentColors: AccentColors = {} as AccentColors;
-
-    baseColorKeys.forEach((key) => {
-        const lightBaseShade = parseInt(
-            baseColors[key].light.split("-").at(-1) as string,
-            10,
-        );
-        const darkBaseShade = parseInt(
-            baseColors[key].dark.split("-").at(-1) as string,
-            10,
-        );
-
-        const { hoverShade: lightHoverShade, activeShade: lightActiveShade } =
-            adjustShade(lightBaseShade as ColorShadeKeys, darkenOnHover);
-        const { hoverShade: darkHoverShade, activeShade: darkActiveShade } =
-            adjustShade(darkBaseShade as ColorShadeKeys, darkenOnHover);
-
-        accentColors[key] = {
-            light: baseColors[key].light,
-            dark: baseColors[key].dark,
-        };
-
-        accentColors[`${key}-hover`] = {
-            light: `var(--${key.split("-")[0]}-${lightHoverShade})`,
-            dark: `var(--${key.split("-")[0]}-${darkHoverShade})`,
-        };
-
-        accentColors[`${key}-active`] = {
-            light: `var(--${key.split("-")[0]}-${lightActiveShade})`,
-            dark: `var(--${key.split("-")[0]}-${darkActiveShade})`,
-        };
-    });
-
-    return accentColors;
-};
-
-/**
- * Filter the base accent colors (colors without hover and active states) from the accent colors
- * @param baseColors The accent colors to filter
- * @returns The list of base accent colors
- */
-export const filterBaseAccentColors = (
-    baseColors: Partial<AccentColors>,
-): BaseAccentColors => {
-    // Get the list of keys from the base accent colors
-    const keys: (keyof BaseAccentColors)[] = [
+    // Get the keys of the base colors
+    const baseColorKeys: (keyof BaseAccentColors)[] = [
         "neutral",
         "neutral-negative",
         "neutral-subtle",
@@ -153,13 +113,49 @@ export const filterBaseAccentColors = (
         "danger-subtle",
     ];
 
-    // Return the filtered base accent
-    return keys.reduce((acc, key) => {
-        if (key in baseColors && baseColors[key]) {
-            acc[key] = baseColors[key];
-        }
-        return acc;
-    }, {} as BaseAccentColors);
+    // Set a return object to avoid mutating the original object
+    const returnAccentColors: AccentColors = accentColors;
+
+    // For each base color key, grab the light and dark shade
+    baseColorKeys.forEach((key) => {
+        // Grab the shade number from the base color (e.g. 600 from neutral-600), which is the last part of the string
+        // Then convert it to a number
+        const lightBaseShade = parseInt(
+            baseColors[key].light.split("-").at(-1) as string,
+            10,
+        ) as ColorShadeKeys;
+        const darkBaseShade = parseInt(
+            baseColors[key].dark.split("-").at(-1) as string,
+            10,
+        ) as ColorShadeKeys;
+
+        // Adjust the shade for hover and active states
+        const { hoverShade: lightHoverShade, activeShade: lightActiveShade } =
+            adjustShade(lightBaseShade, darkenOnHover, "light");
+        const { hoverShade: darkHoverShade, activeShade: darkActiveShade } =
+            adjustShade(darkBaseShade, darkenOnHover, "dark");
+
+        // Set the accent color for the base state
+        returnAccentColors[key] = {
+            light: baseColors[key].light,
+            dark: baseColors[key].dark,
+        };
+
+        // Set the accent color for the hover state
+        returnAccentColors[`${key}-hover`] = {
+            light: `var(--${key.split("-")[0]}-${lightHoverShade})`,
+            dark: `var(--${key.split("-")[0]}-${darkHoverShade})`,
+        };
+
+        // Set the accent color for the active state
+        returnAccentColors[`${key}-active`] = {
+            light: `var(--${key.split("-")[0]}-${lightActiveShade})`,
+            dark: `var(--${key.split("-")[0]}-${darkActiveShade})`,
+        };
+    });
+
+    // Return the generated accent colors
+    return returnAccentColors;
 };
 
 export const accentColors: AccentColors = {

@@ -1,5 +1,5 @@
 import { ColorScale } from "./colors/types";
-import { PluginStyles, Styles } from "./styles/types";
+import { PluginStyles } from "./styles/types";
 
 export type ModeValue = {
     light: string;

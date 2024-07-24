@@ -310,6 +310,13 @@ export const baseTextColors: BaseTextColors = {
     },
 };
 
+/**
+ * Generate text colors based on the base text colors. They will generate the shade for the hover and active states.
+ * @param defaultTextColors The list of default text colors to use (so that any keys not provided will use the default values)
+ * @param textColors The list of base text colors to generate the text colors from
+ * @param darkenOnHover Whether to darken the shade on hover (in dark mode, it will lighten the shade)
+ * @returns The list of fully generated text colors
+ */
 export const generateTextColors = (
     defaultTextColors: TextColors,
     textColors: BaseTextColors,
@@ -320,52 +327,7 @@ export const generateTextColors = (
     const returnTextColors = defaultTextColors;
 
     // Get the keys of the base text colors
-    const baseTextColorKeys = Object.keys(textColors) as Array<
-        keyof BaseTextColors
-    >;
-
-    // For each text colors key, grab the light and dark shade
-    // Then adjust the shade for hover and active states
-    baseTextColorKeys.forEach((key) => {
-        const lightBaseShade = parseInt(
-            textColors[key].light.split("-").at(-1) as string,
-            10,
-        ) as ColorShadeKeys;
-
-        const darkBaseShade = parseInt(
-            textColors[key].dark.split("-").at(-1) as string,
-            10,
-        ) as ColorShadeKeys;
-
-        const { hoverShade: lightHoverShade, activeShade: lightActiveShade } =
-            adjustShade(lightBaseShade, darkenOnHover);
-        const { hoverShade: darkHoverShade, activeShade: darkActiveShade } =
-            adjustShade(darkBaseShade, darkenOnHover);
-
-        let adjustedKey = key;
-
-        if (key.match(/on-/)) {
-            adjustedKey = key.replace("on-", "") as keyof BaseTextColors;
-        }
-
-        returnTextColors[`${key}-hover`] = {
-            light: `var(--${adjustedKey}-${lightHoverShade})`,
-            dark: `var(--${adjustedKey}-${darkHoverShade})`,
-        };
-
-        returnTextColors[`${key}-active`] = {
-            light: `var(--${adjustedKey}-${lightActiveShade})`,
-            dark: `var(--${adjustedKey}-${darkActiveShade})`,
-        };
-    });
-
-    return returnTextColors;
-};
-
-export const filterBaseTextColors = (
-    textColors: TextColors,
-): BaseTextColors => {
-    const keys: (keyof BaseTextColors)[] = [
+    const baseTextColorKeys: (keyof BaseTextColors)[] = [
         "neutral",
         "on-neutral",
         "primary",
@@ -380,10 +342,48 @@ export const filterBaseTextColors = (
         "on-danger",
     ];
 
-    return keys.reduce((acc, key) => {
-        acc[key] = textColors[key];
-        return acc;
-    }, {} as TextColors);
+    // For each text colors key, grab the light and dark shade
+    // Then adjust the shade for hover and active states
+    baseTextColorKeys.forEach((key) => {
+        // Grab the shade number from the base color (e.g. 600 from neutral-600), which is the last part of the string
+        // Then convert it to a number
+        const lightBaseShade = parseInt(
+            textColors[key].light.split("-").at(-1) as string,
+            10,
+        ) as ColorShadeKeys;
+
+        const darkBaseShade = parseInt(
+            textColors[key].dark.split("-").at(-1) as string,
+            10,
+        ) as ColorShadeKeys;
+
+        // Adjust the shade for hover and active states
+        const { hoverShade: lightHoverShade, activeShade: lightActiveShade } =
+            adjustShade(lightBaseShade, darkenOnHover);
+        const { hoverShade: darkHoverShade, activeShade: darkActiveShade } =
+            adjustShade(darkBaseShade, darkenOnHover);
+
+        // Adjust the key if it is an "on-" key
+        let adjustedKey = key;
+
+        if (key.match(/on-/)) {
+            adjustedKey = key.replace("on-", "") as keyof BaseTextColors;
+        }
+
+        // Set the text colors for the hover state
+        returnTextColors[`${key}-hover`] = {
+            light: `var(--${adjustedKey}-${lightHoverShade})`,
+            dark: `var(--${adjustedKey}-${darkHoverShade})`,
+        };
+
+        // Set the text colors for the active state
+        returnTextColors[`${key}-active`] = {
+            light: `var(--${adjustedKey}-${lightActiveShade})`,
+            dark: `var(--${adjustedKey}-${darkActiveShade})`,
+        };
+    });
+
+    return returnTextColors;
 };
 
 export const textColorsPlugin: TextColorsPlugin = {

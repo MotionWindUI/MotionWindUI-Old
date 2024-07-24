@@ -17,20 +17,19 @@ import {
 } from "./styles/colorStyles/surface";
 import {
     ACCENT_CONSTANT,
+    accentColors,
     accentColorsPlugin,
     baseAccentColors,
-    filterBaseAccentColors,
     generateAccentColors,
 } from "./styles/colorStyles/accent";
 import {
     baseBorderColors,
     BORDER_CONSTANT,
+    borderColors,
     borderColorsPlugin,
-    filterBaseBorderColors,
     generateBorderColors,
 } from "./styles/colorStyles/border";
 import {
-    filterBaseTextColors,
     generateTextColors,
     TEXT_CONSTANT,
     textColors,
@@ -60,7 +59,6 @@ import {
     borderWidth,
     borderWidthPlugin,
 } from "./styles/spacingStyles/borderWidth";
-import { TextColors } from "./styles/colorStyles/types";
 
 const DEFAULT_THEME = "default";
 
@@ -137,6 +135,37 @@ const corePlugin = (config: MotionWindUIPluginConfig) => {
         danger: themeColors.danger,
     };
 
+    // Set the base style colors for the plugin (the colors that are used as the base for hover and active states)
+    const themeBaseAccentColors = deepmerge(
+        baseAccentColors,
+        userTheme.style?.accent ?? {},
+    );
+    const themeBaseBorderColors = deepmerge(
+        baseBorderColors,
+        userTheme.style?.border ?? {},
+    );
+    const themeBaseTextColors = deepmerge(
+        baseTextColors,
+        userTheme.style?.text ?? {},
+    );
+
+    // Generate all of the style colors for the main theme (based off of the base style colors and the user's overriden values)
+    const themeAccentColors = generateAccentColors(
+        accentColors,
+        themeBaseAccentColors,
+        userTheme.darkenOnHover ?? true,
+    );
+    const themeBorderColors = generateBorderColors(
+        borderColors,
+        themeBaseBorderColors,
+        userTheme.darkenOnHover ?? true,
+    );
+    const themeTextColors = generateTextColors(
+        textColors,
+        themeBaseTextColors,
+        userTheme.darkenOnHover ?? true,
+    );
+
     // Set up the default styles
     // This is done by merging the default style that MotionWindUI provides with the user's style (if present)
     // This is done for each style (background, surface, accent, border, text)
@@ -146,33 +175,23 @@ const corePlugin = (config: MotionWindUIPluginConfig) => {
     const defaultStyles: Styles = {
         background: backgroundColors,
         surface: surfaceColors,
-        accent: generateAccentColors(
-            deepmerge(baseAccentColors, userTheme.style?.accent || {}),
-            userTheme.darkenOnHover,
-        ),
-        border: generateBorderColors(
-            deepmerge(baseBorderColors, userTheme.style?.border || {}),
-            userTheme.darkenOnHover,
-        ),
-        text: generateTextColors(
-            textColors,
-            deepmerge(baseTextColors, userTheme.style?.text || {}),
-            userTheme.darkenOnHover,
-        ),
+        accent: themeAccentColors,
+        border: themeBorderColors,
+        text: themeTextColors,
         borderRadius: deepmerge(
             borderRadius,
-            userTheme.style?.borderRadius || {},
+            userTheme.style?.borderRadius ?? {},
         ),
-        borderWidth: deepmerge(borderWidth, userTheme.style?.borderWidth || {}),
-        opacity: deepmerge(opacity, userTheme.style?.opacity || {}),
-        fontSize: deepmerge(fontSize, userTheme.style?.fontSize || {}),
-        lineHeight: deepmerge(lineHeight, userTheme.style?.lineHeight || {}),
+        borderWidth: deepmerge(borderWidth, userTheme.style?.borderWidth ?? {}),
+        opacity: deepmerge(opacity, userTheme.style?.opacity ?? {}),
+        fontSize: deepmerge(fontSize, userTheme.style?.fontSize ?? {}),
+        lineHeight: deepmerge(lineHeight, userTheme.style?.lineHeight ?? {}),
     };
 
     // Merge the default base colors with the user's base
     const mergedBaseColors: BaseColors = deepmerge(
         defaultBaseColors,
-        userTheme.colors || {},
+        userTheme.colors ?? {},
     );
 
     // Generate the CSS variables for the color scales
@@ -212,115 +231,81 @@ const corePlugin = (config: MotionWindUIPluginConfig) => {
         {} as { [key: string]: Partial<ColorShades> },
     );
 
+    // Group the CSS variables for the plugin (the default theme and any user themes)
+    const baseCssVars = {};
+
+    baseCssVars[":root"] = {
+        ...colorStyles,
+    };
+
+    baseCssVars[`:root[data-theme="${DEFAULT_THEME}-light"]`] = {
+        ...generateVars(defaultStyles, "light"),
+        ...generateVarsWithoutMode(defaultStyles),
+    };
+
+    baseCssVars[`:root[data-theme="${DEFAULT_THEME}-dark"]`] = {
+        ...generateVars(defaultStyles, "dark"),
+        ...generateVarsWithoutMode(defaultStyles),
+    };
+
+    // Go through each user defined theme and generate the CSS variables for the theme
+    Object.keys(userThemes).forEach((themeName) => {
+        const themeConfig = userThemes[themeName];
+
+        const themeBaseColors = deepmerge(
+            mergedBaseColors,
+            themeConfig.colors ?? {},
+        );
+
+        const themeStyles = deepmerge(defaultStyles, themeConfig.style ?? {});
+
+        themeStyles.accent = generateAccentColors(
+            themeAccentColors,
+            deepmerge(themeBaseAccentColors, themeStyles.accent ?? {}),
+            themeConfig.darkenOnHover,
+        );
+        themeStyles.border = generateBorderColors(
+            themeBorderColors,
+            deepmerge(themeBaseBorderColors, themeStyles.border ?? {}),
+            themeConfig.darkenOnHover,
+        );
+        themeStyles.text = generateTextColors(
+            themeTextColors,
+            deepmerge(themeBaseTextColors, themeStyles.text ?? {}),
+            themeConfig.darkenOnHover,
+        );
+
+        const themeColorStyles: CSSColorVarScale = {
+            ...colorScaleToCssVars("neutral", themeBaseColors.neutral, false),
+            ...colorScaleToCssVars("primary", themeBaseColors.primary, false),
+            ...colorScaleToCssVars(
+                "secondary",
+                themeBaseColors.secondary,
+                false,
+            ),
+            ...colorScaleToCssVars("success", themeBaseColors.success, false),
+            ...colorScaleToCssVars("warning", themeBaseColors.warning, false),
+            ...colorScaleToCssVars("danger", themeBaseColors.danger, false),
+        };
+
+        baseCssVars[`:root[data-theme="${themeName}-light"]`] = {
+            ...generateVars(themeStyles, "light"),
+            ...themeColorStyles,
+            ...generateVarsWithoutMode(themeStyles),
+        };
+
+        baseCssVars[`:root[data-theme="${themeName}-dark"]`] = {
+            ...generateVars(themeStyles, "dark"),
+            ...themeColorStyles,
+            ...generateVarsWithoutMode(themeStyles),
+        };
+    });
+
     return plugin(
         ({ addBase }) => {
             // Add the base colors
             addBase({
-                // Add the base colors (neutral, primary, secondary, success, warning, danger)
-                [":root"]: {
-                    ...colorStyles,
-                },
-
-                // Add the default theme's light mode (:root[data-theme="default-light"])
-                [`:root[data-theme="${DEFAULT_THEME}-light"]`]: {
-                    ...generateVars(defaultStyles, "light"),
-                    ...generateVarsWithoutMode(defaultStyles),
-                },
-
-                // Add the default theme's dark mode (:root[data-theme="default-dark"])
-                [`:root[data-theme="${DEFAULT_THEME}-dark"]`]: {
-                    ...generateVars(defaultStyles, "dark"),
-                    ...generateVarsWithoutMode(defaultStyles),
-                },
-            });
-
-            // Go through each user defined theme and generate the CSS variables for each and add them to the base
-            Object.keys(userThemes).forEach((themeName) => {
-                // Get the theme configuration
-                const themeConfig = userThemes[themeName];
-
-                // Merge the base colors with the theme's colors
-                const themeBaseColors = deepmerge(
-                    mergedBaseColors,
-                    themeConfig.colors || {},
-                );
-                const themeStyles = {
-                    ...defaultStyles,
-                    ...themeConfig.style,
-                    accent: generateAccentColors(
-                        filterBaseAccentColors({
-                            ...defaultStyles.accent,
-                            ...themeConfig.style?.accent,
-                        }),
-                        userTheme.darkenOnHover !== undefined
-                            ? userTheme.darkenOnHover
-                            : true,
-                    ),
-                    border: generateBorderColors(
-                        filterBaseBorderColors({
-                            ...defaultStyles.border,
-                            ...themeConfig.style?.border,
-                        }),
-                        userTheme.darkenOnHover !== undefined
-                            ? userTheme.darkenOnHover
-                            : true,
-                    ),
-                    text: generateTextColors(
-                        textColors,
-                        filterBaseTextColors({
-                            ...defaultStyles.text,
-                            ...themeConfig.style?.text,
-                        } as TextColors),
-                        userTheme.darkenOnHover !== undefined
-                            ? userTheme.darkenOnHover
-                            : true,
-                    ),
-                };
-                const themeColorStyles: CSSColorVarScale = {
-                    ...colorScaleToCssVars(
-                        "neutral",
-                        themeBaseColors.neutral,
-                        false,
-                    ),
-                    ...colorScaleToCssVars(
-                        "primary",
-                        themeBaseColors.primary,
-                        false,
-                    ),
-                    ...colorScaleToCssVars(
-                        "secondary",
-                        themeBaseColors.secondary,
-                        false,
-                    ),
-                    ...colorScaleToCssVars(
-                        "success",
-                        themeBaseColors.success,
-                        false,
-                    ),
-                    ...colorScaleToCssVars(
-                        "warning",
-                        themeBaseColors.warning,
-                        false,
-                    ),
-                    ...colorScaleToCssVars(
-                        "danger",
-                        themeBaseColors.danger,
-                        false,
-                    ),
-                };
-
-                addBase({
-                    [`:root[data-theme="${themeName}-light"]`]: {
-                        ...generateVars(themeStyles, "light"),
-                        ...themeColorStyles,
-                        ...generateVarsWithoutMode(themeStyles),
-                    },
-                    [`:root[data-theme="${themeName}-dark"]`]: {
-                        ...generateVars(themeStyles, "dark"),
-                        ...themeColorStyles,
-                        ...generateVarsWithoutMode(themeStyles),
-                    },
-                });
+                ...baseCssVars,
             });
         },
         {

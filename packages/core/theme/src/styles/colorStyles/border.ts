@@ -156,7 +156,7 @@ export const borderColors: BorderColors = {
 
 export const baseBorderColors: BaseBorderColors = {
     neutral: {
-        light: "var(--neutral-600)",
+        light: "var(--neutral-700)",
         dark: "var(--neutral-300)",
     },
     "neutral-negative": {
@@ -207,64 +207,17 @@ export const baseBorderColors: BaseBorderColors = {
 
 /**
  * Generate border colors based on the base border colors
+ * @param borderColors The border colors to generate
  * @param baseBorderColors The base border colors to generate the border colors from
  * @param darkenOnHover Whether to darken the border colors on hover
  */
 export const generateBorderColors = (
+    borderColors: BorderColors,
     baseBorderColors: BaseBorderColors,
     darkenOnHover: boolean = true,
 ): BorderColors => {
-    // Set a return object to avoid mutating the original object
-    // Set the return object to the original object, so that we can modify existing props but leave others
-    const returnBorderColors = borderColors;
-
     // Get the keys of the baseBorderColors object
-    const baseBorderColorsKeys = Object.keys(baseBorderColors) as Array<
-        keyof BaseBorderColors
-    >;
-
-    // For each base border colors key, grab the light and dark shade
-    // Then adjust the shade for hover and active states
-    baseBorderColorsKeys.forEach((key) => {
-        const lightBaseShade = parseInt(
-            baseBorderColors[key].light.split("-").at(-1) as string,
-            10,
-        ) as ColorShadeKeys;
-
-        const darkBaseShade = parseInt(
-            baseBorderColors[key].dark.split("-").at(-1) as string,
-            10,
-        ) as ColorShadeKeys;
-
-        const { hoverShade: lightHoverShade, activeShade: lightActiveShade } =
-            adjustShade(lightBaseShade, darkenOnHover);
-        const { hoverShade: darkHoverShade, activeShade: darkActiveShade } =
-            adjustShade(darkBaseShade, darkenOnHover);
-
-        returnBorderColors[`${key}-hover`] = {
-            light: `var(--${key.split("-")[0]}-${lightHoverShade})`,
-            dark: `var(--${key.split("-")[0]}-${darkHoverShade})`,
-        };
-
-        returnBorderColors[`${key}-active`] = {
-            light: `var(--${key.split("-")[0]}-${lightActiveShade})`,
-            dark: `var(--${key.split("-")[0]}-${darkActiveShade})`,
-        };
-    });
-
-    // Return the modified object
-    return returnBorderColors;
-};
-
-/**
- * Filter the base border colors from the border colors
- * @param borderColors The border colors to filter
- * @return Returns the base border colors from the list of border colors
- */
-export const filterBaseBorderColors = (
-    borderColors: Partial<BorderColors>,
-): BaseBorderColors => {
-    const keys: (keyof BaseBorderColors)[] = [
+    const baseBorderColorsKeys: (keyof BaseBorderColors)[] = [
         "neutral",
         "neutral-negative",
         "primary",
@@ -279,12 +232,43 @@ export const filterBaseBorderColors = (
         "danger-negative",
     ];
 
-    return keys.reduce((acc, key) => {
-        if (key in borderColors && borderColors[key]) {
-            acc[key] = borderColors[key];
-        }
-        return acc;
-    }, {} as BaseBorderColors);
+    // Set a return object to avoid mutating the original object
+    // Set the return object to the original object, so that we can modify existing props but leave others
+    const returnBorderColors = borderColors;
+
+    // For each base border colors key, grab the light and dark shade
+    // Then adjust the shade for hover and active states
+    baseBorderColorsKeys.forEach((key) => {
+        // Grab the shade number from the base color (e.g. 600 from neutral-600), which is the last part of the string
+        // Then convert it to a number
+        const lightBaseShade = parseInt(
+            baseBorderColors[key].light.split("-").at(-1) as string,
+            10,
+        ) as ColorShadeKeys;
+
+        const darkBaseShade = parseInt(
+            baseBorderColors[key].dark.split("-").at(-1) as string,
+            10,
+        ) as ColorShadeKeys;
+
+        const { hoverShade: lightHoverShade, activeShade: lightActiveShade } =
+            adjustShade(lightBaseShade, darkenOnHover, "light");
+        const { hoverShade: darkHoverShade, activeShade: darkActiveShade } =
+            adjustShade(darkBaseShade, darkenOnHover, "dark");
+
+        returnBorderColors[`${key}-hover`] = {
+            light: `var(--${key.split("-")[0]}-${lightHoverShade})`,
+            dark: `var(--${key.split("-")[0]}-${darkHoverShade})`,
+        };
+
+        returnBorderColors[`${key}-active`] = {
+            light: `var(--${key.split("-")[0]}-${lightActiveShade})`,
+            dark: `var(--${key.split("-")[0]}-${darkActiveShade})`,
+        };
+    });
+
+    // Return the modified object
+    return returnBorderColors;
 };
 
 export const borderColorsPlugin: BorderColorsPlugin = {

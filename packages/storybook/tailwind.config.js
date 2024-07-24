@@ -22,21 +22,22 @@ module.exports = {
         },
         themes: {
             "custom": {
-                darkenOnHover: true,
-                baseColors: {
+                darkenOnHover: false,
+                colors: {
                     primary: {
-                        50: "#f9f8ff",
-                        100: "#f3f0ff",
-                        200: "#e6dbff",
-                        300: "#d9c6ff",
-                        400: "#bf99ff",
-                        500: "#a56cff",
-                        600: "#954fc2",
-                        700: "#7d4099",
-                        800: "#63336f",
-                        900: "#522b57"
+                        50: '#fbf5ef',
+                        100: '#f3e1d2',
+                        200: '#e6c2a1',
+                        300: '#d99e70',
+                        400: '#d0824e',
+                        500: '#c6653a',
+                        600: '#af4b30',
+                        700: '#92372b',
+                        800: '#782c28',
+                        900: '#632724',
+                        950: '#381110',
                     }
-                }
+                },
             }
         }
     })],

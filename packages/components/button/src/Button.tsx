@@ -1,13 +1,19 @@
-import { buttonStyles } from "@motionwindui/theme/src/components/button";
-import React, { ComponentPropsWithoutRef } from "react";
+import {
+    ButtonContext,
+    composeRenderProps,
+    Button as ReactAriaButton,
+    ButtonProps as ReactAriaButtonProps,
+    useContextProps,
+} from "react-aria-components";
+import {
+    ButtonStyles,
+    buttonStyles,
+} from "@motionwindui/theme/src/components/button";
+import React from "react";
 import { VariantProps } from "class-variance-authority";
 import { clsxMerge } from "@motionwindui/theme/src/utils/clsxMerge";
 
-type ButtonElementProps = ComponentPropsWithoutRef<"button">;
-
-export interface ButtonProps
-    extends VariantProps<typeof buttonStyles>,
-        Omit<ButtonElementProps, "color"> {
+export interface ButtonProps extends ReactAriaButtonProps {
     /** The color/intentions of the button */
     color?:
         | "neutral"
@@ -36,39 +42,56 @@ export interface ButtonProps
     isInGroup?: boolean;
 
     /** Is disabled */
-    disabled?: boolean;
+    isDisabled?: boolean;
+
+    /** Whether or not to disable animations */
+    animateDisable?: boolean;
+
+    /** React children */
+    children?: React.ReactNode;
 }
 
-function Button({
-    color = "neutral",
-    variant = "solid",
-    size = "md",
-    radius = "md",
-    disabled = false,
-    startContent,
-    endContent,
-    children,
-    ...props
-}: ButtonProps) {
-    return (
-        <button
-            className={clsxMerge(
-                buttonStyles({
-                    color,
-                    variant,
-                    size,
-                    isInGroup: false,
-                    radius,
-                }),
-            )}
-            disabled={disabled}
-            {...props}
-        >
-            {startContent}
-            {children}
-            {endContent}
-        </button>
-    );
-}
+const Button = React.forwardRef(
+    (props: ButtonProps, ref: React.ForwardedRef<HTMLButtonElement>) => {
+        const {
+            color = "neutral",
+            variant = "solid",
+            size = "md",
+            radius = "md",
+            startContent,
+            endContent,
+            isInGroup,
+            animateDisable,
+            children,
+            className,
+        } = props;
+
+        [props, ref] = useContextProps(props, ref, ButtonContext);
+
+        return (
+            <ReactAriaButton
+                ref={ref}
+                className={composeRenderProps(
+                    className,
+                    (className, renderProps) =>
+                        buttonStyles({
+                            ...renderProps,
+                            variant,
+                            color,
+                            size,
+                            radius,
+                            isInGroup,
+                            className,
+                        }),
+                )}
+                {...props}
+            >
+                {startContent}
+                {children}
+                {endContent}
+            </ReactAriaButton>
+        );
+    },
+);
 
 export default Button;

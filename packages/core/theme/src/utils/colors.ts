@@ -97,6 +97,7 @@ export const colorScaleToCssVars = (
 export const adjustShade = (
     shade: ColorShadeKeys,
     darkenOnHover: boolean,
+    mode: "light" | "dark" = "light",
     allShades: ColorShadesList = DEFAULT_COLOR_SHADES,
 ) => {
     const shadeIndex = allShades.indexOf(shade);
@@ -105,12 +106,26 @@ export const adjustShade = (
     let hoverShade: ColorShadeKeys;
     let activeShade: ColorShadeKeys;
 
-    if (darkenOnHover) {
-        hoverShade = allShades[Math.min(shadeIndex + 1, allShades.length - 1)];
-        activeShade = allShades[Math.min(shadeIndex + 2, allShades.length - 1)];
+    if (mode === "light") {
+        if (darkenOnHover) {
+            hoverShade =
+                allShades[Math.min(shadeIndex + 1, allShades.length - 1)];
+            activeShade =
+                allShades[Math.min(shadeIndex + 2, allShades.length - 1)];
+        } else {
+            hoverShade = allShades[Math.max(shadeIndex - 1, 0)];
+            activeShade = allShades[Math.max(shadeIndex - 2, 0)];
+        }
     } else {
-        hoverShade = allShades[Math.max(shadeIndex - 1, 0)];
-        activeShade = allShades[Math.max(shadeIndex - 2, 0)];
+        if (darkenOnHover) {
+            hoverShade = allShades[Math.max(shadeIndex - 1, 0)];
+            activeShade = allShades[Math.max(shadeIndex - 2, 0)];
+        } else {
+            hoverShade =
+                allShades[Math.min(shadeIndex + 1, allShades.length - 1)];
+            activeShade =
+                allShades[Math.min(shadeIndex + 2, allShades.length - 1)];
+        }
     }
 
     return {
