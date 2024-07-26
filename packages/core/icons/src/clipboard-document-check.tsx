@@ -3,16 +3,12 @@ import { ClipboardDocumentCheckIcon as IconOutline } from "@heroicons/react/24/o
 import { IconSvgProps } from "./types";
 
 export type ClipboardDocumentCheckIconProps = IconSvgProps & {
-    filled?: boolean;
+  filled?: boolean;
 };
 
 export const ClipboardDocumentCheckIcon = ({
-    filled = false,
-    color = "currentColor",
-    ...props
+  filled = false,
+  color = "currentColor",
+  ...props
 }: ClipboardDocumentCheckIconProps) =>
-    filled ? (
-        <IconFilled color={color} {...props} />
-    ) : (
-        <IconOutline color={color} {...props} />
-    );
+  filled ? <IconFilled color={color} {...props} /> : <IconOutline color={color} {...props} />;

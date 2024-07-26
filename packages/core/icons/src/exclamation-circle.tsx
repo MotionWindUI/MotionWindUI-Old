@@ -3,16 +3,12 @@ import { ExclamationCircleIcon as IconOutline } from "@heroicons/react/24/outlin
 import { IconSvgProps } from "./types";
 
 export type ExclamationCircleIconProps = IconSvgProps & {
-    filled?: boolean;
+  filled?: boolean;
 };
 
 export const ExclamationCircleIcon = ({
-    filled = false,
-    color = "currentColor",
-    ...props
+  filled = false,
+  color = "currentColor",
+  ...props
 }: ExclamationCircleIconProps) =>
-    filled ? (
-        <IconFilled color={color} {...props} />
-    ) : (
-        <IconOutline color={color} {...props} />
-    );
+  filled ? <IconFilled color={color} {...props} /> : <IconOutline color={color} {...props} />;

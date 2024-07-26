@@ -7,3 +7,5 @@ dist/
 # Turbo
 .turbo/
 *storybook.log
+
+dependency-graph.png

@@ -3,16 +3,12 @@ import { MagnifyingGlassCircleIcon as IconOutline } from "@heroicons/react/24/ou
 import { IconSvgProps } from "./types";
 
 export type MagnifyingGlassCircleIconProps = IconSvgProps & {
-    filled?: boolean;
+  filled?: boolean;
 };
 
 export const MagnifyingGlassCircleIcon = ({
-    filled = false,
-    color = "currentColor",
-    ...props
+  filled = false,
+  color = "currentColor",
+  ...props
 }: MagnifyingGlassCircleIconProps) =>
-    filled ? (
-        <IconFilled color={color} {...props} />
-    ) : (
-        <IconOutline color={color} {...props} />
-    );
+  filled ? <IconFilled color={color} {...props} /> : <IconOutline color={color} {...props} />;

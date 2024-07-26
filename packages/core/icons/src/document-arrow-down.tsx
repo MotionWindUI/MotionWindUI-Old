@@ -3,16 +3,12 @@ import { DocumentArrowDownIcon as IconOutline } from "@heroicons/react/24/outlin
 import { IconSvgProps } from "./types";
 
 export type DocumentArrowDownIconProps = IconSvgProps & {
-    filled?: boolean;
+  filled?: boolean;
 };
 
 export const DocumentArrowDownIcon = ({
-    filled = false,
-    color = "currentColor",
-    ...props
+  filled = false,
+  color = "currentColor",
+  ...props
 }: DocumentArrowDownIconProps) =>
-    filled ? (
-        <IconFilled color={color} {...props} />
-    ) : (
-        <IconOutline color={color} {...props} />
-    );
+  filled ? <IconFilled color={color} {...props} /> : <IconOutline color={color} {...props} />;

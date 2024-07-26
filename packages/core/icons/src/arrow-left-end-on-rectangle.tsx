@@ -3,16 +3,12 @@ import { ArrowLeftEndOnRectangleIcon as IconOutline } from "@heroicons/react/24/
 import { IconSvgProps } from "./types";
 
 export type ArrowLeftEndOnRectangleIconProps = IconSvgProps & {
-    filled?: boolean;
+  filled?: boolean;
 };
 
 export const ArrowLeftEndOnRectangleIcon = ({
-    filled = false,
-    color = "currentColor",
-    ...props
+  filled = false,
+  color = "currentColor",
+  ...props
 }: ArrowLeftEndOnRectangleIconProps) =>
-    filled ? (
-        <IconFilled color={color} {...props} />
-    ) : (
-        <IconOutline color={color} {...props} />
-    );
+  filled ? <IconFilled color={color} {...props} /> : <IconOutline color={color} {...props} />;

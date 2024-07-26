@@ -3,16 +3,12 @@ import { ChevronDoubleLeftIcon as IconOutline } from "@heroicons/react/24/outlin
 import { IconSvgProps } from "./types";
 
 export type ChevronDoubleLeftIconProps = IconSvgProps & {
-    filled?: boolean;
+  filled?: boolean;
 };
 
 export const ChevronDoubleLeftIcon = ({
-    filled = false,
-    color = "currentColor",
-    ...props
+  filled = false,
+  color = "currentColor",
+  ...props
 }: ChevronDoubleLeftIconProps) =>
-    filled ? (
-        <IconFilled color={color} {...props} />
-    ) : (
-        <IconOutline color={color} {...props} />
-    );
+  filled ? <IconFilled color={color} {...props} /> : <IconOutline color={color} {...props} />;

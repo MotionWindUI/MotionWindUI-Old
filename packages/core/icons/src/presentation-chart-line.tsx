@@ -3,16 +3,12 @@ import { PresentationChartLineIcon as IconOutline } from "@heroicons/react/24/ou
 import { IconSvgProps } from "./types";
 
 export type PresentationChartLineIconProps = IconSvgProps & {
-    filled?: boolean;
+  filled?: boolean;
 };
 
 export const PresentationChartLineIcon = ({
-    filled = false,
-    color = "currentColor",
-    ...props
+  filled = false,
+  color = "currentColor",
+  ...props
 }: PresentationChartLineIconProps) =>
-    filled ? (
-        <IconFilled color={color} {...props} />
-    ) : (
-        <IconOutline color={color} {...props} />
-    );
+  filled ? <IconFilled color={color} {...props} /> : <IconOutline color={color} {...props} />;

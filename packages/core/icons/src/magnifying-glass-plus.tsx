@@ -3,16 +3,12 @@ import { MagnifyingGlassPlusIcon as IconOutline } from "@heroicons/react/24/outl
 import { IconSvgProps } from "./types";
 
 export type MagnifyingGlassPlusIconProps = IconSvgProps & {
-    filled?: boolean;
+  filled?: boolean;
 };
 
 export const MagnifyingGlassPlusIcon = ({
-    filled = false,
-    color = "currentColor",
-    ...props
+  filled = false,
+  color = "currentColor",
+  ...props
 }: MagnifyingGlassPlusIconProps) =>
-    filled ? (
-        <IconFilled color={color} {...props} />
-    ) : (
-        <IconOutline color={color} {...props} />
-    );
+  filled ? <IconFilled color={color} {...props} /> : <IconOutline color={color} {...props} />;

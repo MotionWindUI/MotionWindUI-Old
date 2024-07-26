@@ -3,16 +3,12 @@ import { SpeakerXMarkIcon as IconOutline } from "@heroicons/react/24/outline";
 import { IconSvgProps } from "./types";
 
 export type SpeakerXMarkIconProps = IconSvgProps & {
-    filled?: boolean;
+  filled?: boolean;
 };
 
 export const SpeakerXMarkIcon = ({
-    filled = false,
-    color = "currentColor",
-    ...props
+  filled = false,
+  color = "currentColor",
+  ...props
 }: SpeakerXMarkIconProps) =>
-    filled ? (
-        <IconFilled color={color} {...props} />
-    ) : (
-        <IconOutline color={color} {...props} />
-    );
+  filled ? <IconFilled color={color} {...props} /> : <IconOutline color={color} {...props} />;

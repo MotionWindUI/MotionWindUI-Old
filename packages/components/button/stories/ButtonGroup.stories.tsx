@@ -5,8 +5,8 @@ import IconWrapper from "../../../storybook/.storybook/IconWrapper";
 import { ChevronDownIcon } from "../../../core/icons/src";
 
 const meta = {
-    title: "Components/Button Group",
-    component: ButtonGroup,
+  title: "Components/Button Group",
+  component: ButtonGroup,
 } satisfies Meta<typeof ButtonGroup>;
 
 export default meta;
@@ -14,75 +14,82 @@ export default meta;
 type Story = StoryObj<typeof ButtonGroup>;
 
 const StoryTemplate: Story = {
-    argTypes: {
-        color: {
-            options: [
-                "neutral",
-                "primary",
-                "secondary",
-                "success",
-                "warning",
-                "danger",
-            ],
-            control: { type: "select" },
-        },
-        variant: {
-            options: ["solid", "faded", "bordered", "ghost", "light"],
-            control: { type: "select" },
-        },
-        size: {
-            options: ["sm", "md", "lg"],
-            control: { type: "select" },
-        },
-        radius: {
-            options: ["none", "sm", "md", "lg", "full"],
-            control: { type: "select" },
-        },
-        isDisabled: {
-            control: { type: "boolean" },
-        },
-        shadow: {
-            control: { type: "boolean" },
-        },
+  argTypes: {
+    color: {
+      options: ["neutral", "primary", "secondary", "success", "warning", "danger"],
+      control: { type: "select" },
+      description: "The color of the button group.",
     },
-    render: ({ ...args }) => {
-        return (
-            <ButtonGroup {...args}>
-                <Button>Cut</Button>
-                <Button>Copy</Button>
-                <Button>Paste</Button>
-            </ButtonGroup>
-        );
+    variant: {
+      options: ["solid", "faded", "bordered", "ghost", "light"],
+      control: { type: "select" },
+      description: "The variation style of the button group.",
     },
+    size: {
+      options: ["sm", "md", "lg"],
+      control: { type: "select" },
+      description: "The size of the button group.",
+    },
+    radius: {
+      options: ["none", "sm", "md", "lg", "full"],
+      control: { type: "select" },
+      description: "The border radius of the button group.",
+    },
+    isDisabled: {
+      control: { type: "boolean" },
+      description: "Whether or not this button is disabled.",
+    },
+    shadow: {
+      control: { type: "boolean" },
+    },
+  },
+  args: {
+    color: "neutral",
+    variant: "solid",
+    size: "md",
+    radius: "md",
+    isDisabled: false,
+  },
+  render: ({ ...args }) => {
+    return (
+      <ButtonGroup {...args}>
+        <Button>Cut</Button>
+        <Button>Copy</Button>
+        <Button>Paste</Button>
+      </ButtonGroup>
+    );
+  },
 };
 
 export const Default: Story = StoryTemplate;
 
 export const DifferentStyles: Story = {
-    ...StoryTemplate,
-    render: ({ ...args }) => {
-        return (
-            <ButtonGroup {...args}>
-                <Button>One</Button>
-                <Button>Two</Button>
-                <Button variant="bordered">Three</Button>
-                <Button>Four</Button>
-            </ButtonGroup>
-        );
-    },
+  ...StoryTemplate,
+  render: ({ ...args }) => {
+    return (
+      <ButtonGroup {...args}>
+        <Button>One</Button>
+        <Button>Two</Button>
+        <Button variant="bordered">Three</Button>
+        <Button>Four</Button>
+      </ButtonGroup>
+    );
+  },
 };
 
 export const WithIconOnly: Story = {
-    ...StoryTemplate,
-    render: ({ ...args }) => {
-        return (
-            <ButtonGroup {...args}>
-                <Button>Action</Button>
-                <Button
-                    isIconOnly
-                    startContent={<IconWrapper icon={ChevronDownIcon} />}
-                />
-            </ButtonGroup>
-        );
+  ...StoryTemplate,
+  parameters: {
+    controls: {
+      exclude: /children/g,
     },
+  },
+  render: ({ ...args }) => {
+    return (
+      <ButtonGroup {...args}>
+        <Button>Action</Button>
+        <Button isIconOnly startContent={<IconWrapper icon={ChevronDownIcon} />} />
+      </ButtonGroup>
+    );
+  },
 };

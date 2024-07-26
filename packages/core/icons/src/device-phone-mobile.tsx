@@ -3,16 +3,12 @@ import { DevicePhoneMobileIcon as IconOutline } from "@heroicons/react/24/outlin
 import { IconSvgProps } from "./types";
 
 export type DevicePhoneMobileIconProps = IconSvgProps & {
-    filled?: boolean;
+  filled?: boolean;
 };
 
 export const DevicePhoneMobileIcon = ({
-    filled = false,
-    color = "currentColor",
-    ...props
+  filled = false,
+  color = "currentColor",
+  ...props
 }: DevicePhoneMobileIconProps) =>
-    filled ? (
-        <IconFilled color={color} {...props} />
-    ) : (
-        <IconOutline color={color} {...props} />
-    );
+  filled ? <IconFilled color={color} {...props} /> : <IconOutline color={color} {...props} />;

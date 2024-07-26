@@ -3,16 +3,12 @@ import { BookmarkSquareIcon as IconOutline } from "@heroicons/react/24/outline";
 import { IconSvgProps } from "./types";
 
 export type BookmarkSquareIconProps = IconSvgProps & {
-    filled?: boolean;
+  filled?: boolean;
 };
 
 export const BookmarkSquareIcon = ({
-    filled = false,
-    color = "currentColor",
-    ...props
+  filled = false,
+  color = "currentColor",
+  ...props
 }: BookmarkSquareIconProps) =>
-    filled ? (
-        <IconFilled color={color} {...props} />
-    ) : (
-        <IconOutline color={color} {...props} />
-    );
+  filled ? <IconFilled color={color} {...props} /> : <IconOutline color={color} {...props} />;

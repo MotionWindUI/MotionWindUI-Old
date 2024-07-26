@@ -3,16 +3,8 @@ import { CakeIcon as IconOutline } from "@heroicons/react/24/outline";
 import { IconSvgProps } from "./types";
 
 export type CakeIconProps = IconSvgProps & {
-    filled?: boolean;
+  filled?: boolean;
 };
 
-export const CakeIcon = ({
-    filled = false,
-    color = "currentColor",
-    ...props
-}: CakeIconProps) =>
-    filled ? (
-        <IconFilled color={color} {...props} />
-    ) : (
-        <IconOutline color={color} {...props} />
-    );
+export const CakeIcon = ({ filled = false, color = "currentColor", ...props }: CakeIconProps) =>
+  filled ? <IconFilled color={color} {...props} /> : <IconOutline color={color} {...props} />;

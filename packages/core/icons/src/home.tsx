@@ -3,16 +3,8 @@ import { HomeIcon as IconOutline } from "@heroicons/react/24/outline";
 import { IconSvgProps } from "./types";
 
 export type HomeIconProps = IconSvgProps & {
-    filled?: boolean;
+  filled?: boolean;
 };
 
-export const HomeIcon = ({
-    filled = false,
-    color = "currentColor",
-    ...props
-}: HomeIconProps) =>
-    filled ? (
-        <IconFilled color={color} {...props} />
-    ) : (
-        <IconOutline color={color} {...props} />
-    );
+export const HomeIcon = ({ filled = false, color = "currentColor", ...props }: HomeIconProps) =>
+  filled ? <IconFilled color={color} {...props} /> : <IconOutline color={color} {...props} />;

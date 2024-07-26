@@ -5,12 +5,10 @@
  * :heart: NextUI
  */
 export const collapsedBorderStyle = {
-    neutral: ["[&+.border.border-neutral]:ms-[calc(theme(borderWidth.md)*-1)]"],
-    primary: ["[&+.border.border-primary]:ms-[calc(theme(borderWidth.md)*-1)]"],
-    secondary: [
-        "[&+.border.border-secondary]:ms-[calc(theme(borderWidth.md)*-1)]",
-    ],
-    success: ["[&+.border.border-success]:ms-[calc(theme(borderWidth.md)*-1)]"],
-    warning: ["[&+.border.border-warning]:ms-[calc(theme(borderWidth.md)*-1)]"],
-    danger: ["[&+.border.border-danger]:ms-[calc(theme(borderWidth.md)*-1)]"],
+  neutral: ["[&+.border.border-neutral]:ms-[calc(theme(borderWidth.md)*-1)]"],
+  primary: ["[&+.border.border-primary]:ms-[calc(theme(borderWidth.md)*-1)]"],
+  secondary: ["[&+.border.border-secondary]:ms-[calc(theme(borderWidth.md)*-1)]"],
+  success: ["[&+.border.border-success]:ms-[calc(theme(borderWidth.md)*-1)]"],
+  warning: ["[&+.border.border-warning]:ms-[calc(theme(borderWidth.md)*-1)]"],
+  danger: ["[&+.border.border-danger]:ms-[calc(theme(borderWidth.md)*-1)]"],
 };

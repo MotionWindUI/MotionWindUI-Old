@@ -3,16 +3,12 @@ import { ShieldExclamationIcon as IconOutline } from "@heroicons/react/24/outlin
 import { IconSvgProps } from "./types";
 
 export type ShieldExclamationIconProps = IconSvgProps & {
-    filled?: boolean;
+  filled?: boolean;
 };
 
 export const ShieldExclamationIcon = ({
-    filled = false,
-    color = "currentColor",
-    ...props
+  filled = false,
+  color = "currentColor",
+  ...props
 }: ShieldExclamationIconProps) =>
-    filled ? (
-        <IconFilled color={color} {...props} />
-    ) : (
-        <IconOutline color={color} {...props} />
-    );
+  filled ? <IconFilled color={color} {...props} /> : <IconOutline color={color} {...props} />;

@@ -14,9 +14,7 @@ import { ThemeColors } from "./types";
  *
  * Currently, the design tokens are loaded from the motionwindui-tokens.yaml file.
  */
-const tokens = loadYaml(
-    path.resolve(__dirname, "../../design-tokens/motionwindui-tokens.yaml"),
-);
+const tokens = loadYaml(path.resolve(__dirname, "../../design-tokens/motionwindui-tokens.yaml"));
 
 /**
  * Load in the default Motion Wind UI color scales.
@@ -32,10 +30,10 @@ const danger = dangerScale(tokens);
  * Export the default Motion Wind UI color scales.
  */
 export const themeColors: ThemeColors = {
-    neutral: neutral,
-    primary: primary,
-    secondary: secondary,
-    success: success,
-    warning: warning,
-    danger: danger,
+  neutral: neutral,
+  primary: primary,
+  secondary: secondary,
+  success: success,
+  warning: warning,
+  danger: danger,
 };

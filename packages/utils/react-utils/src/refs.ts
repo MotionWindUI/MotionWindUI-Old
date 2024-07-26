@@ -4,10 +4,7 @@ import React from "react";
  * ReactRef is a type that can be used to define a React ref.
  * It can be a RefObject, MutableRefObject, or a Ref.
  */
-export type ReactRef<T> =
-    | React.RefObject<T>
-    | React.MutableRefObject<T>
-    | React.Ref<T>;
+export type ReactRef<T> = React.RefObject<T> | React.MutableRefObject<T> | React.Ref<T>;
 
 /**
  * Assigns a value to a ref.
@@ -24,19 +21,19 @@ export type ReactRef<T> =
  * ```
  */
 export function assignRef<T>(ref: ReactRef<T> | undefined, value: T) {
-    if (ref == null) {
-        return;
-    }
+  if (ref == null) {
+    return;
+  }
 
-    if (typeof ref === "function") {
-        ref(value);
-    } else {
-        try {
-            (ref as any).current = value;
-        } catch (error) {
-            throw new Error(`Cannot assign value "${value}" to ref "${ref}"`);
-        }
+  if (typeof ref === "function") {
+    ref(value);
+  } else {
+    try {
+      (ref as any).current = value;
+    } catch (error) {
+      throw new Error(`Cannot assign value "${value}" to ref "${ref}"`);
     }
+  }
 }
 
 /**
@@ -52,10 +49,8 @@ export function assignRef<T>(ref: ReactRef<T> | undefined, value: T) {
  * const mergedRef = mergeRefs(ref1, ref2);
  * ```
  */
-export function mergeRefs<T>(
-    ...refs: (ReactRef<T> | undefined)[]
-): ReactRef<T> {
-    return (node: T | null) => {
-        refs.forEach((ref) => assignRef(ref, node));
-    };
+export function mergeRefs<T>(...refs: (ReactRef<T> | undefined)[]): ReactRef<T> {
+  return (node: T | null) => {
+    refs.forEach((ref) => assignRef(ref, node));
+  };
 }

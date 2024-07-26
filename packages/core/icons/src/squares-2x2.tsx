@@ -3,16 +3,12 @@ import { Squares2X2Icon as IconOutline } from "@heroicons/react/24/outline";
 import { IconSvgProps } from "./types";
 
 export type Squares2X2IconProps = IconSvgProps & {
-    filled?: boolean;
+  filled?: boolean;
 };
 
 export const Squares2X2Icon = ({
-    filled = false,
-    color = "currentColor",
-    ...props
+  filled = false,
+  color = "currentColor",
+  ...props
 }: Squares2X2IconProps) =>
-    filled ? (
-        <IconFilled color={color} {...props} />
-    ) : (
-        <IconOutline color={color} {...props} />
-    );
+  filled ? <IconFilled color={color} {...props} /> : <IconOutline color={color} {...props} />;

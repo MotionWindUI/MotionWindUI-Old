@@ -3,16 +3,8 @@ import { HeartIcon as IconOutline } from "@heroicons/react/24/outline";
 import { IconSvgProps } from "./types";
 
 export type HeartIconProps = IconSvgProps & {
-    filled?: boolean;
+  filled?: boolean;
 };
 
-export const HeartIcon = ({
-    filled = false,
-    color = "currentColor",
-    ...props
-}: HeartIconProps) =>
-    filled ? (
-        <IconFilled color={color} {...props} />
-    ) : (
-        <IconOutline color={color} {...props} />
-    );
+export const HeartIcon = ({ filled = false, color = "currentColor", ...props }: HeartIconProps) =>
+  filled ? <IconFilled color={color} {...props} /> : <IconOutline color={color} {...props} />;

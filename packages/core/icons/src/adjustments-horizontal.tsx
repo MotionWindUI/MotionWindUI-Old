@@ -3,16 +3,12 @@ import { AdjustmentsHorizontalIcon as IconOutline } from "@heroicons/react/24/ou
 import { IconSvgProps } from "./types";
 
 export type AdjustmentsHorizontalIconProps = IconSvgProps & {
-    filled?: boolean;
+  filled?: boolean;
 };
 
 export const AdjustmentsHorizontalIcon = ({
-    filled = false,
-    color = "currentColor",
-    ...props
+  filled = false,
+  color = "currentColor",
+  ...props
 }: AdjustmentsHorizontalIconProps) =>
-    filled ? (
-        <IconFilled color={color} {...props} />
-    ) : (
-        <IconOutline color={color} {...props} />
-    );
+  filled ? <IconFilled color={color} {...props} /> : <IconOutline color={color} {...props} />;

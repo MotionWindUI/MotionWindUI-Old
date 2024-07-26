@@ -3,16 +3,12 @@ import { PhoneArrowDownLeftIcon as IconOutline } from "@heroicons/react/24/outli
 import { IconSvgProps } from "./types";
 
 export type PhoneArrowDownLeftIconProps = IconSvgProps & {
-    filled?: boolean;
+  filled?: boolean;
 };
 
 export const PhoneArrowDownLeftIcon = ({
-    filled = false,
-    color = "currentColor",
-    ...props
+  filled = false,
+  color = "currentColor",
+  ...props
 }: PhoneArrowDownLeftIconProps) =>
-    filled ? (
-        <IconFilled color={color} {...props} />
-    ) : (
-        <IconOutline color={color} {...props} />
-    );
+  filled ? <IconFilled color={color} {...props} /> : <IconOutline color={color} {...props} />;

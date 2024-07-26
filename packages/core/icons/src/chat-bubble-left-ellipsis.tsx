@@ -3,16 +3,12 @@ import { ChatBubbleLeftEllipsisIcon as IconOutline } from "@heroicons/react/24/o
 import { IconSvgProps } from "./types";
 
 export type ChatBubbleLeftEllipsisIconProps = IconSvgProps & {
-    filled?: boolean;
+  filled?: boolean;
 };
 
 export const ChatBubbleLeftEllipsisIcon = ({
-    filled = false,
-    color = "currentColor",
-    ...props
+  filled = false,
+  color = "currentColor",
+  ...props
 }: ChatBubbleLeftEllipsisIconProps) =>
-    filled ? (
-        <IconFilled color={color} {...props} />
-    ) : (
-        <IconOutline color={color} {...props} />
-    );
+  filled ? <IconFilled color={color} {...props} /> : <IconOutline color={color} {...props} />;

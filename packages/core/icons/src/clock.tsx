@@ -3,16 +3,8 @@ import { ClockIcon as IconOutline } from "@heroicons/react/24/outline";
 import { IconSvgProps } from "./types";
 
 export type ClockIconProps = IconSvgProps & {
-    filled?: boolean;
+  filled?: boolean;
 };
 
-export const ClockIcon = ({
-    filled = false,
-    color = "currentColor",
-    ...props
-}: ClockIconProps) =>
-    filled ? (
-        <IconFilled color={color} {...props} />
-    ) : (
-        <IconOutline color={color} {...props} />
-    );
+export const ClockIcon = ({ filled = false, color = "currentColor", ...props }: ClockIconProps) =>
+  filled ? <IconFilled color={color} {...props} /> : <IconOutline color={color} {...props} />;

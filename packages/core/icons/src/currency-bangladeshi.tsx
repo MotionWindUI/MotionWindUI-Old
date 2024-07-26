@@ -3,16 +3,12 @@ import { CurrencyBangladeshiIcon as IconOutline } from "@heroicons/react/24/outl
 import { IconSvgProps } from "./types";
 
 export type CurrencyBangladeshiIconProps = IconSvgProps & {
-    filled?: boolean;
+  filled?: boolean;
 };
 
 export const CurrencyBangladeshiIcon = ({
-    filled = false,
-    color = "currentColor",
-    ...props
+  filled = false,
+  color = "currentColor",
+  ...props
 }: CurrencyBangladeshiIconProps) =>
-    filled ? (
-        <IconFilled color={color} {...props} />
-    ) : (
-        <IconOutline color={color} {...props} />
-    );
+  filled ? <IconFilled color={color} {...props} /> : <IconOutline color={color} {...props} />;

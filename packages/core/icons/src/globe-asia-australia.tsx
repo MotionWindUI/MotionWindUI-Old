@@ -3,16 +3,12 @@ import { GlobeAsiaAustraliaIcon as IconOutline } from "@heroicons/react/24/outli
 import { IconSvgProps } from "./types";
 
 export type GlobeAsiaAustraliaIconProps = IconSvgProps & {
-    filled?: boolean;
+  filled?: boolean;
 };
 
 export const GlobeAsiaAustraliaIcon = ({
-    filled = false,
-    color = "currentColor",
-    ...props
+  filled = false,
+  color = "currentColor",
+  ...props
 }: GlobeAsiaAustraliaIconProps) =>
-    filled ? (
-        <IconFilled color={color} {...props} />
-    ) : (
-        <IconOutline color={color} {...props} />
-    );
+  filled ? <IconFilled color={color} {...props} /> : <IconOutline color={color} {...props} />;

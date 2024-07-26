@@ -10,9 +10,16 @@
 		"build:fast": "turbo build:fast --filter=!@motionwindui/storybook",
 		"dev": "turbo dev --filter=!@motionwindui/storybook",
 		"test": "turbo test --filter=!@motionwindui/storybook",
-		"lint": "turbo lint --filter=!@motionwindui/storybook",
+		"lint": "pnpm lint:pkg",
+		"lint:pkg": "eslint -c .eslintrc.json ./packages/**/*.{ts,tsx}",
 		"type-check": "turbo type-check --filter=!@motionwindui/storybook",
-		"sb": "pnpm --filter @motionwindui/storybook dev"
+		"sb": "pnpm --filter @motionwindui/storybook dev",
+		"build:sb": "pnpm --filter @motionwindui/storybook build",
+		"deploy:sb": "echo 'Deploy StoryBook to GitHub Pages'",
+		"format:check": "prettier --check packages/**/**/src --cache",
+		"format:write": "prettier --write packages/**/**/src --cache",
+		"turbo:clean": "turbo clean && rm -rf ./node_modules/.cache/turbo",
+		"turbo:graph": "pnpm build --graph=dependency-graph.png"
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.7.0",
@@ -24,6 +31,7 @@
 		"concurrently": "^8.2.2",
 		"eslint": "^8.57.0",
 		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-prettier": "^5.2.1",
 		"eslint-plugin-react": "^7.34.3",
 		"globals": "^15.8.0",
 		"husky": "^9.0.11",

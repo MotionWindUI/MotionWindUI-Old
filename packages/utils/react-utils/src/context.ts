@@ -4,69 +4,61 @@
 import React from "react";
 
 export interface CreateContextOptions {
-    /**
-     * If `true`, the context will be created in strict mode.
-     * Strict mode will throw an error if the context is accessed outside of a provider.
-     * Sometimes a context should be optional, and in those cases, strict mode should be disabled.
-     */
-    strict?: boolean;
-    /**
-     * The error message to throw if the context is accessed outside of a provider.
-     */
-    errorMessage?: string;
-    /**
-     * The name of the context. This is used for debugging purposes.
-     */
-    name?: string;
+  /**
+   * If `true`, the context will be created in strict mode.
+   * Strict mode will throw an error if the context is accessed outside of a provider.
+   * Sometimes a context should be optional, and in those cases, strict mode should be disabled.
+   */
+  strict?: boolean;
+  /**
+   * The error message to throw if the context is accessed outside of a provider.
+   */
+  errorMessage?: string;
+  /**
+   * The name of the context. This is used for debugging purposes.
+   */
+  name?: string;
 }
 
 /**
  * A return type for creating a context.
  * It returns a provider, a hook to get the context, and the context itself.
  */
-export type CreateContextReturn<T> = [
-    React.Provider<T>,
-    () => T,
-    React.Context<T>,
-];
+export type CreateContextReturn<T> = [React.Provider<T>, () => T, React.Context<T>];
 
 export const createContext = <ContextType>(
-    options: CreateContextOptions = {},
+  options: CreateContextOptions = {},
 ): CreateContextReturn<ContextType> => {
-    const {
-        strict = true,
-        errorMessage = "useContext must be used within a Provider with a value",
-        name,
-    } = options;
+  const {
+    strict = true,
+    errorMessage = "useContext must be used within a Provider with a value",
+    name,
+  } = options;
 
-    // Create the React context
-    const Context = React.createContext<ContextType | undefined>(undefined);
+  // Create the React context
+  const Context = React.createContext<ContextType | undefined>(undefined);
 
-    // Set the display name of the context
-    Context.displayName = name;
+  // Set the display name of the context
+  Context.displayName = name;
 
-    // Create a custom hook to get the context
-    const useContext = () => {
-        // Get the context
-        const context = React.useContext(Context);
+  // Create a custom hook to get the context
+  const useContext = () => {
+    // Get the context
+    const context = React.useContext(Context);
 
-        // If strict mode is enabled and the context is undefined, throw an error
-        if (strict && context === undefined) {
-            const error = new Error(errorMessage);
+    // If strict mode is enabled and the context is undefined, throw an error
+    if (strict && context === undefined) {
+      const error = new Error(errorMessage);
 
-            // Capture the stack trace
-            error.name = "ContextError";
-            Error.captureStackTrace?.(error, useContext);
-            throw error;
-        }
+      // Capture the stack trace
+      error.name = "ContextError";
+      Error.captureStackTrace?.(error, useContext);
+      throw error;
+    }
 
-        return context as ContextType;
-    };
+    return context as ContextType;
+  };
 
-    // Return the provider, the custom hook, and the context
-    return [
-        Context.Provider,
-        useContext,
-        Context,
-    ] as CreateContextReturn<ContextType>;
+  // Return the provider, the custom hook, and the context
+  return [Context.Provider, useContext, Context] as CreateContextReturn<ContextType>;
 };

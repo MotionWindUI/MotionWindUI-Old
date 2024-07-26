@@ -3,16 +3,12 @@ import { ArrowTopRightOnSquareIcon as IconOutline } from "@heroicons/react/24/ou
 import { IconSvgProps } from "./types";
 
 export type ArrowTopRightOnSquareIconProps = IconSvgProps & {
-    filled?: boolean;
+  filled?: boolean;
 };
 
 export const ArrowTopRightOnSquareIcon = ({
-    filled = false,
-    color = "currentColor",
-    ...props
+  filled = false,
+  color = "currentColor",
+  ...props
 }: ArrowTopRightOnSquareIconProps) =>
-    filled ? (
-        <IconFilled color={color} {...props} />
-    ) : (
-        <IconOutline color={color} {...props} />
-    );
+  filled ? <IconFilled color={color} {...props} /> : <IconOutline color={color} {...props} />;

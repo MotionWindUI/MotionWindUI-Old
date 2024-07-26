@@ -3,16 +3,12 @@ import { FolderArrowDownIcon as IconOutline } from "@heroicons/react/24/outline"
 import { IconSvgProps } from "./types";
 
 export type FolderArrowDownIconProps = IconSvgProps & {
-    filled?: boolean;
+  filled?: boolean;
 };
 
 export const FolderArrowDownIcon = ({
-    filled = false,
-    color = "currentColor",
-    ...props
+  filled = false,
+  color = "currentColor",
+  ...props
 }: FolderArrowDownIconProps) =>
-    filled ? (
-        <IconFilled color={color} {...props} />
-    ) : (
-        <IconOutline color={color} {...props} />
-    );
+  filled ? <IconFilled color={color} {...props} /> : <IconOutline color={color} {...props} />;

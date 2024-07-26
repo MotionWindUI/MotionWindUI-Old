@@ -3,16 +3,12 @@ import { ChatBubbleBottomCenterTextIcon as IconOutline } from "@heroicons/react/
 import { IconSvgProps } from "./types";
 
 export type ChatBubbleBottomCenterTextIconProps = IconSvgProps & {
-    filled?: boolean;
+  filled?: boolean;
 };
 
 export const ChatBubbleBottomCenterTextIcon = ({
-    filled = false,
-    color = "currentColor",
-    ...props
+  filled = false,
+  color = "currentColor",
+  ...props
 }: ChatBubbleBottomCenterTextIconProps) =>
-    filled ? (
-        <IconFilled color={color} {...props} />
-    ) : (
-        <IconOutline color={color} {...props} />
-    );
+  filled ? <IconFilled color={color} {...props} /> : <IconOutline color={color} {...props} />;

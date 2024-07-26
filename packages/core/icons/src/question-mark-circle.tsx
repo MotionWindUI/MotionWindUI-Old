@@ -3,16 +3,12 @@ import { QuestionMarkCircleIcon as IconOutline } from "@heroicons/react/24/outli
 import { IconSvgProps } from "./types";
 
 export type QuestionMarkCircleIconProps = IconSvgProps & {
-    filled?: boolean;
+  filled?: boolean;
 };
 
 export const QuestionMarkCircleIcon = ({
-    filled = false,
-    color = "currentColor",
-    ...props
+  filled = false,
+  color = "currentColor",
+  ...props
 }: QuestionMarkCircleIconProps) =>
-    filled ? (
-        <IconFilled color={color} {...props} />
-    ) : (
-        <IconOutline color={color} {...props} />
-    );
+  filled ? <IconFilled color={color} {...props} /> : <IconOutline color={color} {...props} />;

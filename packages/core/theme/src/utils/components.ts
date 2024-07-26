@@ -7,5 +7,5 @@ import { twMerge } from "tailwind-merge";
  * @returns The combined styles.
  */
 export const combineStyles = (...styles: (string | undefined)[]) => {
-    return twMerge(styles.filter(Boolean).join(" "));
+  return twMerge(styles.filter(Boolean).join(" "));
 };
