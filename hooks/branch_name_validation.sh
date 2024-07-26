@@ -1,4 +1,4 @@
-#!/usr/bin
+#!/bin/bash
 
 # The following branch patterns are allowed
 #
