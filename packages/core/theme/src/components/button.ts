@@ -2,6 +2,7 @@ import { cva } from "class-variance-authority";
 import { combineStyles } from "../utils/components";
 import { tv } from "tailwind-variants";
 import { focusRing } from "../utils/focusRing";
+import { collapsedBorderStyle } from "../utils/borderStyle";
 
 export interface ButtonVariantStateStyles {
     default: string;
@@ -14,6 +15,7 @@ export interface ButtonVariantStyles {
     faded: ButtonVariantStateStyles;
     bordered: ButtonVariantStateStyles;
     ghost: ButtonVariantStateStyles;
+    light: ButtonVariantStateStyles;
 }
 
 export interface ButtonVariants {
@@ -44,8 +46,13 @@ const buttonVariants: ButtonVariants = {
         },
         ghost: {
             default: "border-neutral text-neutral",
-            hover: "hover:bg-neutral-hover hover:text-on-neutral-hover",
+            hover: "hover:bg-neutral-hover hover:text-on-neutral-hover hover:border-neutral-hover",
             active: "aria-pressed:bg-neutral-active aria-pressed:border-neutral-active",
+        },
+        light: {
+            default: "bg-neutral-subtle text-neutral",
+            hover: "hover:bg-neutral-subtle-hover",
+            active: "aria-pressed:bg-neutral-subtle-active",
         },
     },
     primary: {
@@ -69,6 +76,11 @@ const buttonVariants: ButtonVariants = {
             hover: "hover:bg-primary-hover hover:text-on-primary-hover hover:border-primary-hover",
             active: "active:bg-primary-active active:text-on-primary-hover active:border-primary-active",
         },
+        light: {
+            default: "bg-primary-subtle text-primary",
+            hover: "hover:bg-primary-subtle-hover",
+            active: "aria-pressed:bg-primary-subtle-active",
+        },
     },
     secondary: {
         solid: {
@@ -90,6 +102,11 @@ const buttonVariants: ButtonVariants = {
             default: "border-secondary text-secondary",
             hover: "hover:bg-secondary-hover hover:text-on-secondary-hover",
             active: "active:bg-secondary-active active:text-on-secondary-active",
+        },
+        light: {
+            default: "bg-secondary-subtle text-secondary",
+            hover: "hover:bg-secondary-subtle-hover",
+            active: "aria-pressed:bg-secondary-subtle-active",
         },
     },
     success: {
@@ -113,6 +130,11 @@ const buttonVariants: ButtonVariants = {
             hover: "hover:bg-success-hover hover:text-on-success-hover",
             active: "active:bg-success-active active:text-on-success-active",
         },
+        light: {
+            default: "bg-success-subtle text-success",
+            hover: "hover:bg-success-subtle-hover",
+            active: "aria-pressed:bg-success-subtle-active",
+        },
     },
     warning: {
         solid: {
@@ -134,6 +156,11 @@ const buttonVariants: ButtonVariants = {
             default: "border-warning text-warning",
             hover: "hover:bg-warning-hover hover:text-on-warning-hover",
             active: "active:bg-warning-active active:text-on-warning-active",
+        },
+        light: {
+            default: "bg-warning-subtle text-warning",
+            hover: "hover:bg-warning-subtle-hover",
+            active: "aria-pressed:bg-warning-subtle-active",
         },
     },
     danger: {
@@ -157,23 +184,30 @@ const buttonVariants: ButtonVariants = {
             hover: "hover:bg-danger-hover hover:text-on-danger-hover",
             active: "active:bg-danger-active active:text-on-danger-active",
         },
+        light: {
+            default: "bg-danger-subtle text-danger",
+            hover: "hover:bg-danger-subtle-hover",
+            active: "aria-pressed:bg-danger-subtle-active",
+        },
     },
 };
 
 export const buttonStyles = tv({
     base: [
-        "flex",
+        "z0",
+        "group",
+        "inline-flex",
+        "relative",
         "flex-row",
         "items-center",
         "justify-center",
         "min-w-max",
         "outline-none",
         "select-none",
+        "text-wrap",
+        "overflow-hidden",
         "data-[pressed=true]:scale-95",
-        "data-[focus-visible=true]:z-10",
-        "data-[focus-visible=true]:outline-2",
-        "data-[focus-visible=true]:outline-primary-600",
-        "data-[focus-visible=true]:outline-offset-2",
+        ...focusRing,
     ],
     variants: {
         variant: {
@@ -181,6 +215,7 @@ export const buttonStyles = tv({
             faded: "bg-transparent",
             bordered: "bg-transparent border border-solid",
             ghost: "bg-transparent border border-solid",
+            light: "",
         },
         color: {
             neutral: "",
@@ -191,9 +226,9 @@ export const buttonStyles = tv({
             danger: "",
         },
         size: {
-            sm: "px-2 py-1 gap-2 text-small",
-            md: "px-3 py-2 gap-3 text-base",
-            lg: "px-4 py-3 gap-4 text-large",
+            sm: "text-[length:--font-size-small] leading-[--line-height-small] px-3 min-w-16 min-h-8 gap-2",
+            md: "text-[length:--font-size-medium] leading-[--line-height-medium] px-4 min-w-20 min-h-10 gap-2",
+            lg: "text-[length:--font-size-large] leading-[--line-height-large] px-6 min-w-24 min-h-12 gap-3",
         },
         radius: {
             none: "rounded-none",
@@ -206,8 +241,20 @@ export const buttonStyles = tv({
         isInGroup: {
             true: "[&:not(:first-child):not(:last-child)]:rounded-none",
         },
+        isIconOnly: {
+            true: "px-0 !gap-0",
+            false: "[&>svg]:max-w-[theme(spacing.8)]",
+        },
         isDisabled: {
             true: "opacity-disabled pointer-events-none",
+        },
+        animateDisable: {
+            true: "!transition-none data-[pressed=true]:scale-100",
+            false: "motion-reduce:transition-none",
+        },
+        shadow: {
+            true: "shadow-md drop-shadow-xl",
+            false: "shadow-none",
         },
     },
     compoundVariants: [
@@ -248,6 +295,15 @@ export const buttonStyles = tv({
             ),
         },
         {
+            color: "neutral",
+            variant: "light",
+            className: combineStyles(
+                buttonVariants.neutral.light.default,
+                buttonVariants.neutral.light.hover,
+                buttonVariants.neutral.light.active,
+            ),
+        },
+        {
             color: "primary",
             variant: "solid",
             className: combineStyles(
@@ -281,6 +337,15 @@ export const buttonStyles = tv({
                 buttonVariants.primary.ghost.default,
                 buttonVariants.primary.ghost.hover,
                 buttonVariants.primary.ghost.active,
+            ),
+        },
+        {
+            color: "primary",
+            variant: "light",
+            className: combineStyles(
+                buttonVariants.primary.light.default,
+                buttonVariants.primary.light.hover,
+                buttonVariants.primary.light.active,
             ),
         },
         {
@@ -320,6 +385,15 @@ export const buttonStyles = tv({
             ),
         },
         {
+            color: "secondary",
+            variant: "light",
+            className: combineStyles(
+                buttonVariants.secondary.light.default,
+                buttonVariants.secondary.light.hover,
+                buttonVariants.secondary.light.active,
+            ),
+        },
+        {
             color: "success",
             variant: "solid",
             className: combineStyles(
@@ -353,6 +427,15 @@ export const buttonStyles = tv({
                 buttonVariants.success.ghost.default,
                 buttonVariants.success.ghost.hover,
                 buttonVariants.success.ghost.active,
+            ),
+        },
+        {
+            color: "success",
+            variant: "light",
+            className: combineStyles(
+                buttonVariants.success.light.default,
+                buttonVariants.success.light.hover,
+                buttonVariants.success.light.active,
             ),
         },
         {
@@ -392,6 +475,15 @@ export const buttonStyles = tv({
             ),
         },
         {
+            color: "warning",
+            variant: "light",
+            className: combineStyles(
+                buttonVariants.warning.light.default,
+                buttonVariants.warning.light.hover,
+                buttonVariants.warning.light.active,
+            ),
+        },
+        {
             color: "danger",
             variant: "solid",
             className: combineStyles(
@@ -427,7 +519,115 @@ export const buttonStyles = tv({
                 buttonVariants.danger.ghost.active,
             ),
         },
+        {
+            color: "danger",
+            variant: "light",
+            className: combineStyles(
+                buttonVariants.danger.light.default,
+                buttonVariants.danger.light.hover,
+                buttonVariants.danger.light.active,
+            ),
+        },
+        {
+            isInGroup: true,
+            radius: "none",
+            className: "rounded-none",
+        },
+        {
+            isInGroup: true,
+            radius: "sm",
+            className:
+                "rounded-none first:rounded-s-small last:rounded-e-small",
+        },
+        {
+            isInGroup: true,
+            radius: "md",
+            className:
+                "rounded-none first:rounded-s-medium last:rounded-e-medium",
+        },
+        {
+            isInGroup: true,
+            radius: "lg",
+            className:
+                "rounded-none first:rounded-s-large last:rounded-e-large",
+        },
+        {
+            isInGroup: true,
+            radius: "xl",
+            className:
+                "rounded-none first:rounded-s-xlarge last:rounded-e-xlarge",
+        },
+        {
+            isInGroup: true,
+            radius: "full",
+            className: "rounded-none first:rounded-s-full last:rounded-e-full",
+        },
+        {
+            isInGroup: true,
+            variant: ["bordered", "ghost"],
+            color: "neutral",
+            className: collapsedBorderStyle.neutral,
+        },
+        {
+            isInGroup: true,
+            variant: ["bordered", "ghost"],
+            color: "primary",
+            className:
+                "[&+.border.border-primary]:ms-[calc(theme(borderWidth.md)*-1)]",
+        },
+        {
+            isInGroup: true,
+            variant: ["bordered", "ghost"],
+            color: "secondary",
+            className:
+                "[&+.border.border-secondary]:ms-[calc(theme(borderWidth.md)*-1)]",
+        },
+        {
+            isInGroup: true,
+            variant: ["bordered", "ghost"],
+            color: "success",
+            className:
+                "[&+.border.border-success]:ms-[calc(theme(borderWidth.md)*-1)]",
+        },
+        {
+            isInGroup: true,
+            variant: ["bordered", "ghost"],
+            color: "warning",
+            className:
+                "[&+.border.border-warning]:ms-[calc(theme(borderWidth.md)*-1)]",
+        },
+        {
+            isInGroup: true,
+            variant: ["bordered", "ghost"],
+            color: "danger",
+            className:
+                "[&+.border.border-danger]:ms-[calc(theme(borderWidth.md)*-1)]",
+        },
+        {
+            isIconOnly: true,
+            size: "sm",
+            className: "min-w-8 w-8 h-8",
+        },
+        {
+            isIconOnly: true,
+            size: "md",
+            className: "min-w-10 w-10 h-10",
+        },
+        {
+            isIconOnly: true,
+            size: "lg",
+            className: "min-w-12 w-12 h-12",
+        },
     ],
+    defaultVariants: {
+        color: "neutral",
+        variant: "solid",
+        size: "md",
+        radius: "md",
+        isDisabled: false,
+        isInGroup: false,
+        isIconOnly: false,
+    },
 });
 
 export type ButtonStyles = typeof buttonStyles;

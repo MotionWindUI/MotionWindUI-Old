@@ -1,11 +1,9 @@
-import { tv } from "tailwind-variants";
-
-export const focusRing = tv({
-    base: ["outline", "outline-primary-600", "outline-offset-2"],
-    variants: {
-        isFocusVisible: {
-            false: "outline-0",
-            true: "outline-2",
-        },
-    },
-});
+/**
+ * A set of classes to apply a focus ring to an element.
+ */
+export const focusRing: string[] = [
+    "data-[focus-visible=true]:z-10",
+    "data-[focus-visible=true]:outline-2",
+    "data-[focus-visible=true]:outline-primary-600",
+    "data-[focus-visible=true]:outline-offset-2",
+];

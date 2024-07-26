@@ -12,9 +12,7 @@ const IconWrapper: React.FC<IconWrapperProps> = ({
     color = "currentColor",
     ...props
 }) => {
-    return Icon ? (
-        <Icon color={color} {...props} width={40} height={40} />
-    ) : null;
+    return Icon ? <Icon color={color} {...props} /> : null;
 };
 
 export default IconWrapper;
