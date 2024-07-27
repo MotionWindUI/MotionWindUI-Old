@@ -1,0 +1,40 @@
+import React from "react";
+import type { Meta, StoryObj } from "@storybook/react";
+
+import { {{capitalize componentName}}, {{capitalize componentName}}Props } from "../src";
+
+const meta = {
+  title: "Components/{{capitalize componentName}}",
+  component: {{capitalize componentName}},
+  argTypes: {
+    color: {
+      control: { type: "select" },
+      options: ["neutral", "primary", "secondary", "success", "warning", "danger"],
+    },
+    radius: {
+      control: { type: "select" },
+      options: ["none", "sm", "md", "lg", "full"],
+    },
+    size: {
+      control: { type: "select" },
+      options: ["sm", "md", "lg"],
+    },
+    isDisabled: {
+      control: {
+        type: "boolean",
+      },
+    },
+  },
+} satisfies Meta<typeof {{capitalize componentName}}>;
+
+export default meta;
+
+type Story = StoryObj<typeof {{capitalize componentName}}>;
+
+const StoryTemplate: Story = {
+  render: (args) => {
+    return <{{capitalize componentName}} {...args} />;
+  },
+};
+
+export const Default: Story = StoryTemplate;

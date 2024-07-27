@@ -2,6 +2,7 @@
   "name": "@motionwindui/storybook-utils",
   "version": "1.0.0",
   "description": "Storybook utilities for Motion Wind UI",
+  "private": "true",
   "main": "src/index.ts",
   "files": [
     "dist"

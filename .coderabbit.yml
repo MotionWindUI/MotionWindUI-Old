@@ -18,3 +18,4 @@ reviews:
       - "fix/*"
       - "feat/*"
       - "chore/*"
+      - "development"

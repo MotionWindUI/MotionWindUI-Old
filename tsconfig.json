@@ -14,8 +14,9 @@
         "resolveJsonModule": true,
         "allowSyntheticDefaultImports": true,
         "noImplicitAny": false,
-        "jsx": "react-jsx"
+        "jsx": "react-jsx",
+        "types": ["jest"]
     },
     "include": ["packages"],
-    "exclude": ["**/node_modules", "**/dist", "**/turbo"]
+    "exclude": ["**/node_modules", "**/dist", "**/turbo"],
 }

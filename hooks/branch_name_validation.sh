@@ -10,7 +10,7 @@
 # docs/*
 # test/*
 # style/*
-branch_pattern='^(feat|feature|fix|chore|refactor|docs|style|test)\/.+$'
+branch_pattern='^(feat|feature|fix|chore|refactor|docs|style|test)\/.+$|(development)'
 
 # Get the current branch name
 current_branch=$(git symbolic-ref --short HEAD)
