@@ -1,0 +1,28 @@
+name: "Chromatic"
+
+on: push
+
+jobs:
+  chromatic:
+    name: Run Chromatic
+    runs-on: ubuntu-latest
+    steps:
+        - name: Checkout Code
+          uses: actions/checkout@v4
+        - name: Setup PNPM
+          uses: pnpm/action-setup@v4
+          with:
+            version: latest
+        - name: Setup Node
+          uses: actions/setup-node@v3
+          with:
+            node-version-file: '.nvmrc'
+            cache: "pnpm"
+        - name: Install dependencies
+          run: pnpm install --hoist --frozen-lockfile
+        - name: Run Chromatic
+          uses: chromaui/action@latest
+          with:
+            projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+
+

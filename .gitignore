@@ -10,4 +10,5 @@ dist/
 
 dependency-graph.png
 
-#
+# Environment files
+.env
