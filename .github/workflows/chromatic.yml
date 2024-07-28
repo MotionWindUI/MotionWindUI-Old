@@ -1,6 +1,14 @@
 name: "Chromatic"
 
-on: push
+on: workflow_call
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-chromatic
+  cancel-in-progress: true
+
+permissions:
+  actions: write
+  contents: read
 
 jobs:
   chromatic:
@@ -22,5 +30,9 @@ jobs:
           uses: chromaui/action@latest
           with:
             projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+            exitZeroOnChanges: true
+            exitOnceUploaded: true
+            onlyChanged: true
+            skip: "@(renovate/**)"
 
 
