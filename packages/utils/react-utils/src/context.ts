@@ -52,7 +52,6 @@ export const createContext = <ContextType>(
 
       // Capture the stack trace
       error.name = "ContextError";
-      Error.captureStackTrace?.(error, useContext);
       throw error;
     }
 
