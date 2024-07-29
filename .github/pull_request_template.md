@@ -7,7 +7,7 @@ Give a quick summary of the changes you made in your own words. CodeRabbit will 
 Why did you make this PR?
 
 ## Related Issue / Bug
-Does this PR resolve an issue or bug? If so which one?
+Does this PR resolve an issue or bug? If so which one? (Please use close)
 
 ## Test Plan
 What unit tests did you write to make sure this is ok?
