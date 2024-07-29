@@ -1,6 +1,6 @@
 {
   "name": "@motionwindui/button",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "MotionWindUI button component. A simple button component for use in your projects.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",

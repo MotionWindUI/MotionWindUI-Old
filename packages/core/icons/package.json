@@ -1,11 +1,16 @@
 {
   "name": "@motionwindui/heroicons-icons",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A reexport of Heroicons used for MotionWindUI",
-  "main": "src/index.ts",
+  "main": "dist/index.ts",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "sideEffects": false,
   "scripts": {
     "build": "tsup src --dts",

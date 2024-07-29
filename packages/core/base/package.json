@@ -1,10 +1,13 @@
 {
   "name": "@motionwindui/base",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The base package for MotionWindUI",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsup src --dts",
     "build:fast": "tsup src",
