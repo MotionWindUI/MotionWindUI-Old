@@ -19,5 +19,5 @@ reviews:
       - "feat/*"
       - "chore/*"
       - "refactor/*"
-      - "development"
+      - "dev"
   poem: false
