@@ -18,10 +18,6 @@ const camelCase = (str) => {
   return str.replace(/[-_](\w)/g, (_, c) => c.toUpperCase());
 };
 
-const isPascalCase = (str) => {
-  return /^[A-Z][A-Za-z]*$/.test(str);
-};
-
 /**
  * The list of things to generate using plop.
  */
@@ -132,65 +128,5 @@ export default function (plop) {
         return actions;
       },
     });
-  });
-
-  plop.setGenerator("context", {
-    description: "Adding a new React Context",
-    prompts: [
-      {
-        type: "input",
-        name: "contextName",
-        message: "Please enter a React context name:",
-        validate: (value) => {
-          if (!value) {
-            return `Context name is required`;
-          }
-
-          // The name can't have spaces
-          if (value.includes(" ")) {
-            return `Context name cannot have any spaces`;
-          }
-
-          if (!isPascalCase(value)) {
-            return "Context name must be in PascalCase";
-          }
-
-          return true;
-        },
-      },
-      {
-        type: "list",
-        name: "component",
-        message: `Which component should get this context?`,
-        default: "button",
-        choices: components,
-        validate: (value) => {
-          if (!value) {
-            return "component is required";
-          }
-
-          return true;
-        },
-      },
-    ],
-    actions(answers) {
-      const actions = [];
-
-      const { contextName, component } = answers;
-
-      const data = {
-        contextName,
-      };
-
-      actions.push({
-        type: "addMany",
-        destination: `./packages/components/${component}/src`,
-        templateFiles: "plop/context/**",
-        base: "plop/context",
-        data,
-      });
-
-      return actions;
-    },
   });
 }

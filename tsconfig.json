@@ -15,7 +15,7 @@
         "allowSyntheticDefaultImports": true,
         "noImplicitAny": false,
         "jsx": "react-jsx",
-        "types": ["jest"]
+        "types": ["jest", "node"]
     },
     "include": ["packages"],
     "exclude": ["**/node_modules", "**/dist", "**/turbo"],
