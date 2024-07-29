@@ -24,18 +24,21 @@ body:
   - type: dropdown
     id: area
     attributes:
-      label: Which area?
-      description: Which area of the project/monorepo does this target
+      label: Which package?
+      description: Which package(s) does this fix apply to?
       multiple: true
       options:
-        - components
-        - core
-        - utilities
+        - "@motionwindui/base"
+        - "@motionwindui/theme"
+        - "@motionwindui/provider"
+        - "@motionwindui/heroicons-icons"
+        - "@motionwindui/react-utils"
+        - "@motionwindui/button"
   - type: dropdown
     id: component-fix
     attributes:
       label: Any component?
-      description: If this fixes a component(s) which one does it fix?
+      description: If this fixes a component(s) which one(s) does it fix?
       multiple: true
       options:
         - button
