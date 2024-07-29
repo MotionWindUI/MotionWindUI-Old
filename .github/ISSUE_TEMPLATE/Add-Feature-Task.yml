@@ -1,5 +1,5 @@
 name: Add Feature Task
-description: Adds a new task to add a new feature
+description: Template for creating a new feature task in the MotionWindUI project
 title: "[Feature]: "
 labels:
   - "feature"
@@ -9,12 +9,12 @@ body:
   - type: markdown
     attributes:
       value: |
-        Please fill out the information below to add a new feature task
+        Please provide detailed information below to create a new feature task
   - type: textarea
     id: description
     attributes:
       label: What is the new feature?
-      description: Please describe the new feature. If it is tied directly to a feature request, please add "Resolves"
+      description: Please describe the new feature. If it is tied directly to a feature request, please add "Resolves #<Issue Number>"
       placeholder: |
         (Description)
 
@@ -23,7 +23,7 @@ body:
     id: modification
     attributes:
       label: Does this modify an existing package?
-      description: Will this feature modify/add to an existing package?
+      description: Will this feature modify or add to an existing package?
       options:
         - label: Yes
           required: false
@@ -31,7 +31,7 @@ body:
     id: packages
     attributes:
       label: If it modifies an existing package, which one?
-      description: If this feature adds/modifies an existing package, which package?
+      description: If this feature adds to or modifies an existing package, which package?
       multiple: true
       options:
         - "@motionwindui/base"
@@ -52,7 +52,7 @@ body:
     id: area
     attributes:
       label: Which area?
-      description: Which area of the project/monorepo does this target?
+      description: Which area of the project or monorepo does this feature target?
       multiple: true
       options:
         - components
@@ -62,7 +62,7 @@ body:
     id: package-name
     attributes:
       label: If this is a new package, what will it be called?
-      placeholder: "@motionwindui/<package name>"
+      placeholder: "@motionwindui/package-name"
   - type: textarea
     id: extra-info
     attributes:
