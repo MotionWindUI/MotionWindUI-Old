@@ -2,9 +2,13 @@
   "name": "@motionwindui/react-utils",
   "version": "1.0.0",
   "description": "A set of utilities for React",
-  "private": "true",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "dist"
   ],

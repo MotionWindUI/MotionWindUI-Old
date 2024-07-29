@@ -21,7 +21,7 @@ const camelCase = (str) => {
 /**
  * The list of things to generate using plop.
  */
-const generators = ["component", "package"];
+const generators = ["component"];
 
 /**
  * The list of workspaces under packages/*.
@@ -35,6 +35,11 @@ const outputDirs = {
   component: "components",
   package: "utils",
 };
+
+/**
+ * The list of components to add to
+ */
+const components = ["button"];
 
 /**
  * Initializes the plop generator.
