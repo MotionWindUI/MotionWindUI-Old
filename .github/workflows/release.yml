@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install dependencies
-        uses: ./.github/common-actions/install
+        uses: ./.github/workflows/common-actions/install
 
       - name: Build
         run: pnpm build
