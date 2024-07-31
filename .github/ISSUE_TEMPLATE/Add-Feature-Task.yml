@@ -25,8 +25,7 @@ body:
       label: Does this modify an existing package?
       description: Will this feature modify or add to an existing package?
       options:
-        - label: Yes
-          required: false
+        - required: false
   - type: dropdown
     id: packages
     attributes:
@@ -46,8 +45,7 @@ body:
       label: Does this add a new package?
       description: Will this feature be a new package?
       options:
-        - label: Yes
-          required: false
+        - required: false
   - type: dropdown
     id: area
     attributes:
