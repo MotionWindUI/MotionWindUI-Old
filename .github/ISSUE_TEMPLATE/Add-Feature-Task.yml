@@ -62,7 +62,7 @@ body:
     id: package-name
     attributes:
       label: If this is a new package, what will it be called?
-      placeholder: "@motionwindui/package-name"
+      placeholder: "Enter the package name, e.g., @motionwindui/package-name"
   - type: textarea
     id: extra-info
     attributes:
