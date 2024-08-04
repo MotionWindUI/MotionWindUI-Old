@@ -19,4 +19,4 @@ runs:
         git config --global user.name "Kyle Gagnon"
 
     - name: Install Node Dependencies
-      run: pnpm install --hoist --frozen-lockfile
+      run: pnpm install --hoist --no-frozen-lockfile
