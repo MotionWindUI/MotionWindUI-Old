@@ -156,7 +156,7 @@ export const borderColors: BorderColors = {
 
 export const baseBorderColors: BaseBorderColors = {
   neutral: {
-    light: "var(--neutral-700)",
+    light: "var(--neutral-600)",
     dark: "var(--neutral-300)",
   },
   "neutral-negative": {
