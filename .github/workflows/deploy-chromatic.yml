@@ -34,6 +34,7 @@ jobs:
             .storybook/**
             stories/**
             packages/components/**/src/**
+            packages/core/theme/src/components/**
       - name: List all changed files
         env:
           ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
