@@ -1,4 +1,4 @@
-import React from "react";
+import React, { cloneElement, isValidElement } from "react";
 import { MotionWindUIBaseProps } from "@motionwindui/base";
 import { checkBoxStyles } from "../../../core/theme/src/components/checkbox";
 import {
@@ -7,13 +7,20 @@ import {
   CheckboxProps as RACCheckboxProps,
   useContextProps,
 } from "react-aria-components";
+import { CheckIcon } from "@motionwindui/heroicons-icons";
 
-export interface CheckboxProps extends MotionWindUIBaseProps, RACCheckboxProps {
+export interface CheckboxProps extends MotionWindUIBaseProps, Omit<RACCheckboxProps, "children"> {
   /* Whether or not to include the checkbox label */
   includeLabel?: boolean;
 
-  /* The label position */
-  labelPosition?: "left" | "right";
+  /* The children to be used as the label */
+  children?: React.ReactNode;
+
+  /* The icon to display in the checkbox */
+  icon?: React.ReactNode;
+
+  /* Disables all animation */
+  disableAnimation?: boolean;
 }
 
 const Checkbox = React.forwardRef(
@@ -25,21 +32,38 @@ const Checkbox = React.forwardRef(
       size = "md",
       radius = "none",
       includeLabel = true,
-      labelPosition = "left",
+      disableAnimation = false,
+      icon: checkBoxIcon = <CheckIcon />,
       children,
     } = props;
 
-    const { base, wrapper, outsideWraper } = checkBoxStyles({ size, color, radius });
+    const { base, wrapper, label, icon } = checkBoxStyles({
+      color,
+      size,
+      radius,
+      disableAnimation,
+    });
+
+    const iconClone = (icon: React.ReactNode) =>
+      isValidElement(icon)
+        ? cloneElement(icon, {
+            // @ts-ignore
+            "aria-hidden": true,
+            tabIndex: -1,
+            focusable: false,
+          })
+        : null;
+
+    const checkedIcon = iconClone(checkBoxIcon);
 
     return (
       <RACCheckbox className={base()} {...props}>
         {({ isSelected, ...renderProps }) => (
           <>
-            {includeLabel && labelPosition === "right" && children}
-            <div className={outsideWraper()}>
-              <div className={wrapper({ isSelected, ...renderProps })}> </div>
+            <div className={wrapper({ isSelected, ...renderProps })}>
+              <span className={icon({ isSelected })}>{checkedIcon}</span>
             </div>
-            {includeLabel && labelPosition === "left" && children}
+            {includeLabel && <span className={label()}>{children}</span>}
           </>
         )}
       </RACCheckbox>

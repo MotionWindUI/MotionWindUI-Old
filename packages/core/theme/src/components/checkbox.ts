@@ -14,70 +14,134 @@ export const checkBoxStyles = tv({
       "-m-2",
       ...focusRing,
     ],
-    outsideWraper: "border-neutral border-2 border-solid box-border inset-0",
-    wrapper: "transition-all origin-center w-full h-full",
-    icon: "z-10 w-4 h-3 opacity-0 group-data-[selected=true]:opacity-100",
-    label: "select-none relative",
+    wrapper: [
+      "relative",
+      "inline-flex",
+      "items-center",
+      "justify-center",
+      "align-middle",
+      "flex-shrink-0",
+      "overflow-hidden",
+      "before:content-['']",
+      "before:absolute",
+      "before:inset-0",
+      "before:border-solid",
+      "before:border-2",
+      "before:box-border",
+      "before:border-neutral",
+      "after:content-['']",
+      "after:absolute",
+      "after:inset-0",
+      "after:scale-50",
+      "after:opacity-0",
+      "after:origin-center",
+      "group-data-[focus-visible=true]:z-10",
+      "group-data-[focus-visible=true]:outline-2",
+      "group-data-[focus-visible=true]:outline-offset-2",
+      "group-data-[focus-visible=true]:outline-primary-600",
+      ...focusRing,
+    ],
+    icon: "z-10 w-4 h-3 opacity-0 inset-0",
+    label: "select-none relative text-neutral",
   },
   variants: {
     size: {
       sm: {
-        outsideWraper: "w-4 h-4",
+        base: "gap-2",
+        wrapper: "w-4 h-4",
+        label: "text-small",
+        icon: "w-3 h-2",
       },
       md: {
-        outsideWraper: "w-5 h-5",
+        base: "gap-2",
+        wrapper: "w-5 h-5",
+        label: "text-base",
+        icon: "w-4 h-3",
       },
       lg: {
-        outsideWraper: "w-6 h-6",
-      },
-    },
-    radius: {
-      none: {
-        outsideWraper: "rounded-none",
-      },
-      sm: {
-        outsideWraper: "rounded-[calc(theme(borderRadius.small)*0.5)]",
-      },
-      md: {
-        outsideWraper: "rounded-[calc(theme(borderRadius.medium)*0.5)]",
-      },
-      lg: {
-        outsideWraper: "rounded-[calc(theme(borderRadius.large)*0.5)]",
-      },
-      xl: {
-        outsideWraper: "rounded-[calc(theme(borderRadius.xlarge)*0.5)]",
-      },
-      full: {
-        outsideWraper: "rounded-[calc(theme(borderRadius.full)*0.5)]",
+        base: "gap-3",
+        wrapper: "w-6 h-6",
+        label: "text-large",
+        icon: "w-5 h-4",
       },
     },
     color: {
       neutral: {
-        wrapper: "bg-neutral",
+        wrapper: "after:bg-neutral after:text-on-neutral",
+        icon: "text-on-neutral",
       },
       primary: {
-        wrapper: "bg-primary",
+        wrapper: "after:bg-primary after:text-on-primary",
+        icon: "text-on-primary",
       },
       secondary: {
-        wrapper: "bg-secondary",
+        wrapper: "after:bg-secondary after:text-on-secondary",
+        icon: "text-on-secondary",
       },
       success: {
-        wrapper: "bg-success",
+        wrapper: "after:bg-success after:text-on-success",
+        icon: "text-on-success",
       },
       warning: {
-        wrapper: "bg-warning",
+        wrapper: "after:bg-warning after:text-on-warning",
+        icon: "text-on-warning",
       },
       danger: {
-        wrapper: "bg-danger",
+        wrapper: "after:bg-danger after:text-on-danger",
+        icon: "text-on-danger",
+      },
+    },
+    radius: {
+      none: {
+        wrapper: ["rounded-none", "before:rounded-none", "after:rounded-none"],
+      },
+      sm: {
+        wrapper: ["rounded-small", "before:rounded-small", "after:rounded-small"],
+      },
+      md: {
+        wrapper: ["rounded-medium", "before:rounded-medium", "after:rounded-medium"],
+      },
+      lg: {
+        wrapper: ["rounded-large", "before:rounded-large", "after:rounded-large"],
+      },
+      xl: {
+        wrapper: ["rounded-xlarge", "before:rounded-xlarge", "after:rounded-xlarge"],
+      },
+      full: {
+        wrapper: ["rounded-full", "before:rounded-full", "after:rounded-full"],
       },
     },
     isSelected: {
-      false: {
-        wrapper: "scale-50 opacity-0 bg-neutral-subtle",
-      },
       true: {
-        wrapper: "scale-100 opacity-100",
+        wrapper: "after:scale-100 after:opacity-100",
+        icon: "opacity-100",
+      },
+    },
+    isDisabled: {
+      true: {
+        base: "opacity-disabled pointer-events-none",
+      },
+    },
+    disableAnimation: {
+      true: {
+        wrapper: "transition-none",
+        icon: "transition-none",
+      },
+      false: {
+        wrapper: [
+          "before:transition-all after:transition-all duration-200 motion-reduce:transition-none",
+        ],
+        icon: "transition-all duration-200 motion-reduce:transition-none",
       },
     },
   },
+  compoundVariants: [
+    {
+      isPressed: true,
+      disableAnimation: false,
+      className: {
+        wrapper: "scale-95",
+      },
+    },
+  ],
 });
