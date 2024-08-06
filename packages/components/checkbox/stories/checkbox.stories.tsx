@@ -1,7 +1,7 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { Checkbox, CheckboxProps } from "../src";
+import { Checkbox } from "../src";
 
 const meta = {
   title: "Components/Checkbox",
@@ -41,6 +41,13 @@ const meta = {
         type: "boolean",
       },
     },
+    children: {
+      description: "The children for this component",
+      control: { type: "text" },
+      table: {
+        type: { summary: "React.ReactNode" },
+      },
+    },
   },
 } satisfies Meta<typeof Checkbox>;
 
@@ -49,8 +56,11 @@ export default meta;
 type Story = StoryObj<typeof Checkbox>;
 
 const StoryTemplate: Story = {
-  render: (args) => {
-    return <Checkbox {...args} />;
+  args: {
+    children: "Checkbox",
+  },
+  render: ({ children, ...args }) => {
+    return <Checkbox {...args}>{children}</Checkbox>;
   },
 };
 

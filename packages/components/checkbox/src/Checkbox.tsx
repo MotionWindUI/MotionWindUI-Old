@@ -12,34 +12,36 @@ export interface CheckboxProps extends MotionWindUIBaseProps, RACCheckboxProps {
   /* Whether or not to include the checkbox label */
   includeLabel?: boolean;
 
-  /* The label for the checkbox */
-  label?: string;
-
   /* The label position */
   labelPosition?: "left" | "right";
 }
 
 const Checkbox = React.forwardRef(
   (props: CheckboxProps, ref: React.ForwardedRef<HTMLLabelElement>) => {
+    [props, ref] = useContextProps(props, ref, CheckboxContext);
+
     const {
       color = "neutral",
       size = "md",
       radius = "none",
       includeLabel = true,
-      label = "Checkbox",
       labelPosition = "left",
+      children,
     } = props;
 
-    [props, ref] = useContextProps(props, ref, CheckboxContext);
-
-    const { base } = checkBoxStyles({ color, size, radius });
+    const { base, wrapper, outsideWraper } = checkBoxStyles({ size, color, radius });
 
     return (
-      <RACCheckbox className={"inline-flex group"}>
-        <div className="w-4 h-4 border-neutral border-solid border-2">
-          <span className="opacity-0 scale-50 bg-primary group-data-[selected=true]:opacity-100 group-data-[selected=true]:scale-100 transition-all"></span>
-        </div>
-        Checkbox
+      <RACCheckbox className={base()} {...props}>
+        {({ isSelected, ...renderProps }) => (
+          <>
+            {includeLabel && labelPosition === "right" && children}
+            <div className={outsideWraper()}>
+              <div className={wrapper({ isSelected, ...renderProps })}> </div>
+            </div>
+            {includeLabel && labelPosition === "left" && children}
+          </>
+        )}
       </RACCheckbox>
     );
   },
