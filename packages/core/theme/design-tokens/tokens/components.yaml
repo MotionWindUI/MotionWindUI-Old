@@ -1,5 +1,0 @@
-# Component Tokens
-# Component Tokens are used to define parts of a UI component (e.g. button, input, etc.). Parts of a component are seperated to allow for more flexibility in theming.
-# Parts of a component include: background, border, text, and shadow. These should also have defined states (e.g. hover, focus, active, etc.).
-includes:
-  - ./components/button.yaml

@@ -22,4 +22,6 @@ export interface MotionWindUIBaseProps {
   radius?: RadiusSizeVariants;
   /** Whether or not the component is disabled from further interactions */
   isDisabled?: boolean;
+  /* Disables all animation */
+  disableAnimation?: boolean;
 }

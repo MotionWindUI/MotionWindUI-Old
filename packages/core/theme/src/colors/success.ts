@@ -1,27 +1,22 @@
-import { STYLE_TOKENS, ColorScale, Tokens, VALUES_KEYWORD } from "./types";
-
-const SUCCESS_KEY = "success";
+import { ColorScale } from "./types";
 
 /**
  * Get the success color scale.
  *
- * @param tokens The theme tokens object
  * @returns The success color scale
  */
-export function success(tokens: Tokens): ColorScale {
-  const success = tokens[STYLE_TOKENS][SUCCESS_KEY][VALUES_KEYWORD];
-
+export function success(): ColorScale {
   return {
-    "50": success["50"],
-    "100": success["100"],
-    "200": success["200"],
-    "300": success["300"],
-    "400": success["400"],
-    "500": success["500"],
-    "600": success["600"],
-    "700": success["700"],
-    "800": success["800"],
-    "900": success["900"],
-    "950": success["950"],
+    50: "#f1f8f2",
+    100: "#dcefdc",
+    200: "#bcdebe",
+    300: "#90c597",
+    400: "#67aa72",
+    500: "#3f8a4e",
+    600: "#2e6d3c",
+    700: "#255731",
+    800: "#1f4629",
+    900: "#1a3a22",
+    950: "#0e2014",
   };
 }

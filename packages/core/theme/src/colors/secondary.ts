@@ -1,27 +1,22 @@
-import { ColorScale, STYLE_TOKENS, Tokens, VALUES_KEYWORD } from "./types";
-
-const SECONDARY_KEY = "secondary";
+import { ColorScale } from "./types";
 
 /**
  * Get the fuchsia blue color scale.
  *
- * @param tokens The theme tokens object
  * @returns The fuchsia blue color scale
  */
-export function secondary(tokens: Tokens): ColorScale {
-  const secondaryTokens = tokens[STYLE_TOKENS][SECONDARY_KEY][VALUES_KEYWORD];
-
+export function secondary(): ColorScale {
   return {
-    "50": secondaryTokens["50"],
-    "100": secondaryTokens["100"],
-    "200": secondaryTokens["200"],
-    "300": secondaryTokens["300"],
-    "400": secondaryTokens["400"],
-    "500": secondaryTokens["500"],
-    "600": secondaryTokens["600"],
-    "700": secondaryTokens["700"],
-    "800": secondaryTokens["800"],
-    "900": secondaryTokens["900"],
-    "950": secondaryTokens["950"],
+    50: "#faf6fe",
+    100: "#f2ebfc",
+    200: "#e7dafa",
+    300: "#d5bdf5",
+    400: "#bc93ed",
+    500: "#a269e3",
+    600: "#8a48d3",
+    700: "#7737b9",
+    800: "#643297",
+    900: "#52297a",
+    950: "#361259",
   };
 }

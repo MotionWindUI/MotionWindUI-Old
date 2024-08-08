@@ -1,13 +1,15 @@
-import React, { cloneElement, isValidElement } from "react";
+import React, { cloneElement, ReactElement } from "react";
 import { MotionWindUIBaseProps } from "@motionwindui/base";
-import { checkBoxStyles } from "../../../core/theme/src/components/checkbox";
+import { CheckboxSlots, checkBoxStyles } from "@motionwindui/theme";
 import {
   CheckboxContext,
   Checkbox as RACCheckbox,
   CheckboxProps as RACCheckboxProps,
   useContextProps,
 } from "react-aria-components";
-import { CheckIcon } from "@motionwindui/heroicons-icons";
+import { CheckboxIcon } from "./CheckboxIcon";
+import { SlotClassess } from "@motionwindui/theme";
+import { clsxMerge } from "@motionwindui/theme/src/utils/clsxMerge";
 
 export interface CheckboxProps extends MotionWindUIBaseProps, Omit<RACCheckboxProps, "children"> {
   /* Whether or not to include the checkbox label */
@@ -21,6 +23,8 @@ export interface CheckboxProps extends MotionWindUIBaseProps, Omit<RACCheckboxPr
 
   /* Disables all animation */
   disableAnimation?: boolean;
+
+  classNames?: SlotClassess<CheckboxSlots>;
 }
 
 const Checkbox = React.forwardRef(
@@ -33,7 +37,10 @@ const Checkbox = React.forwardRef(
       radius = "none",
       includeLabel = true,
       disableAnimation = false,
-      icon: checkBoxIcon = <CheckIcon />,
+      icon: checkBoxIcon = <CheckboxIcon />,
+      isIndeterminate,
+      className,
+      classNames,
       children,
     } = props;
 
@@ -44,26 +51,36 @@ const Checkbox = React.forwardRef(
       disableAnimation,
     });
 
-    const iconClone = (icon: React.ReactNode) =>
-      isValidElement(icon)
-        ? cloneElement(icon, {
-            // @ts-ignore
+    /**
+     * Clones any icon passed to the checkbox to give the proper styles
+     * @param isSelected Whether or not the checkbox is selected
+     * @returns The cloned checkbox icon
+     */
+    const cloneCheckIcon = (isSelected: boolean) => {
+      return typeof checkBoxIcon === "function"
+        ? (checkBoxIcon as () => React.ReactNode)()
+        : cloneElement(checkBoxIcon as ReactElement, {
             "aria-hidden": true,
-            tabIndex: -1,
-            focusable: false,
-          })
-        : null;
-
-    const checkedIcon = iconClone(checkBoxIcon);
+            className: icon({ className: classNames?.icon, isSelected }),
+            isIndeterminate,
+          });
+    };
 
     return (
-      <RACCheckbox className={base()} {...props}>
+      <RACCheckbox
+        className={base({ className: clsxMerge(classNames?.base, className) })}
+        {...props}
+      >
         {({ isSelected, ...renderProps }) => (
           <>
-            <div className={wrapper({ isSelected, ...renderProps })}>
-              <span className={icon({ isSelected })}>{checkedIcon}</span>
-            </div>
-            {includeLabel && <span className={label()}>{children}</span>}
+            <span
+              className={wrapper({ isSelected, ...renderProps, className: classNames?.wrapper })}
+            >
+              {cloneCheckIcon(isSelected)}
+            </span>
+            {includeLabel && (
+              <span className={label({ className: classNames?.label })}>{children}</span>
+            )}
           </>
         )}
       </RACCheckbox>

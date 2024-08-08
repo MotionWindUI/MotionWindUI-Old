@@ -1,6 +1,4 @@
-import { ColorScale, STYLE_TOKENS, Tokens, VALUES_KEYWORD } from "./types";
-
-const NEUTRAL_KEY = "neutral";
+import { ColorScale } from "./types";
 
 /**
  * Get the neutral color scale.
@@ -8,20 +6,18 @@ const NEUTRAL_KEY = "neutral";
  * @param tokens The theme tokens object
  * @returns The neutral color scale
  */
-export function neutral(tokens: Tokens): ColorScale {
-  const neutral = tokens[STYLE_TOKENS][NEUTRAL_KEY][VALUES_KEYWORD];
-
+export function neutral(): ColorScale {
   return {
-    "50": neutral["50"],
-    "100": neutral["100"],
-    "200": neutral["200"],
-    "300": neutral["300"],
-    "400": neutral["400"],
-    "500": neutral["500"],
-    "600": neutral["600"],
-    "700": neutral["700"],
-    "800": neutral["800"],
-    "900": neutral["900"],
-    "950": neutral["950"],
+    50: "#f5f8fa",
+    100: "#e0e6eb",
+    200: "#c2cdd6",
+    300: "#a3b4c2",
+    400: "#859aad",
+    500: "#668199",
+    600: "#52677a",
+    700: "#3d4e5c",
+    800: "#29343d",
+    900: "#141a1f",
+    950: "#0a0d0f",
   };
 }

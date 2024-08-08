@@ -1,8 +1,0 @@
-# Import other tokens
-includes: 
-  - ./tokens/colors.yaml
-  - ./tokens/spacing.yaml
-  - ./tokens/typography.yaml
-  - ./tokens/styles.yaml
-  - ./tokens/components.yaml
-        

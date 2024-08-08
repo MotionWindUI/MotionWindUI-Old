@@ -1,5 +1,5 @@
 import { tv } from "tailwind-variants";
-import { focusRing } from "../utils/focusRing";
+import { groupDataFocusRing } from "../utils/focusRing";
 
 export const checkBoxStyles = tv({
   slots: {
@@ -12,7 +12,6 @@ export const checkBoxStyles = tv({
       "cursor-pointer",
       "p-2",
       "-m-2",
-      ...focusRing,
     ],
     wrapper: [
       "relative",
@@ -21,25 +20,21 @@ export const checkBoxStyles = tv({
       "justify-center",
       "align-middle",
       "flex-shrink-0",
-      "overflow-hidden",
       "before:content-['']",
       "before:absolute",
       "before:inset-0",
-      "before:border-solid",
       "before:border-2",
+      "before:border-neutral-negative",
+      "before:border-solid",
       "before:box-border",
-      "before:border-neutral",
       "after:content-['']",
       "after:absolute",
       "after:inset-0",
       "after:scale-50",
       "after:opacity-0",
       "after:origin-center",
-      "group-data-[focus-visible=true]:z-10",
-      "group-data-[focus-visible=true]:outline-2",
-      "group-data-[focus-visible=true]:outline-offset-2",
-      "group-data-[focus-visible=true]:outline-primary-600",
-      ...focusRing,
+      "group-data-[hovered=true]:bg-neutral-subtle",
+      ...groupDataFocusRing,
     ],
     icon: "z-10 w-4 h-3 opacity-0 inset-0",
     label: "select-none relative text-neutral",
@@ -50,19 +45,19 @@ export const checkBoxStyles = tv({
         base: "gap-2",
         wrapper: "w-4 h-4",
         label: "text-small",
-        icon: "w-3 h-2",
+        icon: "w-3 h-3",
       },
       md: {
         base: "gap-2",
         wrapper: "w-5 h-5",
         label: "text-base",
-        icon: "w-4 h-3",
+        icon: "w-5 h-5",
       },
       lg: {
         base: "gap-3",
         wrapper: "w-6 h-6",
         label: "text-large",
-        icon: "w-5 h-4",
+        icon: "w-5 h-5",
       },
     },
     color: {
@@ -122,6 +117,11 @@ export const checkBoxStyles = tv({
         base: "opacity-disabled pointer-events-none",
       },
     },
+    isReadOnly: {
+      true: {
+        base: "pointer-events-none cursor-pointer",
+      },
+    },
     disableAnimation: {
       true: {
         wrapper: "transition-none",
@@ -129,9 +129,14 @@ export const checkBoxStyles = tv({
       },
       false: {
         wrapper: [
-          "before:transition-all after:transition-all duration-200 motion-reduce:transition-none",
+          "before:transition-colors",
+          "transition-transform",
+          "after:transition-transform-opacity",
+          "after:!ease-linear",
+          "after:!duration-200",
+          "motion-reduce:transition-none",
         ],
-        icon: "transition-all duration-200 motion-reduce:transition-none",
+        icon: "transition-opacity motion-reduce:transition-none",
       },
     },
   },
@@ -145,3 +150,5 @@ export const checkBoxStyles = tv({
     },
   ],
 });
+
+export type CheckboxSlots = keyof ReturnType<typeof checkBoxStyles>;
