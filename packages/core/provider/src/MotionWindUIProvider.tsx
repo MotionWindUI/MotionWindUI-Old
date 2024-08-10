@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useEffect, useRef, useState } from "react";
+/* eslint-disable no-unused-vars */
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 export type ThemeMode = "light" | "dark";
 
@@ -7,6 +8,8 @@ export interface ThemeContextProps {
   currentMode: string;
   setCurrentTheme: (theme: string) => void;
   setCurrentMode: (mode: ThemeMode) => void;
+  disableAnimations: boolean;
+  setDisableAnimations: (value: boolean) => void;
 }
 
 export const ThemeContext = createContext<ThemeContextProps | null>(null);
@@ -55,6 +58,8 @@ export const MotionWindUIProvider = ({
     return prefersDarkMode ? "dark" : "light";
   });
 
+  const [disableAnimations, setDisableAnimations] = useState(false);
+
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", `${currentTheme}-${currentMode}`);
   }, [currentTheme, currentMode]);
@@ -74,6 +79,8 @@ export const MotionWindUIProvider = ({
         currentMode,
         setCurrentTheme,
         setCurrentMode,
+        disableAnimations,
+        setDisableAnimations,
       }}
     >
       {children}

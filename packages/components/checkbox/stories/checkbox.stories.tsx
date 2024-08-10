@@ -100,6 +100,11 @@ const StoryTemplate: Story = {
   args: {
     children: "Checkbox",
   },
+  parameters: {
+    controls: {
+      exclude: /icon$/,
+    },
+  },
   render: ({ children, ...args }) => {
     return <Checkbox {...args}>{children}</Checkbox>;
   },
