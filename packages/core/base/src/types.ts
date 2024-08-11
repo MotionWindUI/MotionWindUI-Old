@@ -13,15 +13,22 @@ export type SizeVariants = "sm" | "md" | "lg";
  */
 export type RadiusSizeVariants = "none" | "sm" | "md" | "lg" | "full";
 
+/**
+ * The base props that apply to all MotionWindUI components.
+ */
 export interface MotionWindUIBaseProps {
   /** The color style of the component */
   color?: ColorVariants;
+
   /** The size of the component */
   size?: SizeVariants;
+
   /** The radius size of the component */
   radius?: RadiusSizeVariants;
+
   /** Whether or not the component is disabled from further interactions */
   isDisabled?: boolean;
+
   /* Disables all animation */
-  disableAnimation?: boolean;
+  disableAnimations?: boolean;
 }

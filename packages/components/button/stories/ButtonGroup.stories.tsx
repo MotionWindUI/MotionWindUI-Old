@@ -16,9 +16,13 @@ type Story = StoryObj<typeof ButtonGroup>;
 const StoryTemplate: Story = {
   argTypes: {
     color: {
-      options: ["neutral", "primary", "secondary", "success", "warning", "danger"],
+      description: "The color of the checkbox",
       control: { type: "select" },
-      description: "The color of the button group.",
+      options: ["neutral", "primary", "secondary", "success", "warning", "danger"],
+      table: {
+        defaultValue: { summary: "neutral" },
+        type: { summary: "neutral | primary | secondary | success | warning | danger" },
+      },
     },
     variant: {
       options: ["solid", "faded", "bordered", "ghost", "light"],

@@ -22,7 +22,7 @@ export const borderColors: BorderColors = {
   },
   "neutral-negative": {
     light: "var(--neutral-300)",
-    dark: "var(--netural-700)",
+    dark: "var(--neutral-700)",
   },
   "neutral-negative-hover": {
     light: "var(--neutral-200)",

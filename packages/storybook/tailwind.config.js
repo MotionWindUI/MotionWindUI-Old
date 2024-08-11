@@ -6,6 +6,8 @@ module.exports = {
     "../core/theme/src/components/**/*.{js,jsx,ts,tsx}",
     "../components/*/src/**/*.{js,jsx,ts,tsx}",
     "../components/*/stories/**/*.{js,jsx,ts,tsx}",
+    "./.storybook/preview.jsx",
+    "./.storybook/preview-body.html",
   ],
   theme: {},
   variants: {},

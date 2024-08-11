@@ -3,7 +3,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 
 export type ThemeMode = "light" | "dark";
 
-export interface ThemeContextProps {
+export interface MotionWindUIContextProps {
   currentTheme: string;
   currentMode: string;
   setCurrentTheme: (theme: string) => void;
@@ -12,13 +12,13 @@ export interface ThemeContextProps {
   setDisableAnimations: (value: boolean) => void;
 }
 
-export const ThemeContext = createContext<ThemeContextProps | null>(null);
+export const MotionWindUIContext = createContext<MotionWindUIContextProps | null>(null);
 
-export const useTheme = () => {
-  const context = useContext(ThemeContext);
+export const useMotionWindUI = () => {
+  const context = useContext(MotionWindUIContext);
 
   if (!context) {
-    throw new Error("useTheme must be used within a MotionWindUIProvider");
+    throw new Error("useMotionWindUI must be used within a MotionWindUIProvider");
   }
 
   return context;
@@ -36,6 +36,11 @@ interface MotionWindUIProviderProps {
    * The light or dark mode of the theme
    */
   mode?: ThemeMode;
+
+  /**
+   * Disables animations globally in the library
+   */
+  disableAnimations?: boolean;
 }
 
 export const MotionWindUIProvider = ({
@@ -73,7 +78,7 @@ export const MotionWindUIProvider = ({
   }, [currentMode]);
 
   return (
-    <ThemeContext.Provider
+    <MotionWindUIContext.Provider
       value={{
         currentTheme,
         currentMode,
@@ -84,6 +89,6 @@ export const MotionWindUIProvider = ({
       }}
     >
       {children}
-    </ThemeContext.Provider>
+    </MotionWindUIContext.Provider>
   );
 };

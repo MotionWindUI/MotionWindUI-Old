@@ -15,7 +15,7 @@
   "scripts": {
     "build": "tsup src --dts",
     "build:fast": "tsup src",
-    "dev": "pnpm build:fast --watch",
+    "dev": "pnpm build --watch",
     "clean": "rm -rf dist",
     "type-check": "tsc --noEmit"
   },

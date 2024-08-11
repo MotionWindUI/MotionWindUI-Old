@@ -2,7 +2,8 @@
 import React from "react";
 import "./styles.css";
 import { withThemeByDataAttribute } from "@storybook/addon-themes";
-import { MotionWindUIProvider } from "@motionwindui/provider";
+import { MotionWindUIProvider, useMotionWindUI } from "@motionwindui/provider";
+import { useEffect } from "react";
 
 const preview = {
   parameters: {
@@ -14,7 +15,7 @@ const preview = {
       },
     },
   },
-  gloablTypes: {
+  globalTypes: {
     disableAnimations: {
       description: "Disables animations globally throughout the library",
       defaultValue: false,
@@ -25,27 +26,61 @@ const preview = {
           { value: false, title: "Enable" },
           { value: true, title: "Disable" },
         ],
+        dynamicTitle: true,
+      },
+    },
+    mode: {
+      description: "The light or dark mode of MotionWindUI",
+      defaultValue: "light",
+      toolbar: {
+        title: "Mode",
+        icon: "mirror",
+        items: [
+          { value: "light", title: "Light" },
+          { value: "dark", title: "Dark" },
+        ],
+        dynamicTitle: true,
+      },
+    },
+    theme: {
+      description: "The theme of MotionWindUI",
+      defaultValue: "default",
+      toolbar: {
+        title: "Theme",
+        icon: "paintbrush",
+        items: [
+          { value: "default", title: "Default" },
+          { value: "custom", title: "Custom" },
+          { value: "tailwindColors", title: "Tailwind Colors" },
+        ],
+        dynamicTitle: true,
       },
     },
   },
   decorators: [
-    withThemeByDataAttribute({
-      defaultTheme: "Default Light",
-      attributeName: "data-theme",
-      themes: {
-        "Default Light": "default-light",
-        "Default Dark": "default-dark",
-        "Custom Light": "custom-light",
-        "Custom Dark": "custom-dark",
-        "Tailwind Colors Light": "tailwindColors-light",
-        "Tailwind Colors Dark": "tailwindColors-dark",
-      },
-    }),
     (Story, context) => {
-      const disiableAnimations = context.globals.disableAnimations;
+      const StoryWithProvider = () => {
+        const { setDisableAnimations, setCurrentTheme, setCurrentMode } = useMotionWindUI();
+
+        setCurrentTheme("default");
+
+        useEffect(() => {
+          setDisableAnimations(context.globals.disableAnimations);
+        }, [context.globals.disableAnimations]);
+
+        useEffect(() => {
+          setCurrentTheme(context.globals.theme);
+        }, [context.globals.theme]);
+
+        useEffect(() => {
+          setCurrentMode(context.globals.mode);
+        }, [context.globals.mode]);
+
+        return <Story />;
+      };
       return (
-        <MotionWindUIProvider disableAnimations={disiableAnimations}>
-          <Story />
+        <MotionWindUIProvider>
+          <StoryWithProvider />
         </MotionWindUIProvider>
       );
     },

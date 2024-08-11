@@ -18,7 +18,7 @@ export function CheckIcon(props: CheckboxIconProps) {
         fill="none"
         strokeLinecap="round"
         strokeLinejoin="round"
-        strokeDasharray={22}
+        strokeDasharray={0}
         strokeDashoffset={isSelected ? 22 : 44}
         style={
           !disableAnimation && isSelected

@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
+import { Controller, useForm } from "react-hook-form";
 
 import { Checkbox } from "../src";
-import { iconList } from "../../../core/icons/src";
+import { HeartIcon, iconList } from "../../../core/icons/src";
 import IconWrapper from "../../../storybook/.storybook/IconWrapper";
+import { Button } from "../../button/src";
 
 const iconOptions = {
   None: null,
@@ -102,7 +104,7 @@ const StoryTemplate: Story = {
   },
   parameters: {
     controls: {
-      exclude: /icon$/,
+      exclude: /icon$|classNames$|className$/,
     },
   },
   render: ({ children, ...args }) => {
@@ -112,18 +114,129 @@ const StoryTemplate: Story = {
 
 export const Default: Story = StoryTemplate;
 
-export const CustomCheckbox: Story = {
+export const WithDescription: Story = {
+  ...StoryTemplate,
+  args: {
+    ...StoryTemplate.args,
+    description: "This is for a newsletter",
+  },
+};
+
+export const Controlled: Story = {
+  ...StoryTemplate,
+  args: {
+    children: "Subscribe",
+  },
+  render: ({ children, ...args }) => {
+    const [subscribed, setSubscribed] = useState(true);
+
+    return (
+      <div>
+        <Checkbox {...args} isSelected={subscribed} onChange={setSubscribed}>
+          {children}
+        </Checkbox>
+        <p className="text-default">You are {subscribed ? "subscribed" : "not subscribed"}</p>
+        <Button color={args.color} onPress={() => setSubscribed(!subscribed)}>
+          Toggle Change
+        </Button>
+      </div>
+    );
+  },
+};
+
+export const DefaultSelected: Story = {
+  ...StoryTemplate,
+  args: {
+    ...StoryTemplate.args,
+    defaultSelected: true,
+  },
+};
+
+export const Invalid: Story = {
+  ...StoryTemplate,
+  args: {
+    ...StoryTemplate.args,
+    isInvalid: true,
+  },
+};
+
+export const ReactHookForm: Story = {
+  ...StoryTemplate,
+  args: {
+    ...StoryTemplate.args,
+    children: "I accept the terms and conditions",
+  },
+  render: ({ children, ...args }) => {
+    let { handleSubmit, control } = useForm({
+      defaultValues: {
+        agreeToTerms: "",
+      },
+    });
+    let onSubmit = (data: any) => {
+      // eslint-disable-next-line no-console
+      console.log(data);
+      alert(data.agreeToTerms);
+    };
+
+    return (
+      <form onSubmit={handleSubmit(onSubmit)} className="inline-flex flex-col gap-2">
+        <Controller
+          control={control}
+          name="agreeToTerms"
+          rules={{ required: true }}
+          render={({ field: { name, value, onChange, ref }, fieldState: { invalid } }) => (
+            <>
+              <Checkbox
+                {...args}
+                name={name}
+                value={value}
+                onChange={onChange}
+                ref={ref}
+                isRequired
+                validationBehavior="aria"
+                isInvalid={invalid}
+                errorMessage="Agreement to terms and conditions is required"
+              >
+                {children}
+              </Checkbox>
+            </>
+          )}
+        />
+        <Button color={args.color} type="submit" size="md">
+          Submit
+        </Button>
+      </form>
+    );
+  },
+};
+
+export const CustomIcon: Story = {
+  ...StoryTemplate,
+  args: {
+    ...StoryTemplate.args,
+    icon: <HeartIcon />,
+  },
+  parameters: {
+    controls: {
+      exclude: /className$|classNames$/,
+    },
+  },
+};
+
+export const CustomDesign: Story = {
   args: {
     children: "Checkbox",
-    className: "bg-neutral-subtle data-[selected=true]:outline-primary-600",
+    className:
+      "data-[selected=true]:outline-primary-600 data-[selected=true]:outline hover:bg-neutral-subtle-hover rounded-medium",
     classNames: {
+      wrapper: "mr-3 align-middle",
       icon: "text-blue-500",
     },
   },
   render: ({ ...args }) => {
     return (
       <Checkbox {...args}>
-        <div className="bg-neutral-subtle inline-flex w-96 justify-between">
+        <div className="align-baseline inline-flex w-96 justify-between group-data-[selected=true]:outline group-data-[selected=true]:outline-primary-600">
           <div>Yep</div>
           <div>Nope</div>
         </div>

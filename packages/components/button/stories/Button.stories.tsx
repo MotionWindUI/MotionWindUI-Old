@@ -12,6 +12,15 @@ const meta = {
   title: "Components/Button",
   component: Button,
   argTypes: {
+    color: {
+      description: "The color of the checkbox",
+      control: { type: "select" },
+      options: ["neutral", "primary", "secondary", "success", "warning", "danger"],
+      table: {
+        defaultValue: { summary: "neutral" },
+        type: { summary: "neutral | primary | secondary | success | warning | danger" },
+      },
+    },
     startContent: {
       options: Object.keys(iconOptions),
       mapping: Object.fromEntries(

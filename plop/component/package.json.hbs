@@ -28,18 +28,20 @@
   "scripts": {
     "build": "tsup src --dts",
     "build:fast": "tsup src",
-    "dev": "pnpm build:fast --watch",
+    "dev": "pnpm build --watch",
     "clean": "rimraf dist .turbo",
     "type-check": "tsc --noEmit"
   },
   "peerDependencies": {
     "@motionwindui/theme": ">=1.0.0",
+    "@motionwindui/provider": ">=1.1.0",
     "react": ">=18",
     "react-dom": ">=18"
   },
   "devDependencies": {
     "@motionwindui/theme": "workspace:*",
     "@motionwindui/base": "workspace:*",
+    "@motionwindui/provider": "workspace:*",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   }

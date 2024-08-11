@@ -1,5 +1,5 @@
 import { tv } from "tailwind-variants";
-import { groupDataFocusRing } from "../utils/focusRing";
+import { focusRing, groupDataFocusRing } from "../utils/focusRing";
 
 export const checkBoxStyles = tv({
   slots: {
@@ -36,8 +36,10 @@ export const checkBoxStyles = tv({
       "group-data-[hovered=true]:bg-neutral-subtle",
       ...groupDataFocusRing,
     ],
-    icon: "z-10 w-4 h-3 opacity-0 inset-0",
-    label: "select-none relative text-neutral",
+    icon: "z-10 w-4 h-4 opacity-0 inset-0",
+    label: "select-none relative !text-neutral",
+    description: "!text-subtle opacity-90 text-small pt-1",
+    fieldError: "!text-danger text-small",
   },
   variants: {
     size: {
@@ -46,18 +48,24 @@ export const checkBoxStyles = tv({
         wrapper: "w-4 h-4",
         label: "text-small",
         icon: "w-3 h-3",
+        description: "text-tiny",
+        fieldError: "text-tiny",
       },
       md: {
         base: "gap-2",
         wrapper: "w-5 h-5",
         label: "text-base",
         icon: "w-5 h-5",
+        description: "text-small",
+        fieldError: "text-small",
       },
       lg: {
         base: "gap-3",
         wrapper: "w-6 h-6",
         label: "text-large",
         icon: "w-5 h-5",
+        description: "text-base",
+        fieldError: "text-base",
       },
     },
     color: {
@@ -119,7 +127,26 @@ export const checkBoxStyles = tv({
     },
     isReadOnly: {
       true: {
-        base: "pointer-events-none cursor-pointer",
+        base: "pointer-events-none cursor-default",
+      },
+    },
+    isInvalid: {
+      true: {
+        wrapper: [
+          "before:border-danger",
+          "after:bg-danger",
+          "group-data-[hovered=true]:bg-danger-subtle",
+        ],
+      },
+    },
+    isRequired: {
+      true: {
+        label: ["after:content-['*']", "after:text-danger"],
+      },
+    },
+    isFocusVisible: {
+      true: {
+        wrapper: [...focusRing],
       },
     },
     disableAnimation: {

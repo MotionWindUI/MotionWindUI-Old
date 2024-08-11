@@ -211,7 +211,6 @@ export const buttonStyles = tv({
     "text-wrap",
     "overflow-hidden",
     "data-[pressed=true]:scale-95",
-    ...focusRing,
   ],
   variants: {
     variant: {
@@ -252,7 +251,10 @@ export const buttonStyles = tv({
     isDisabled: {
       true: "opacity-disabled pointer-events-none",
     },
-    animateDisable: {
+    isFocusVisible: {
+      true: [...focusRing],
+    },
+    disableAnimations: {
       true: "!transition-none data-[pressed=true]:scale-100",
       false: "motion-reduce:transition-none",
     },

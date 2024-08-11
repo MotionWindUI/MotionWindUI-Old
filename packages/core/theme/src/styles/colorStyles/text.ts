@@ -79,15 +79,15 @@ export const textColors: TextColors = {
   },
   primary: {
     light: "var(--primary-700)",
-    dark: "var(--primary-500)",
+    dark: "var(--primary-400)",
   },
   "primary-hover": {
     light: "var(--primary-800)",
-    dark: "var(--primary-400)",
+    dark: "var(--primary-300)",
   },
   "primary-active": {
     light: "var(--primary-900)",
-    dark: "var(--primary-300)",
+    dark: "var(--primary-200)",
   },
   "on-primary": {
     light: "var(--primary-50)",
@@ -115,15 +115,15 @@ export const textColors: TextColors = {
   },
   secondary: {
     light: "var(--secondary-700)",
-    dark: "var(--secondary-500)",
+    dark: "var(--secondary-400)",
   },
   "secondary-hover": {
     light: "var(--secondary-800)",
-    dark: "var(--secondary-400)",
+    dark: "var(--secondary-300)",
   },
   "secondary-active": {
     light: "var(--secondary-900)",
-    dark: "var(--secondary-300)",
+    dark: "var(--secondary-200)",
   },
   "on-secondary": {
     light: "var(--secondary-50)",
@@ -151,15 +151,15 @@ export const textColors: TextColors = {
   },
   success: {
     light: "var(--success-700)",
-    dark: "var(--success-500)",
+    dark: "var(--success-400)",
   },
   "success-hover": {
     light: "var(--success-800)",
-    dark: "var(--success-400)",
+    dark: "var(--success-300)",
   },
   "success-active": {
     light: "var(--success-900)",
-    dark: "var(--success-300)",
+    dark: "var(--success-200)",
   },
   "on-success": {
     light: "var(--success-50)",
@@ -187,15 +187,15 @@ export const textColors: TextColors = {
   },
   warning: {
     light: "var(--warning-700)",
-    dark: "var(--warning-500)",
+    dark: "var(--warning-400)",
   },
   "warning-hover": {
     light: "var(--warning-800)",
-    dark: "var(--warning-400)",
+    dark: "var(--warning-300)",
   },
   "warning-active": {
     light: "var(--warning-900)",
-    dark: "var(--warning-300)",
+    dark: "var(--warning-200)",
   },
   "on-warning": {
     light: "var(--warning-50)",
@@ -223,15 +223,15 @@ export const textColors: TextColors = {
   },
   danger: {
     light: "var(--danger-700)",
-    dark: "var(--danger-500)",
+    dark: "var(--danger-400)",
   },
   "danger-hover": {
     light: "var(--danger-800)",
-    dark: "var(--danger-400)",
+    dark: "var(--danger-300)",
   },
   "danger-active": {
     light: "var(--danger-900)",
-    dark: "var(--danger-300)",
+    dark: "var(--danger-200)",
   },
   "on-danger": {
     light: "var(--danger-50)",
@@ -270,7 +270,7 @@ export const baseTextColors: BaseTextColors = {
   },
   primary: {
     light: "var(--primary-700)",
-    dark: "var(--primary-500)",
+    dark: "var(--primary-400)",
   },
   "on-primary": {
     light: "var(--primary-50)",
@@ -278,7 +278,7 @@ export const baseTextColors: BaseTextColors = {
   },
   secondary: {
     light: "var(--secondary-700)",
-    dark: "var(--secondary-500)",
+    dark: "var(--secondary-400)",
   },
   "on-secondary": {
     light: "var(--secondary-50)",
@@ -286,7 +286,7 @@ export const baseTextColors: BaseTextColors = {
   },
   success: {
     light: "var(--success-700)",
-    dark: "var(--success-500)",
+    dark: "var(--success-400)",
   },
   "on-success": {
     light: "var(--success-50)",
@@ -294,7 +294,7 @@ export const baseTextColors: BaseTextColors = {
   },
   warning: {
     light: "var(--warning-700)",
-    dark: "var(--warning-500)",
+    dark: "var(--warning-400)",
   },
   "on-warning": {
     light: "var(--warning-50)",
@@ -302,7 +302,7 @@ export const baseTextColors: BaseTextColors = {
   },
   danger: {
     light: "var(--danger-700)",
-    dark: "var(--danger-500)",
+    dark: "var(--danger-400)",
   },
   "on-danger": {
     light: "var(--danger-50)",
