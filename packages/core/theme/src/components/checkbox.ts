@@ -1,5 +1,5 @@
 import { tv } from "tailwind-variants";
-import { focusRing, groupDataFocusRing } from "../utils/focusRing";
+import { groupDataFocusRing } from "../utils/focusRing";
 
 export const checkBoxStyles = tv({
   slots: {
@@ -144,11 +144,6 @@ export const checkBoxStyles = tv({
         label: ["after:content-['*']", "after:text-danger"],
       },
     },
-    isFocusVisible: {
-      true: {
-        wrapper: [...focusRing],
-      },
-    },
     disableAnimation: {
       true: {
         wrapper: "transition-none",
@@ -177,5 +172,50 @@ export const checkBoxStyles = tv({
     },
   ],
 });
+
+export const checkBoxGroupStyles = tv({
+  slots: {
+    base: "relative flex flex-col gap-2",
+    label: "relative text-medium !text-neutral",
+    wrapper: "flex flex-col flex-wrap gap-2 data-[orientation=horizontal]:flex-row",
+    description: "!text-subtle opacity-90 text-small",
+    errorMessage: "!text-danger text-small",
+  },
+  variants: {
+    isRequired: {
+      true: {
+        label: "after:content-['*'] after:text-danger after:ml-0.5",
+      },
+    },
+    isDisabled: {
+      true: {
+        base: "opacity-disabled pointer-events-none",
+      },
+    },
+    size: {
+      sm: {
+        label: "text-small",
+        description: "text-tiny",
+        errorMessage: "text-tiny",
+      },
+      md: {
+        label: "text-base",
+        description: "text-small",
+        errorMessage: "text-small",
+      },
+      lg: {
+        label: "text-large",
+        description: "text-base",
+        errorMessage: "text-base",
+      },
+    },
+  },
+  defaultVariants: {
+    isInvalid: false,
+    isRequired: false,
+  },
+});
+
+export type CheckboxGroupSlots = keyof ReturnType<typeof checkBoxGroupStyles>;
 
 export type CheckboxSlots = keyof ReturnType<typeof checkBoxStyles>;

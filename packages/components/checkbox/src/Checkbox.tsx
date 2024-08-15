@@ -12,7 +12,7 @@ import { CheckboxIcon } from "./CheckboxIcon";
 import { SlotClassess } from "@motionwindui/theme";
 import { clsxMerge } from "@motionwindui/theme/src/utils/clsxMerge";
 import { useMotionWindUI } from "@motionwindui/provider";
-import { useFocusRing } from "react-aria";
+import { useCheckboxGroup } from "./CheckboxGroupContext";
 
 export interface CheckboxProps extends MotionWindUIBaseProps, Omit<RACCheckboxProps, "children"> {
   /* Whether or not to include the checkbox label */
@@ -49,13 +49,14 @@ const Checkbox = React.forwardRef(
 
     // Get the global context
     const globalProvider = useMotionWindUI();
+    const checkboxGroup = useCheckboxGroup();
 
     const {
-      color = "neutral",
-      size = "md",
-      radius = "none",
+      color = checkboxGroup?.color ?? "neutral",
+      size = checkboxGroup?.size ?? "md",
+      radius = checkboxGroup?.radius ?? "none",
       includeLabel = true,
-      disableAnimation = globalProvider.disableAnimations,
+      disableAnimation = globalProvider.disableAnimations || checkboxGroup?.disableAnimations,
       icon: checkBoxIcon = <CheckboxIcon />,
       description: descriptionProp,
       isIndeterminate,
@@ -70,8 +71,6 @@ const Checkbox = React.forwardRef(
       classNames,
       children,
     } = props;
-
-    const { isFocusVisible } = useFocusRing();
 
     const {
       base,
@@ -90,20 +89,9 @@ const Checkbox = React.forwardRef(
           isDisabled,
           isInvalid,
           isRequired,
-          isFocusVisible,
           disableAnimation,
         }),
-      [
-        color,
-        size,
-        radius,
-        isReadOnly,
-        isDisabled,
-        isInvalid,
-        isRequired,
-        isFocusVisible,
-        disableAnimation,
-      ],
+      [color, size, radius, isReadOnly, isDisabled, isInvalid, isRequired, disableAnimation],
     );
 
     const cloneErrorMessage = (errorMessageContent?: React.ReactNode | string) => {

@@ -245,6 +245,8 @@ export const CustomDesign: Story = {
   },
   // Override so that we can see the className and classNames props in the controls for this story
   parameters: {
-    controls: {},
+    controls: {
+      exclude: /icon$/,
+    },
   },
 };

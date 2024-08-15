@@ -166,6 +166,9 @@ importers:
       '@motionwindui/provider':
         specifier: workspace:*
         version: link:../../core/provider
+      '@motionwindui/react-utils':
+        specifier: workspace:*
+        version: link:../../utils/react-utils
       '@motionwindui/theme':
         specifier: workspace:*
         version: link:../../core/theme

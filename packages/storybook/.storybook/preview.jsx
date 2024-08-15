@@ -62,7 +62,10 @@ const preview = {
       const StoryWithProvider = () => {
         const { setDisableAnimations, setCurrentTheme, setCurrentMode } = useMotionWindUI();
 
-        setCurrentTheme("default");
+        // Set the theme to default on initial load
+        useEffect(() => {
+          setCurrentTheme("default");
+        }, []);
 
         useEffect(() => {
           setDisableAnimations(context.globals.disableAnimations);

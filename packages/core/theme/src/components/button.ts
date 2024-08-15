@@ -1,6 +1,6 @@
 import { combineStyles } from "../utils/components";
 import { tv } from "tailwind-variants";
-import { focusRing } from "../utils/focusRing";
+import { dataFocusRing } from "../utils/focusRing";
 import { collapsedBorderStyle } from "../utils/borderStyle";
 
 export interface ButtonVariantStateStyles {
@@ -211,6 +211,7 @@ export const buttonStyles = tv({
     "text-wrap",
     "overflow-hidden",
     "data-[pressed=true]:scale-95",
+    ...dataFocusRing,
   ],
   variants: {
     variant: {
@@ -250,9 +251,6 @@ export const buttonStyles = tv({
     },
     isDisabled: {
       true: "opacity-disabled pointer-events-none",
-    },
-    isFocusVisible: {
-      true: [...focusRing],
     },
     disableAnimations: {
       true: "!transition-none data-[pressed=true]:scale-100",
