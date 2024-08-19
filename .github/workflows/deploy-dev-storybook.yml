@@ -14,6 +14,10 @@ jobs:
       - name: Install dependencies
         uses: ./.github/workflows/common-actions/install
 
+      - name: Build MotionWindUI
+        shell: bash
+        run: pnpm build
+
       - name: Build Storybook
         run: pnpm build:sb
 
