@@ -5,6 +5,7 @@ on:
 
 jobs:
   deploy_sb:
+    name: 🚀 Deploy Storybook Development
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
