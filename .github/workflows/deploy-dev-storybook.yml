@@ -3,6 +3,9 @@ on:
     branches:
       - dev
 
+permissions:
+  actions: write
+
 jobs:
   deploy_sb:
     name: 🚀 Deploy Storybook Development
