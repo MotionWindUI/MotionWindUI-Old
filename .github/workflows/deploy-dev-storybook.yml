@@ -4,7 +4,7 @@ on:
       - dev
 
 permissions:
-  actions: write
+  contents: write
 
 jobs:
   deploy_sb:
