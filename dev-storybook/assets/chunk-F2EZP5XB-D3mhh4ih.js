@@ -1,0 +1,9 @@
+import{r as o}from"./index-Cs7sjTYM.js";var l={exports:{}},d={};/**
+ * @license React
+ * react-jsx-runtime.production.min.js
+ *
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */var x=o,E=Symbol.for("react.element"),S=Symbol.for("react.fragment"),I=Object.prototype.hasOwnProperty,M=x.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner,y={key:!0,ref:!0,__self:!0,__source:!0};function m(n,e,u){var t,r={},a=null,s=null;u!==void 0&&(a=""+u),e.key!==void 0&&(a=""+e.key),e.ref!==void 0&&(s=e.ref);for(t in e)I.call(e,t)&&!y.hasOwnProperty(t)&&(r[t]=e[t]);if(n&&n.defaultProps)for(t in e=n.defaultProps,e)r[t]===void 0&&(r[t]=e[t]);return{$$typeof:E,type:n,key:a,ref:s,props:r,_owner:M.current}}d.Fragment=S;d.jsx=m;d.jsxs=m;l.exports=d;var b=l.exports,c=o.createContext(null),g=()=>{const n=o.useContext(c);if(!n)throw new Error("useMotionWindUI must be used within a MotionWindUIProvider");return n},O=({children:n,theme:e="default",validationBehavior:u="aria",disableAnimations:t=!1})=>{const[r,a]=o.useState(()=>{const i=localStorage.getItem("theme");return i??e}),[s,f]=o.useState(()=>{const i=localStorage.getItem("mode");return i||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}),[p,v]=o.useState(t),[h,_]=o.useState(u);return o.useEffect(()=>{document.documentElement.setAttribute("data-theme",`${r}-${s}`)},[r,s]),o.useEffect(()=>{localStorage.setItem("theme",r)},[r]),o.useEffect(()=>{localStorage.setItem("mode",s)},[s]),b.jsx(c.Provider,{value:{currentTheme:r,currentMode:s,setCurrentTheme:a,setCurrentMode:f,disableAnimations:p,setDisableAnimations:v,validationBehavior:h,setValidationBehavior:_},children:n})};export{O as M,b as j,g as u};
