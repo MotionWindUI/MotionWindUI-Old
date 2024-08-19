@@ -27,4 +27,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./packages/storybook/storybook-static
           destination_dir: dev-storybook
-          publish_branch: dev
+          publish_branch: gh-pages

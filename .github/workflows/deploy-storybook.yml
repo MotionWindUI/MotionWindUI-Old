@@ -6,12 +6,17 @@ on:
 jobs:
   deploy_sb:
     runs-on: ubuntu-latest
+    name: 🚀 Deploy Storybook
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Install dependencies
         uses: ./.github/workflows/common-actions/install
+
+      - name: Build MotionWindUI
+        shell: bash
+        run: pnpm build
 
       - name: Build Storybook
         run: pnpm build:sb
@@ -22,4 +27,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./packages/storybook/storybook-static
           destination_dir: storybook
-          publish_branch: main
+          publish_branch: gh-pages
