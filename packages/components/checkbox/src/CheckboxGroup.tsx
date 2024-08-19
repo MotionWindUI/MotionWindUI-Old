@@ -2,11 +2,14 @@ import React, { cloneElement, useMemo } from "react";
 import {
   CheckboxGroup as RACCheckboxGroup,
   CheckboxGroupProps as RACheckboxGroupProps,
+  CheckboxGroupContext as RACCheckboxGroupContext,
 } from "react-aria-components";
 import { MotionWindUIBaseProps } from "@motionwindui/base";
 import { CheckboxGroupProvider } from "./CheckboxGroupContext";
 import { CheckboxGroupSlots, checkBoxGroupStyles, SlotClassess } from "@motionwindui/theme";
 import { clsxMerge } from "@motionwindui/theme/src/utils/clsxMerge";
+import { useId } from "react-aria";
+import { useMotionWindUI } from "@motionwindui/provider";
 
 export interface CheckboxGroupProps
   extends MotionWindUIBaseProps,
@@ -39,10 +42,15 @@ export type CheckboxContextType = {
 
   /** Disables the checkbox group animations */
   disableAnimations?: CheckboxGroupProps["disableAnimations"];
+
+  /** The checkbox group's validation behavior */
+  validationBehavior?: CheckboxGroupProps["validationBehavior"];
 };
 
 const CheckboxGroup = React.forwardRef(
   (props: CheckboxGroupProps, ref: React.ForwardedRef<HTMLDivElement>) => {
+    const globalProvider = useMotionWindUI();
+
     const {
       children,
       isInvalid = false,
@@ -54,6 +62,7 @@ const CheckboxGroup = React.forwardRef(
       label: labelProp,
       errorMessage: errorMessageProp,
       description: descriptionProp,
+      validationBehavior = globalProvider.validationBehavior || "aria",
       ...rest
     } = props;
 
@@ -67,43 +76,64 @@ const CheckboxGroup = React.forwardRef(
       [isRequired, isDisabled, size],
     );
 
-    // Clones the error message content and applies the error message styles
-    // It will allow a string or a ReactNode to be passed as the error message
-    // If a ReactNode is passed, it will clone the element and apply the error message styles
-    // If a string is passed, it will wrap the string in a span and apply the error message styles
+    // Generate the unique ids for the description, error message, and label
+    // To follow the best practices for accessibility we need to set the aria-describedby,
+    // aria-labelledby, and aria-errormessage attributes. We need to set the ids for these
+    let descriptionId = useId();
+    let errorMessageId = useId();
+    let labelId = useId();
+
+    // If the description is provided, we need to set the descriptionId and add our styles
     const cloneErrorMessage = (errorMessageContent?: React.ReactNode | string) => {
       return typeof errorMessageContent === "string" ? (
-        <span className={errorMessage({ className: classNames?.errorMessage })}>
+        <small className={errorMessage()} id={errorMessageId}>
           {errorMessageContent as string}
-        </span>
+        </small>
       ) : (
         cloneElement(errorMessageContent as React.ReactElement, {
-          className: errorMessage({ className: classNames?.errorMessage }),
+          className: errorMessage(),
+          id: errorMessageId,
         })
       );
     };
 
     return (
-      <RACCheckboxGroup
-        {...rest}
-        isInvalid={isInvalid}
-        isRequired={isRequired}
-        ref={ref}
-        className={base({ className: clsxMerge(classNames?.base, className) })}
+      <RACCheckboxGroupContext.Provider
+        value={{
+          "aria-describedby": descriptionId,
+          "aria-labelledby": labelId,
+          "aria-errormessage": errorMessageId,
+        }}
       >
-        {labelProp && <span className={label()}>{labelProp}</span>}
-        <div className={wrapper({ className: classNames?.wrapper })}>
-          <CheckboxGroupProvider value={{ ...checkBoxGroupProps }}>
-            {children}
-          </CheckboxGroupProvider>
-        </div>
-        {descriptionProp && (
-          <span className={description({ className: classNames?.description })}>
-            {descriptionProp}
-          </span>
-        )}
-        {isInvalid && errorMessageProp && cloneErrorMessage(errorMessageProp)}
-      </RACCheckboxGroup>
+        <RACCheckboxGroup
+          {...rest}
+          isInvalid={isInvalid}
+          isRequired={isRequired}
+          ref={ref}
+          className={base({ className: clsxMerge(classNames?.base, className) })}
+          validationBehavior={validationBehavior}
+        >
+          {labelProp && (
+            <span className={label()} id={labelId}>
+              {labelProp}
+            </span>
+          )}
+          <div className={wrapper({ className: classNames?.wrapper })}>
+            <CheckboxGroupProvider value={{ ...checkBoxGroupProps }}>
+              {children}
+            </CheckboxGroupProvider>
+          </div>
+          {descriptionProp && (
+            <span
+              className={description({ className: classNames?.description })}
+              id={descriptionId}
+            >
+              {descriptionProp}
+            </span>
+          )}
+          {isInvalid && errorMessageProp && cloneErrorMessage(errorMessageProp)}
+        </RACCheckboxGroup>
+      </RACCheckboxGroupContext.Provider>
     );
   },
 );

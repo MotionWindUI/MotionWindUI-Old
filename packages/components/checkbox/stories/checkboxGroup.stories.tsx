@@ -4,6 +4,7 @@ import CheckboxGroup from "../src/CheckboxGroup";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Controller, useForm } from "react-hook-form";
 import Button from "../../button/src/Button";
+import React from "react";
 
 const meta = {
   title: "Components/Checkbox Group",
@@ -109,6 +110,26 @@ export const Disabled: Story = {
   },
 };
 
+export const DefaultValues: Story = {
+  ...StoryTemplate,
+  args: {
+    label: "Please select one or more options",
+    description: "You can select multiple options",
+  },
+  render: ({ ...args }) => {
+    let defaultValues = ["dogs", "fish"];
+
+    return (
+      <CheckboxGroup {...args} value={defaultValues}>
+        <Checkbox value="dogs">Dogs</Checkbox>
+        <Checkbox value="cats">Cats</Checkbox>
+        <Checkbox value="fish">Fish</Checkbox>
+        <Checkbox value="birds">Birds</Checkbox>
+      </CheckboxGroup>
+    );
+  },
+};
+
 export const ReactHookForm: Story = {
   ...StoryTemplate,
   args: {
@@ -122,34 +143,21 @@ export const ReactHookForm: Story = {
       defaultValues: {
         pets: [],
       },
-      mode: "onSubmit",
     });
 
     let onSubmit = (data: any) => {
       // eslint-disable-next-line no-console
       console.log(data);
-    };
-
-    const onError = (errors: any) => {
-      // Log form errors if validation fails
-      console.log("Form Errors:", errors);
-      if (Object.keys(errors).length === 0) {
-        console.log("No validation errors found, but focusing on the first checkbox.");
-      }
+      alert(data.pets);
     };
 
     return (
-      <form onSubmit={handleSubmit(onSubmit, onError)} className="inline-flex flex-col gap-2">
+      <form onSubmit={handleSubmit(onSubmit)} className="inline-flex flex-col gap-2">
         <Controller
           control={control}
           name="pets"
           rules={{
             required: true,
-            validate: (values) => {
-              const isValid = values.length > 0;
-
-              return isValid || "Please select at least one option";
-            },
           }}
           render={({ field: { name, value, onChange, ref }, fieldState: { invalid } }) => (
             <CheckboxGroup

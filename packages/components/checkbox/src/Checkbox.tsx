@@ -5,14 +5,16 @@ import {
   CheckboxContext,
   Checkbox as RACCheckbox,
   CheckboxProps as RACCheckboxProps,
+  CheckboxContext as RACCheckboxContent,
   useContextProps,
   FieldError,
 } from "react-aria-components";
-import { CheckboxIcon } from "./CheckboxIcon";
+import { CheckboxIcon, CheckboxIconProps } from "./CheckboxIcon";
 import { SlotClassess } from "@motionwindui/theme";
 import { clsxMerge } from "@motionwindui/theme/src/utils/clsxMerge";
 import { useMotionWindUI } from "@motionwindui/provider";
 import { useCheckboxGroup } from "./CheckboxGroupContext";
+import { useId } from "react-aria";
 
 export interface CheckboxProps extends MotionWindUIBaseProps, Omit<RACCheckboxProps, "children"> {
   /* Whether or not to include the checkbox label */
@@ -70,6 +72,9 @@ const Checkbox = React.forwardRef(
       className,
       classNames,
       children,
+      validationBehavior = globalProvider.validationBehavior ||
+        checkboxGroup?.validationBehavior ||
+        "aria",
     } = props;
 
     const {
@@ -94,11 +99,22 @@ const Checkbox = React.forwardRef(
       [color, size, radius, isReadOnly, isDisabled, isInvalid, isRequired, disableAnimation],
     );
 
+    // Generate the unique ids for the description, error message, and label
+    let descriptionId = useId();
+    let errorMessageId = useId();
+    let labelId = useId();
+
+    // If the description is provided, we need to set the descriptionId and add our styles
     const cloneErrorMessage = (errorMessageContent?: React.ReactNode | string) => {
       return typeof errorMessageContent === "string" ? (
-        <span className={fieldErrorStyle()}>{errorMessageContent as string}</span>
+        <small className={fieldErrorStyle()} id={errorMessageId}>
+          {errorMessageContent as string}
+        </small>
       ) : (
-        cloneElement(errorMessageContent as React.ReactElement, { className: fieldErrorStyle() })
+        cloneElement(errorMessageContent as React.ReactElement, {
+          className: fieldErrorStyle(),
+          id: errorMessageId,
+        })
       );
     };
 
@@ -108,46 +124,78 @@ const Checkbox = React.forwardRef(
      * @returns The cloned checkbox icon
      */
     const cloneCheckIcon = (isSelected: boolean) => {
-      return typeof checkBoxIcon === "function"
-        ? (checkBoxIcon as () => React.ReactNode)()
-        : cloneElement(checkBoxIcon as ReactElement, {
-            "aria-hidden": true,
-            className: icon({ className: classNames?.icon, isSelected }),
+      // The basic props for the icon
+      const iconProps = {
+        "aria-hidden": true,
+        className: icon({ isSelected, className: classNames?.icon }),
+      };
+
+      // If the icon is a CheckboxIcon, we need to pass the isIndeterminate prop
+      if (React.isValidElement(checkBoxIcon) && checkBoxIcon.type === CheckboxIcon) {
+        // We casted the props to Partial<CheckboxIconProps> because we know that the icon is a CheckboxIcon
+        return cloneElement(
+          checkBoxIcon as React.ReactElement,
+          {
+            ...iconProps,
             isIndeterminate,
-          });
+          } as Partial<CheckboxIconProps>,
+        );
+      }
+
+      // Otherwise, we just clone the icon with the basic props
+      return cloneElement(checkBoxIcon as React.ReactElement, iconProps);
     };
 
     return (
-      <div className="inline-flex flex-col">
-        <RACCheckbox
-          className={base({ className: clsxMerge(classNames?.base, className) })}
-          {...props}
-        >
-          {({ isSelected, isRequired, ...renderProps }) => (
-            <>
-              <span
-                className={wrapper({ isSelected, ...renderProps, className: classNames?.wrapper })}
-              >
-                {cloneCheckIcon(isSelected)}
-              </span>
-              {includeLabel && (
-                <span className={label({ isRequired, className: classNames?.label })}>
-                  {children}
+      <RACCheckboxContent.Provider
+        value={{
+          "aria-describedby": descriptionId,
+          "aria-errormessage": errorMessageId,
+        }}
+      >
+        <div className="inline-flex flex-col">
+          <RACCheckbox
+            className={base({ className: clsxMerge(classNames?.base, className) })}
+            {...props}
+            ref={ref}
+            validationBehavior={validationBehavior}
+          >
+            {({ isSelected, isRequired, ...renderProps }) => (
+              <>
+                <span
+                  className={wrapper({
+                    isSelected,
+                    ...renderProps,
+                    className: classNames?.wrapper,
+                  })}
+                >
+                  {cloneCheckIcon(isSelected)}
                 </span>
-              )}
-            </>
+                {includeLabel && (
+                  <span
+                    className={label({ isRequired, className: classNames?.label })}
+                    id={labelId}
+                  >
+                    {children}
+                  </span>
+                )}
+              </>
+            )}
+          </RACCheckbox>
+          {descriptionProp && (
+            <small
+              className={description({ className: classNames?.description })}
+              id={descriptionId}
+            >
+              {descriptionProp}
+            </small>
           )}
-        </RACCheckbox>
-        {descriptionProp && (
-          <span className={description({ className: classNames?.description })}>
-            {descriptionProp}
-          </span>
-        )}
-        {useFieldError &&
-          fieldErrorProp &&
-          cloneElement(fieldErrorProp as ReactElement, { className: fieldErrorStyle() })}
-        {isInvalid && errorMessage && cloneErrorMessage(errorMessage)}
-      </div>
+          {useFieldError &&
+            fieldErrorProp &&
+            cloneElement(fieldErrorProp as ReactElement, { className: fieldErrorStyle() })}
+          {isInvalid && errorMessage && cloneErrorMessage(errorMessage)}
+        </div>
+      </RACCheckboxContent.Provider>
     );
   },
 );

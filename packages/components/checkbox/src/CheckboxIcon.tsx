@@ -7,7 +7,8 @@ export type CheckboxIconProps = SVGProps<SVGSVGElement> & {
 };
 
 export function CheckIcon(props: CheckboxIconProps) {
-  const { isSelected, disableAnimation, ...rest } = props;
+  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+  const { isSelected, disableAnimation, isIndeterminate, ...rest } = props;
 
   return (
     <svg viewBox="0 0 24 24" {...rest}>
@@ -33,8 +34,8 @@ export function CheckIcon(props: CheckboxIconProps) {
 }
 
 function IndeterminateIcon(props: CheckboxIconProps) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { ...otherProps } = props;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
+  const { isIndeterminate, isSelected, disableAnimation, ...otherProps } = props;
 
   return (
     <svg stroke="currentColor" strokeWidth={3} viewBox="0 0 24 24" {...otherProps}>

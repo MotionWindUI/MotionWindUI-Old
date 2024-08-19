@@ -1,5 +1,5 @@
 import { tv } from "tailwind-variants";
-import { groupDataFocusRing } from "../utils/focusRing";
+import { groupDataFocusOnlyRing, groupDataFocusRing } from "../utils/focusRing";
 
 export const checkBoxStyles = tv({
   slots: {
@@ -12,6 +12,7 @@ export const checkBoxStyles = tv({
       "cursor-pointer",
       "p-2",
       "-m-2",
+      "select-none",
     ],
     wrapper: [
       "relative",
@@ -34,7 +35,9 @@ export const checkBoxStyles = tv({
       "after:opacity-0",
       "after:origin-center",
       "group-data-[hovered=true]:bg-neutral-subtle",
+      "before:group-data-[pressed=true]:border-neutral-negative-hover",
       ...groupDataFocusRing,
+      ...groupDataFocusOnlyRing,
     ],
     icon: "z-10 w-4 h-4 opacity-0 inset-0",
     label: "select-none relative !text-neutral",
@@ -141,7 +144,7 @@ export const checkBoxStyles = tv({
     },
     isRequired: {
       true: {
-        label: ["after:content-['*']", "after:text-danger"],
+        label: ["after:content-['*']", "after:text-danger", "after:ml-0.5"],
       },
     },
     disableAnimation: {
@@ -152,6 +155,7 @@ export const checkBoxStyles = tv({
       false: {
         wrapper: [
           "before:transition-colors",
+          "group-data-[pressed=true]:scale-95",
           "transition-transform",
           "after:transition-transform-opacity",
           "after:!ease-linear",
@@ -162,15 +166,6 @@ export const checkBoxStyles = tv({
       },
     },
   },
-  compoundVariants: [
-    {
-      isPressed: true,
-      disableAnimation: false,
-      className: {
-        wrapper: "scale-95",
-      },
-    },
-  ],
 });
 
 export const checkBoxGroupStyles = tv({

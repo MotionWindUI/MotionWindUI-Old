@@ -2,6 +2,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 export type ThemeMode = "light" | "dark";
+export type ValidationBehavior = "native" | "aria";
 
 export interface MotionWindUIContextProps {
   currentTheme: string;
@@ -10,6 +11,8 @@ export interface MotionWindUIContextProps {
   setCurrentMode: (mode: ThemeMode) => void;
   disableAnimations: boolean;
   setDisableAnimations: (value: boolean) => void;
+  validationBehavior: ValidationBehavior;
+  setValidationBehavior: (value: ValidationBehavior) => void;
 }
 
 export const MotionWindUIContext = createContext<MotionWindUIContextProps | null>(null);
@@ -41,11 +44,18 @@ interface MotionWindUIProviderProps {
    * Disables animations globally in the library
    */
   disableAnimations?: boolean;
+
+  /**
+   * The validation behavior to use. Defaults to "aria"
+   */
+  validationBehavior?: ValidationBehavior;
 }
 
 export const MotionWindUIProvider = ({
   children,
   theme = "default",
+  validationBehavior: validationBehaviorProp = "aria",
+  disableAnimations: disableAnimationsProp = false,
 }: MotionWindUIProviderProps) => {
   const [currentTheme, setCurrentTheme] = useState<string>(() => {
     const storedTheme = localStorage.getItem("theme");
@@ -63,7 +73,10 @@ export const MotionWindUIProvider = ({
     return prefersDarkMode ? "dark" : "light";
   });
 
-  const [disableAnimations, setDisableAnimations] = useState(false);
+  const [disableAnimations, setDisableAnimations] = useState(disableAnimationsProp);
+
+  const [validationBehavior, setValidationBehavior] =
+    useState<ValidationBehavior>(validationBehaviorProp);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", `${currentTheme}-${currentMode}`);
@@ -86,6 +99,8 @@ export const MotionWindUIProvider = ({
         setCurrentMode,
         disableAnimations,
         setDisableAnimations,
+        validationBehavior,
+        setValidationBehavior,
       }}
     >
       {children}

@@ -24,3 +24,11 @@ export const focusRing: string[] = [
   "outline-primary-600",
   "outline-offset-2",
 ];
+
+export const groupDataFocusOnlyRing: string[] = [
+  "group-data-[focused=true]:z-10",
+  "group-data-[focused=true]:outline",
+  "group-data-[focused=true]:outline-2",
+  "group-data-[focused=true]:outline-offset-2",
+  "group-data-[focused=true]:outline-primary-600",
+];

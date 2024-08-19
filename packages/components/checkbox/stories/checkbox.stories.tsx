@@ -100,7 +100,7 @@ type Story = StoryObj<typeof Checkbox>;
 
 const StoryTemplate: Story = {
   args: {
-    children: "Checkbox",
+    children: "Example Label",
   },
   parameters: {
     controls: {
