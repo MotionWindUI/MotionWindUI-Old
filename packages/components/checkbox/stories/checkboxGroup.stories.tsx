@@ -117,7 +117,7 @@ export const DefaultValues: Story = {
     description: "You can select multiple options",
   },
   render: ({ ...args }) => {
-    let defaultValues = ["dogs", "fish"];
+    const defaultValues = ["dogs", "fish"];
 
     return (
       <CheckboxGroup {...args} value={defaultValues}>
@@ -139,13 +139,13 @@ export const ReactHookForm: Story = {
     isRequired: true,
   },
   render: ({ ...args }) => {
-    let { handleSubmit, control } = useForm({
+    const { handleSubmit, control } = useForm({
       defaultValues: {
         pets: [],
       },
     });
 
-    let onSubmit = (data: any) => {
+    const onSubmit = (data: any) => {
       // eslint-disable-next-line no-console
       console.log(data);
       alert(data.pets);

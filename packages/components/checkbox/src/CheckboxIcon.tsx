@@ -11,7 +11,7 @@ export function CheckIcon(props: CheckboxIconProps) {
   const { isSelected, disableAnimation, isIndeterminate, ...rest } = props;
 
   return (
-    <svg viewBox="0 0 24 24" {...rest}>
+    <svg viewBox="0 0 24 24" {...rest} aria-label="Checkmark Icon">
       <path
         d="M5 12l5 5L19 7"
         stroke="currentColor"
@@ -38,7 +38,13 @@ function IndeterminateIcon(props: CheckboxIconProps) {
   const { isIndeterminate, isSelected, disableAnimation, ...otherProps } = props;
 
   return (
-    <svg stroke="currentColor" strokeWidth={3} viewBox="0 0 24 24" {...otherProps}>
+    <svg
+      stroke="currentColor"
+      strokeWidth={3}
+      viewBox="0 0 24 24"
+      {...otherProps}
+      aria-label="Indeterminate Icon"
+    >
       <line x1="21" x2="3" y1="12" y2="12" />
     </svg>
   );

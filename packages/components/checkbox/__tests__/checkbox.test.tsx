@@ -67,7 +67,7 @@ describe("Checkbox", () => {
   });
 
   it("should not animate when disableAnimation is true", () => {
-    const wrapper = customRender(<Checkbox disableAnimation>My Label Text</Checkbox>);
+    const wrapper = customRender(<Checkbox disableAnimations>My Label Text</Checkbox>);
 
     const checkboxWrapper = wrapper.container.querySelector("span.before\\:box-border");
 

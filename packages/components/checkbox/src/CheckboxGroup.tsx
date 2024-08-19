@@ -41,7 +41,7 @@ export type CheckboxContextType = {
   radius?: CheckboxGroupProps["radius"];
 
   /** Disables the checkbox group animations */
-  disableAnimation?: CheckboxGroupProps["disableAnimation"];
+  disableAnimations?: CheckboxGroupProps["disableAnimations"];
 
   /** The checkbox group's validation behavior */
   validationBehavior?: CheckboxGroupProps["validationBehavior"];
@@ -79,9 +79,9 @@ const CheckboxGroup = React.forwardRef(
     // Generate the unique ids for the description, error message, and label
     // To follow the best practices for accessibility we need to set the aria-describedby,
     // aria-labelledby, and aria-errormessage attributes. We need to set the ids for these
-    let descriptionId = useId();
-    let errorMessageId = useId();
-    let labelId = useId();
+    const descriptionId = useId();
+    const errorMessageId = useId();
+    const labelId = useId();
 
     // If the description is provided, we need to set the descriptionId and add our styles
     const cloneErrorMessage = (errorMessageContent?: React.ReactNode | string) => {

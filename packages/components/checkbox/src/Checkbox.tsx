@@ -25,9 +25,6 @@ export interface CheckboxProps extends MotionWindUIBaseProps, Omit<RACCheckboxPr
   /* The icon to display in the checkbox */
   icon?: React.ReactNode;
 
-  /* Disables all animation */
-  disableAnimation?: boolean;
-
   /* The error message content to display */
   errorMessage?: React.ReactNode | string;
 
@@ -46,7 +43,7 @@ export interface CheckboxProps extends MotionWindUIBaseProps, Omit<RACCheckboxPr
 
 const Checkbox = React.forwardRef(
   (props: CheckboxProps, ref: React.ForwardedRef<HTMLLabelElement>) => {
-    [props, ref] = useContextProps(props, ref, CheckboxContext);
+    const [contextProps, contextRef] = useContextProps(props, ref, CheckboxContext);
 
     // Get the global context
     const globalProvider = useMotionWindUI();
@@ -56,7 +53,7 @@ const Checkbox = React.forwardRef(
       color = checkboxGroup?.color ?? "neutral",
       size = checkboxGroup?.size ?? "md",
       radius = checkboxGroup?.radius ?? "none",
-      disableAnimation = globalProvider.disableAnimations || checkboxGroup?.disableAnimation,
+      disableAnimations = globalProvider.disableAnimations || checkboxGroup?.disableAnimations,
       icon: checkBoxIcon = <CheckboxIcon />,
       description: descriptionProp,
       isIndeterminate,
@@ -75,7 +72,7 @@ const Checkbox = React.forwardRef(
       descriptionId: descriptionIdProp,
       errorMessageId: errorMessageIdProp,
       "aria-label": ariaLabel,
-    } = props;
+    } = contextProps;
 
     // First, check if neither a child or label ID is provided
     // If so, then warn the user that they need to provide one
@@ -105,16 +102,16 @@ const Checkbox = React.forwardRef(
           isDisabled,
           isInvalid,
           isRequired,
-          disableAnimation,
+          disableAnimations,
         }),
-      [color, size, radius, isReadOnly, isDisabled, isInvalid, isRequired, disableAnimation],
+      [color, size, radius, isReadOnly, isDisabled, isInvalid, isRequired, disableAnimations],
     );
 
     // Generate the unique ids for the description, error message, and label
     // Use the provided ids if they exist, otherwise generate new ones
-    let descriptionId = descriptionIdProp ?? useId();
-    let errorMessageId = errorMessageIdProp ?? useId();
-    let labelId = labelIdProp ?? useId();
+    const descriptionId = descriptionIdProp ?? useId();
+    const errorMessageId = errorMessageIdProp ?? useId();
+    const labelId = labelIdProp ?? useId();
 
     // If the description is provided, we need to set the descriptionId and add our styles
     const cloneErrorMessage = (errorMessageContent?: React.ReactNode | string) => {
@@ -170,7 +167,7 @@ const Checkbox = React.forwardRef(
           <RACCheckbox
             className={base({ className: clsxMerge(classNames?.base, className) })}
             {...props}
-            ref={ref}
+            ref={contextRef}
             validationBehavior={validationBehavior}
             aria-label={ariaLabel}
           >

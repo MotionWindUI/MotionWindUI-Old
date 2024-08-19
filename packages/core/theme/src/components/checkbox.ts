@@ -147,7 +147,7 @@ export const checkBoxStyles = tv({
         label: ["after:content-['*']", "after:text-danger", "after:ml-0.5"],
       },
     },
-    disableAnimation: {
+    disableAnimations: {
       true: {
         wrapper: "transition-none",
         icon: "transition-none",

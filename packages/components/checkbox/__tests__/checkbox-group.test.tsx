@@ -59,7 +59,7 @@ describe("CheckboxGroup", () => {
 
   it("should not have any child animate when disableAnimation is true", () => {
     const wrapper = customRender(
-      <CheckboxGroup disableAnimation>
+      <CheckboxGroup disableAnimations>
         <Checkbox data-testid="child">Test Label</Checkbox>
       </CheckboxGroup>,
     );
