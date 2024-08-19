@@ -41,7 +41,7 @@ export type CheckboxContextType = {
   radius?: CheckboxGroupProps["radius"];
 
   /** Disables the checkbox group animations */
-  disableAnimations?: CheckboxGroupProps["disableAnimations"];
+  disableAnimation?: CheckboxGroupProps["disableAnimation"];
 
   /** The checkbox group's validation behavior */
   validationBehavior?: CheckboxGroupProps["validationBehavior"];

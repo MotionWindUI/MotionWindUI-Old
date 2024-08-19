@@ -1,4 +1,4 @@
-import React, { cloneElement, ReactElement, useMemo } from "react";
+import React, { cloneElement, useMemo } from "react";
 import { MotionWindUIBaseProps } from "@motionwindui/base";
 import { CheckboxSlots, checkBoxStyles } from "@motionwindui/theme";
 import {
@@ -7,7 +7,6 @@ import {
   CheckboxProps as RACCheckboxProps,
   CheckboxContext as RACCheckboxContent,
   useContextProps,
-  FieldError,
 } from "react-aria-components";
 import { CheckboxIcon, CheckboxIconProps } from "./CheckboxIcon";
 import { SlotClassess } from "@motionwindui/theme";
@@ -17,9 +16,6 @@ import { useCheckboxGroup } from "./CheckboxGroupContext";
 import { useId } from "react-aria";
 
 export interface CheckboxProps extends MotionWindUIBaseProps, Omit<RACCheckboxProps, "children"> {
-  /* Whether or not to include the checkbox label */
-  includeLabel?: boolean;
-
   /* A description of the input (if desired) */
   description?: string;
 
@@ -35,14 +31,17 @@ export interface CheckboxProps extends MotionWindUIBaseProps, Omit<RACCheckboxPr
   /* The error message content to display */
   errorMessage?: React.ReactNode | string;
 
-  /* Use React Aria's native FieldError component */
-  useFieldError?: boolean;
-
-  /* Errors that are shown for validation */
-  fieldError?: ReactElement<typeof FieldError>;
-
   /* The individual slots to apply extra styling to */
   classNames?: SlotClassess<CheckboxSlots>;
+
+  /* If a custom label is provided, then the label ID to use for aria-labledby */
+  labelId?: string;
+
+  /* If a custom description message is provided, then the label ID to use for aria-describedby */
+  descriptionId?: string;
+
+  /* If a custom error message is provided, then the label ID to use for aria-errormessage */
+  errorMessageId?: string;
 }
 
 const Checkbox = React.forwardRef(
@@ -57,8 +56,7 @@ const Checkbox = React.forwardRef(
       color = checkboxGroup?.color ?? "neutral",
       size = checkboxGroup?.size ?? "md",
       radius = checkboxGroup?.radius ?? "none",
-      includeLabel = true,
-      disableAnimation = globalProvider.disableAnimations || checkboxGroup?.disableAnimations,
+      disableAnimation = globalProvider.disableAnimations || checkboxGroup?.disableAnimation,
       icon: checkBoxIcon = <CheckboxIcon />,
       description: descriptionProp,
       isIndeterminate,
@@ -66,8 +64,6 @@ const Checkbox = React.forwardRef(
       isDisabled,
       isInvalid,
       isRequired,
-      fieldError: fieldErrorProp,
-      useFieldError = false,
       errorMessage,
       className,
       classNames,
@@ -75,15 +71,30 @@ const Checkbox = React.forwardRef(
       validationBehavior = globalProvider.validationBehavior ||
         checkboxGroup?.validationBehavior ||
         "aria",
+      labelId: labelIdProp,
+      descriptionId: descriptionIdProp,
+      errorMessageId: errorMessageIdProp,
+      "aria-label": ariaLabel,
     } = props;
 
+    // First, check if neither a child or label ID is provided
+    // If so, then warn the user that they need to provide one
+    if (!props.children && !ariaLabel && !labelIdProp) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        "Warning: The `Checkbox` component is missing a label. You must provide an aria-label attribute, label ID to your label, or children for accessibility.",
+      );
+    }
+
+    // Get the styles for the checkbox
+    // Use useMemo to only recalculate the styles when the dependencies change
     const {
       base,
       wrapper,
       label,
       icon,
       description,
-      fieldError: fieldErrorStyle,
+      errorMessage: errorMessageStyle,
     } = useMemo(
       () =>
         checkBoxStyles({
@@ -100,19 +111,20 @@ const Checkbox = React.forwardRef(
     );
 
     // Generate the unique ids for the description, error message, and label
-    let descriptionId = useId();
-    let errorMessageId = useId();
-    let labelId = useId();
+    // Use the provided ids if they exist, otherwise generate new ones
+    let descriptionId = descriptionIdProp ?? useId();
+    let errorMessageId = errorMessageIdProp ?? useId();
+    let labelId = labelIdProp ?? useId();
 
     // If the description is provided, we need to set the descriptionId and add our styles
     const cloneErrorMessage = (errorMessageContent?: React.ReactNode | string) => {
       return typeof errorMessageContent === "string" ? (
-        <small className={fieldErrorStyle()} id={errorMessageId}>
+        <small className={errorMessageStyle()} id={errorMessageId}>
           {errorMessageContent as string}
         </small>
       ) : (
         cloneElement(errorMessageContent as React.ReactElement, {
-          className: fieldErrorStyle(),
+          className: errorMessageStyle(),
           id: errorMessageId,
         })
       );
@@ -149,8 +161,9 @@ const Checkbox = React.forwardRef(
     return (
       <RACCheckboxContent.Provider
         value={{
-          "aria-describedby": descriptionId,
-          "aria-errormessage": errorMessageId,
+          "aria-describedby": descriptionProp ? descriptionId : undefined,
+          "aria-errormessage": errorMessage ? errorMessageId : undefined,
+          "aria-labelledby": labelId,
         }}
       >
         <div className="inline-flex flex-col">
@@ -159,6 +172,7 @@ const Checkbox = React.forwardRef(
             {...props}
             ref={ref}
             validationBehavior={validationBehavior}
+            aria-label={ariaLabel}
           >
             {({ isSelected, isRequired, ...renderProps }) => (
               <>
@@ -171,7 +185,7 @@ const Checkbox = React.forwardRef(
                 >
                   {cloneCheckIcon(isSelected)}
                 </span>
-                {includeLabel && (
+                {children && (
                   <span
                     className={label({ isRequired, className: classNames?.label })}
                     id={labelId}
@@ -190,9 +204,6 @@ const Checkbox = React.forwardRef(
               {descriptionProp}
             </small>
           )}
-          {useFieldError &&
-            fieldErrorProp &&
-            cloneElement(fieldErrorProp as ReactElement, { className: fieldErrorStyle() })}
           {isInvalid && errorMessage && cloneErrorMessage(errorMessage)}
         </div>
       </RACCheckboxContent.Provider>

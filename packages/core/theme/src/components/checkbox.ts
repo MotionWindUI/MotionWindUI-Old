@@ -42,7 +42,7 @@ export const checkBoxStyles = tv({
     icon: "z-10 w-4 h-4 opacity-0 inset-0",
     label: "select-none relative !text-neutral",
     description: "!text-subtle opacity-90 text-small pt-1",
-    fieldError: "!text-danger text-small",
+    errorMessage: "!text-danger text-small",
   },
   variants: {
     size: {
@@ -52,7 +52,7 @@ export const checkBoxStyles = tv({
         label: "text-small",
         icon: "w-3 h-3",
         description: "text-tiny",
-        fieldError: "text-tiny",
+        errorMessage: "text-tiny",
       },
       md: {
         base: "gap-2",
@@ -60,7 +60,7 @@ export const checkBoxStyles = tv({
         label: "text-base",
         icon: "w-5 h-5",
         description: "text-small",
-        fieldError: "text-small",
+        errorMessage: "text-small",
       },
       lg: {
         base: "gap-3",
@@ -68,7 +68,7 @@ export const checkBoxStyles = tv({
         label: "text-large",
         icon: "w-5 h-5",
         description: "text-base",
-        fieldError: "text-base",
+        errorMessage: "text-base",
       },
     },
     color: {

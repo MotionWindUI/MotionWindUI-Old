@@ -30,5 +30,5 @@ export interface MotionWindUIBaseProps {
   isDisabled?: boolean;
 
   /* Disables all animation */
-  disableAnimations?: boolean;
+  disableAnimation?: boolean;
 }

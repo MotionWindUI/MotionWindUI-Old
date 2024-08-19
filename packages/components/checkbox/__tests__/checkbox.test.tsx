@@ -1,4 +1,5 @@
 import { act, render } from "@testing-library/react";
+import { axe } from "jest-axe";
 import { Checkbox, CheckboxProps } from "../src";
 import React, { useState } from "react";
 import { MotionWindUIProvider } from "@motionwindui/provider";
@@ -10,7 +11,7 @@ const customRender = (ui: React.ReactElement, options?: any) =>
 
 describe("Checkbox", () => {
   it("should render correctly", () => {
-    const wrapper = customRender(<Checkbox />);
+    const wrapper = customRender(<Checkbox>Label</Checkbox>);
 
     expect(() => wrapper.unmount()).not.toThrow();
   });
@@ -18,13 +19,13 @@ describe("Checkbox", () => {
   it("ref should be forwarded", () => {
     const ref = React.createRef<HTMLLabelElement>();
 
-    customRender(<Checkbox ref={ref} />);
+    customRender(<Checkbox ref={ref}>Label</Checkbox>);
     expect(ref.current).not.toBeNull();
   });
 
   it("should ignore events wheen disabled", () => {
     const onPress = jest.fn();
-    const { getByRole } = customRender(<Checkbox isDisabled />);
+    const { getByRole } = customRender(<Checkbox isDisabled>Label</Checkbox>);
 
     act(() => {
       getByRole("checkbox").click();
@@ -40,25 +41,27 @@ describe("Checkbox", () => {
   });
 
   it("should render with a description", () => {
-    const wrapper = customRender(<Checkbox description="Description" />);
+    const wrapper = customRender(<Checkbox description="Description" labelId="test" />);
 
     expect(wrapper.getByText("Description"));
   });
 
   it("should render with an icon", () => {
-    const wrapper = customRender(<Checkbox icon={<span data-testid="icon">Icon</span>} />);
+    const wrapper = customRender(
+      <Checkbox icon={<span data-testid="icon">Icon</span>} labelId="test" />,
+    );
 
     expect(wrapper.getByTestId("icon"));
   });
 
   it("should not render with an error message if it is not invalid", () => {
-    const wrapper = customRender(<Checkbox errorMessage="Error" />);
+    const wrapper = customRender(<Checkbox errorMessage="Error" labelId="test" />);
 
     expect(() => wrapper.getByText("Error")).toThrow();
   });
 
   it("should render with an error message if it is invalid", () => {
-    const wrapper = customRender(<Checkbox errorMessage="Error" isInvalid />);
+    const wrapper = customRender(<Checkbox errorMessage="Error" isInvalid labelId="test" />);
 
     expect(wrapper.getByText("Error"));
   });
@@ -77,17 +80,17 @@ describe("Checkbox", () => {
     // Suppressing console warning to skip the warning about controlled and uncontrolled components
     // eslint-disable-next-line no-console
     console.warn = jest.fn();
-    const wrapper = customRender(<Checkbox />);
+    const wrapper = customRender(<Checkbox labelId="test" />);
 
     expect(wrapper.getByRole("checkbox")).not.toBeChecked();
 
-    wrapper.rerender(<Checkbox isSelected />);
+    wrapper.rerender(<Checkbox isSelected labelId="test" />);
 
     expect(wrapper.getByRole("checkbox")).toBeChecked();
   });
 
   it("should change value after a click", () => {
-    const wrapper = customRender(<Checkbox />);
+    const wrapper = customRender(<Checkbox labelId="test" />);
 
     const checkbox = wrapper.getByRole("checkbox");
 
@@ -102,7 +105,7 @@ describe("Checkbox", () => {
 
   it("should ignore events when disabled", () => {
     const onPress = jest.fn();
-    const { getByRole } = customRender(<Checkbox isDisabled />);
+    const { getByRole } = customRender(<Checkbox isDisabled labelId="test" />);
 
     act(() => {
       getByRole("checkbox").click();
@@ -113,7 +116,7 @@ describe("Checkbox", () => {
 
   it("should ignore events when readOnly", () => {
     const onPress = jest.fn();
-    const { getByRole } = customRender(<Checkbox isReadOnly />);
+    const { getByRole } = customRender(<Checkbox isReadOnly labelId="test" />);
 
     act(() => {
       getByRole("checkbox").click();
@@ -126,6 +129,7 @@ describe("Checkbox", () => {
     const onChange = jest.fn();
 
     const Component = (props: CheckboxProps) => {
+      const { children, ...otherProps } = props;
       const [value, setValue] = useState(false);
 
       const handleChange = (newValue: boolean) => {
@@ -133,7 +137,11 @@ describe("Checkbox", () => {
         onChange(newValue);
       };
 
-      return <Checkbox isSelected={value} onChange={handleChange} {...props} />;
+      return (
+        <Checkbox isSelected={value} onChange={handleChange} {...otherProps}>
+          {children}
+        </Checkbox>
+      );
     };
 
     const wrapper = customRender(<Component data-testid="checkbox-test">Option</Component>);
@@ -188,5 +196,67 @@ describe("Checkbox", () => {
     const checkbox = wrapper.getAllByTestId("custom-checkbox")[1];
 
     expect(checkbox).toHaveAttribute("aria-label", "Custom Checkbox");
+  });
+
+  it("should warn when a child (label) is not provided and the aria-label or label ID is missing", () => {
+    const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation();
+
+    // Render the component without a child (label) and without an aria-label or label ID
+    customRender(<Checkbox />);
+
+    // Assert that the warning was called
+    expect(consoleWarnSpy).toHaveBeenCalledWith(
+      "Warning: The `Checkbox` component is missing a label. You must provide an aria-label attribute, label ID to your label, or children for accessibility.",
+    );
+
+    // Clean up the spy
+    consoleWarnSpy.mockRestore();
+  });
+
+  it("should not warn when a child (label) is provided", () => {
+    const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation();
+
+    // Render the component with a child (label)
+    customRender(<Checkbox>Label</Checkbox>);
+
+    // Assert that the warning was not called
+    expect(consoleWarnSpy).not.toHaveBeenCalled();
+
+    // Clean up the spy
+    consoleWarnSpy.mockRestore();
+  });
+
+  it("should not warn when an aria-label is provided", () => {
+    const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation();
+
+    // Render the component with an aria-label
+    customRender(<Checkbox aria-label="Label" />);
+
+    // Assert that the warning was not called
+    expect(consoleWarnSpy).not.toHaveBeenCalled();
+
+    // Clean up the spy
+    consoleWarnSpy.mockRestore();
+  });
+
+  it("should not warn when a label ID is provided", () => {
+    const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation();
+
+    // Render the component with a label ID
+    customRender(<Checkbox labelId="label-id" />);
+
+    // Assert that the warning was not called
+    expect(consoleWarnSpy).not.toHaveBeenCalled();
+
+    // Clean up the spy
+    consoleWarnSpy.mockRestore();
+  });
+
+  it("should not have basic accessibility violations", async () => {
+    const { container } = customRender(<Checkbox>Label</Checkbox>);
+
+    const results = await axe(container);
+
+    expect(results).toHaveNoViolations();
   });
 });

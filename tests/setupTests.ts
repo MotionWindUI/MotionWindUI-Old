@@ -1,5 +1,6 @@
 import "@testing-library/jest-dom/jest-globals";
 import "@testing-library/jest-dom";
+import "jest-axe/extend-expect";
 
 const { getComputedStyle } = window;
 window.getComputedStyle = (elt) => getComputedStyle(elt);
