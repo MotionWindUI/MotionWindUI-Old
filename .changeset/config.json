@@ -9,7 +9,6 @@
   "updateInternalDependencies": "patch",
   "ignore": [
     "@motionwindui/storybook",
-    "@motionwindui/storybook-utils",
-    "@motionwindui/react-utils"
+    "@motionwindui/storybook-utils"
   ]
 }
