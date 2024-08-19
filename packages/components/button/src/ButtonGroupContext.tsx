@@ -11,7 +11,7 @@ export interface ButtonGroupContextProps {
   radius?: ButtonProps["radius"];
   shadow?: boolean;
   isDisabled?: boolean;
-  animateDisable?: boolean;
+  disableAnimations?: boolean;
   children?: React.ReactNode;
 }
 

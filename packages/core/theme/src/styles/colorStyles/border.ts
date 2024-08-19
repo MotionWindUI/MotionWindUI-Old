@@ -22,15 +22,15 @@ export const borderColors: BorderColors = {
   },
   "neutral-negative": {
     light: "var(--neutral-300)",
-    dark: "var(--netural-700)",
+    dark: "var(--neutral-700)",
   },
   "neutral-negative-hover": {
-    light: "var(--neutral-200)",
-    dark: "var(--neutral-800)",
+    light: "var(--neutral-400)",
+    dark: "var(--neutral-600)",
   },
   "neutral-negative-active": {
-    light: "var(--neutral-100)",
-    dark: "var(--neutral-900)",
+    light: "var(--neutral-500)",
+    dark: "var(--neutral-500)",
   },
   primary: {
     light: "var(--primary-700)",

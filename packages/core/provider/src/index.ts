@@ -1,2 +1,2 @@
-export type { ThemeContextProps } from "./MotionWindUIProvider";
-export { MotionWindUIProvider, ThemeContext, useTheme } from "./MotionWindUIProvider";
+export type { MotionWindUIContextProps } from "./MotionWindUIProvider";
+export { MotionWindUIProvider, MotionWindUIContext, useMotionWindUI } from "./MotionWindUIProvider";

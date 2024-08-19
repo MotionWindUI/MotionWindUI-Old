@@ -1,9 +1,9 @@
 {
-  "name": "@motionwindui/{{componentName}}",
+  "name": "@motionwindui/checkbox",
   "version": "1.0.0",
-  "description": "{{description}}",
+  "description": "A checkbox is used to indicate the selection of something (a yes or no)",
   "keywords": [
-    "{{componentName}}"
+    "checkbox"
   ],
   "author": "Kyle Gagnon <kmgagnon99@gmail.com>",
   "license": "ISC",
@@ -20,7 +20,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MotionWindUI/MotionWindUI",
-    "directory": "packages/{{outDir}}/{{componentName}}"
+    "directory": "packages/components/checkbox"
   },
   "bugs": {
     "url": "https://github.com/MotionWindUI/MotionWindUI/issues"
@@ -33,16 +33,25 @@
     "type-check": "tsc --noEmit"
   },
   "peerDependencies": {
-    "@motionwindui/theme": ">=1.0.0",
     "@motionwindui/provider": ">=1.1.0",
+    "@motionwindui/theme": ">=1.0.0",
     "react": ">=18",
     "react-dom": ">=18"
   },
   "devDependencies": {
-    "@motionwindui/theme": "workspace:*",
+    "@hookform/resolvers": "^3.9.0",
     "@motionwindui/base": "workspace:*",
     "@motionwindui/provider": "workspace:*",
+    "@motionwindui/react-utils": "workspace:*",
+    "@motionwindui/theme": "workspace:*",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.52.2",
+    "yup": "^1.4.0"
+  },
+  "dependencies": {
+    "@motionwindui/heroicons-icons": "^1.0.1",
+    "react-aria": "^3.34.1",
+    "react-aria-components": "^1.3.0"
   }
 }

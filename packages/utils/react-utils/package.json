@@ -6,6 +6,7 @@
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "sideEffects": false,
+  "private": false,
   "publishConfig": {
     "access": "public"
   },
@@ -15,7 +16,7 @@
   "scripts": {
     "build": "tsup src --dts",
     "build:fast": "tsup src",
-    "dev": "pnpm build:fast --watch",
+    "dev": "pnpm build --watch",
     "clean": "rm -rf dist",
     "type-check": "tsc --noEmit"
   },

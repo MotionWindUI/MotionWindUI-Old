@@ -276,6 +276,7 @@ const corePlugin = (config: MotionWindUIPluginConfig) => {
           /* Colors for the plugin */
           colors: {
             ...tailwindColors,
+            "background-default": "var(--background-default)",
           },
           borderColor: {
             ...borderColorsPlugin,
