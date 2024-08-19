@@ -5,9 +5,12 @@ import { MotionWindUIProvider } from "@motionwindui/provider";
 
 const ProviderWrapper = ({ children }) => <MotionWindUIProvider>{children}</MotionWindUIProvider>;
 
+const customRender = (ui: React.ReactElement, options?: any) =>
+  render(ui, { wrapper: ProviderWrapper, ...options });
+
 describe("Checkbox", () => {
   it("should render correctly", () => {
-    const wrapper = render(<Checkbox />, { wrapper: ProviderWrapper });
+    const wrapper = customRender(<Checkbox />);
 
     expect(() => wrapper.unmount()).not.toThrow();
   });
@@ -15,13 +18,13 @@ describe("Checkbox", () => {
   it("ref should be forwarded", () => {
     const ref = React.createRef<HTMLLabelElement>();
 
-    render(<Checkbox ref={ref} />, { wrapper: ProviderWrapper });
+    customRender(<Checkbox ref={ref} />);
     expect(ref.current).not.toBeNull();
   });
 
   it("should ignore events wheen disabled", () => {
     const onPress = jest.fn();
-    const { getByRole } = render(<Checkbox isDisabled />, { wrapper: ProviderWrapper });
+    const { getByRole } = customRender(<Checkbox isDisabled />);
 
     act(() => {
       getByRole("checkbox").click();
@@ -31,45 +34,37 @@ describe("Checkbox", () => {
   });
 
   it("should render with a label", () => {
-    const wrapper = render(<Checkbox>Label</Checkbox>, { wrapper: ProviderWrapper });
+    const wrapper = customRender(<Checkbox>Label</Checkbox>);
 
     expect(wrapper.getByText("Label"));
   });
 
   it("should render with a description", () => {
-    const wrapper = render(<Checkbox description="Description" />, { wrapper: ProviderWrapper });
+    const wrapper = customRender(<Checkbox description="Description" />);
 
     expect(wrapper.getByText("Description"));
   });
 
   it("should render with an icon", () => {
-    const wrapper = render(<Checkbox icon={<span data-testid="icon">Icon</span>} />, {
-      wrapper: ProviderWrapper,
-    });
+    const wrapper = customRender(<Checkbox icon={<span data-testid="icon">Icon</span>} />);
 
     expect(wrapper.getByTestId("icon"));
   });
 
   it("should not render with an error message if it is not invalid", () => {
-    const wrapper = render(<Checkbox errorMessage="Error" />, {
-      wrapper: ProviderWrapper,
-    });
+    const wrapper = customRender(<Checkbox errorMessage="Error" />);
 
     expect(() => wrapper.getByText("Error")).toThrow();
   });
 
   it("should render with an error message if it is invalid", () => {
-    const wrapper = render(<Checkbox errorMessage="Error" isInvalid />, {
-      wrapper: ProviderWrapper,
-    });
+    const wrapper = customRender(<Checkbox errorMessage="Error" isInvalid />);
 
     expect(wrapper.getByText("Error"));
   });
 
   it("should not animate when disableAnimation is true", () => {
-    const wrapper = render(<Checkbox disableAnimation>My Label Text</Checkbox>, {
-      wrapper: ProviderWrapper,
-    });
+    const wrapper = customRender(<Checkbox disableAnimation>My Label Text</Checkbox>);
 
     const checkboxWrapper = wrapper.container.querySelector("span.before\\:box-border");
 
@@ -82,7 +77,7 @@ describe("Checkbox", () => {
     // Suppressing console warning to skip the warning about controlled and uncontrolled components
     // eslint-disable-next-line no-console
     console.warn = jest.fn();
-    const wrapper = render(<Checkbox />, { wrapper: ProviderWrapper });
+    const wrapper = customRender(<Checkbox />);
 
     expect(wrapper.getByRole("checkbox")).not.toBeChecked();
 
@@ -92,7 +87,7 @@ describe("Checkbox", () => {
   });
 
   it("should change value after a click", () => {
-    const wrapper = render(<Checkbox />, { wrapper: ProviderWrapper });
+    const wrapper = customRender(<Checkbox />);
 
     const checkbox = wrapper.getByRole("checkbox");
 
@@ -107,7 +102,7 @@ describe("Checkbox", () => {
 
   it("should ignore events when disabled", () => {
     const onPress = jest.fn();
-    const { getByRole } = render(<Checkbox isDisabled />, { wrapper: ProviderWrapper });
+    const { getByRole } = customRender(<Checkbox isDisabled />);
 
     act(() => {
       getByRole("checkbox").click();
@@ -118,7 +113,7 @@ describe("Checkbox", () => {
 
   it("should ignore events when readOnly", () => {
     const onPress = jest.fn();
-    const { getByRole } = render(<Checkbox isReadOnly />, { wrapper: ProviderWrapper });
+    const { getByRole } = customRender(<Checkbox isReadOnly />);
 
     act(() => {
       getByRole("checkbox").click();
@@ -141,9 +136,7 @@ describe("Checkbox", () => {
       return <Checkbox isSelected={value} onChange={handleChange} {...props} />;
     };
 
-    const wrapper = render(<Component data-testid="checkbox-test">Option</Component>, {
-      wrapper: ProviderWrapper,
-    });
+    const wrapper = customRender(<Component data-testid="checkbox-test">Option</Component>);
 
     act(() => {
       wrapper.getAllByTestId("checkbox-test")[1].click();
@@ -153,9 +146,8 @@ describe("Checkbox", () => {
   });
 
   it("should render with custom styles", () => {
-    const wrapper = render(
+    const wrapper = customRender(
       <Checkbox style={{ color: "red", fontSize: "16px" }}>Custom Styles</Checkbox>,
-      { wrapper: ProviderWrapper },
     );
 
     const checkbox = wrapper.container.querySelector("label");
@@ -166,9 +158,7 @@ describe("Checkbox", () => {
 
   it("should call onChange when clicked", () => {
     const onChange = jest.fn();
-    const wrapper = render(<Checkbox onChange={onChange}>Click Me</Checkbox>, {
-      wrapper: ProviderWrapper,
-    });
+    const wrapper = customRender(<Checkbox onChange={onChange}>Click Me</Checkbox>);
 
     const checkbox = wrapper.getByRole("checkbox");
 
@@ -180,9 +170,7 @@ describe("Checkbox", () => {
   });
 
   it("should render with a custom class name", () => {
-    const wrapper = render(<Checkbox className="custom-checkbox">Custom Class</Checkbox>, {
-      wrapper: ProviderWrapper,
-    });
+    const wrapper = customRender(<Checkbox className="custom-checkbox">Custom Class</Checkbox>);
 
     const checkbox = wrapper.container.querySelector("label");
 
@@ -190,11 +178,10 @@ describe("Checkbox", () => {
   });
 
   it("should render with additional attributes", () => {
-    const wrapper = render(
+    const wrapper = customRender(
       <Checkbox data-testid="custom-checkbox" aria-label="Custom Checkbox">
         Additional Attributes
       </Checkbox>,
-      { wrapper: ProviderWrapper },
     );
 
     // 1 is the input element itself, 0 is the label, so we need to check on the input element
