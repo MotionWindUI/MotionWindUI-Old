@@ -42,7 +42,7 @@ const preview = {
         dynamicTitle: true,
       },
     },
-    theme: {
+    tempTheme: {
       description: "The theme of MotionWindUI",
       defaultValue: "default",
       toolbar: {
@@ -62,18 +62,13 @@ const preview = {
       const StoryWithProvider = () => {
         const { setDisableAnimations, setCurrentTheme, setCurrentMode } = useMotionWindUI();
 
-        // Set the theme to default on initial load
-        useEffect(() => {
-          setCurrentTheme("default");
-        }, []);
-
         useEffect(() => {
           setDisableAnimations(context.globals.disableAnimations);
         }, [context.globals.disableAnimations]);
 
         useEffect(() => {
-          setCurrentTheme(context.globals.theme);
-        }, [context.globals.theme]);
+          setCurrentTheme(context.globals.tempTheme);
+        }, [context.globals.tempTheme]);
 
         useEffect(() => {
           setCurrentMode(context.globals.mode);

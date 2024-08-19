@@ -60,7 +60,7 @@ export const MotionWindUIProvider = ({
   const [currentTheme, setCurrentTheme] = useState<string>(() => {
     const storedTheme = localStorage.getItem("theme");
 
-    return storedTheme || theme;
+    return storedTheme ?? theme;
   });
 
   const [currentMode, setCurrentMode] = useState<ThemeMode>(() => {
