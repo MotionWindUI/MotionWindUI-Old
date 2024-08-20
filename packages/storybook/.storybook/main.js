@@ -5,27 +5,25 @@ import { join, dirname } from "path";
  * It is needed in projects that use Yarn PnP or are set up within a monorepo.
  */
 function getAbsolutePath(value) {
-    return dirname(require.resolve(join(value, "package.json")));
+  return dirname(require.resolve(join(value, "package.json")));
 }
 
 /** @type { import('@storybook/react-vite').StorybookConfig } */
 const config = {
-    stories: [
-        "../../components/**/stories/**/*.stories.@(js|jsx|mjs|ts|tsx)",
-    ],
-    addons: [
-        getAbsolutePath("@storybook/addon-onboarding"),
-        getAbsolutePath("@storybook/addon-links"),
-        getAbsolutePath("@storybook/addon-essentials"),
-        getAbsolutePath("@chromatic-com/storybook"),
-        getAbsolutePath("@storybook/addon-interactions"),
-        "@storybook/addon-styling-webpack",
-        getAbsolutePath('@storybook/addon-themes'),
-        getAbsolutePath('@storybook/addon-a11y')
-    ],
-    framework: {
-        name: getAbsolutePath("@storybook/react-vite"),
-        options: {},
-    },
+  stories: ["../../components/**/stories/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
+  addons: [
+    getAbsolutePath("@storybook/addon-onboarding"),
+    getAbsolutePath("@storybook/addon-links"),
+    getAbsolutePath("@storybook/addon-essentials"),
+    getAbsolutePath("@chromatic-com/storybook"),
+    getAbsolutePath("@storybook/addon-interactions"),
+    "@storybook/addon-styling-webpack",
+    getAbsolutePath("@storybook/addon-themes"),
+    getAbsolutePath("@storybook/addon-a11y"),
+  ],
+  framework: {
+    name: getAbsolutePath("@storybook/react-vite"),
+    options: {},
+  },
 };
 export default config;

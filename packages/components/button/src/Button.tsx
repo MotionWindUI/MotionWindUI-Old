@@ -1,3 +1,4 @@
+import React, { cloneElement, isValidElement } from "react";
 import {
   ButtonContext,
   composeRenderProps,
@@ -5,22 +6,14 @@ import {
   ButtonProps as RACButtonProps,
   useContextProps,
 } from "react-aria-components";
-import { buttonStyles } from "@motionwindui/theme/src/components/button";
-import React, { cloneElement, isValidElement } from "react";
+import { MotionWindUIBaseProps } from "@motionwindui/base";
+import { useMotionWindUI } from "@motionwindui/provider";
+import { buttonStyles } from "@motionwindui/theme";
 import { useButtonGroupContext } from "./ButtonGroupContext";
 
-export interface ButtonProps extends RACButtonProps {
-  /** The color/intentions of the button */
-  color?: "neutral" | "primary" | "secondary" | "success" | "warning" | "danger";
-
+export interface ButtonProps extends MotionWindUIBaseProps, Omit<RACButtonProps, "children"> {
   /** The variant of the button */
   variant?: "solid" | "faded" | "bordered" | "ghost" | "light";
-
-  /** The size of the button */
-  size?: "sm" | "md" | "lg";
-
-  /** The radius of the button */
-  radius?: "none" | "sm" | "md" | "lg" | "full";
 
   /** The icon to display before the content */
   startContent?: React.ReactNode;
@@ -34,14 +27,8 @@ export interface ButtonProps extends RACButtonProps {
   /** Is icon only */
   isIconOnly?: boolean;
 
-  /** Is disabled */
-  isDisabled?: boolean;
-
   /** Is loading */
   isLoading?: boolean;
-
-  /** Whether or not to disable animations */
-  animateDisable?: boolean;
 
   /** The option to always show children (when provided) even in icon only */
   alwaysShowChildren?: boolean;
@@ -52,6 +39,7 @@ export interface ButtonProps extends RACButtonProps {
 
 const Button = React.forwardRef(
   (props: ButtonProps, ref: React.ForwardedRef<HTMLButtonElement>) => {
+    const globalContext = useMotionWindUI();
     const buttonGroup = useButtonGroupContext();
     const isInGroup = !!buttonGroup;
 
@@ -66,7 +54,7 @@ const Button = React.forwardRef(
       isDisabled: isDisabledProp = buttonGroup?.isDisabled ?? false,
       isLoading = false,
       shadow = buttonGroup?.shadow ?? false,
-      animateDisable = false,
+      disableAnimations = globalContext.disableAnimations || buttonGroup?.disableAnimations,
       alwaysShowChildren = false,
       children,
       className,
@@ -101,7 +89,7 @@ const Button = React.forwardRef(
             radius,
             isInGroup,
             isIconOnly,
-            animateDisable,
+            disableAnimations,
             isDisabled,
             shadow,
             className,

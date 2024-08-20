@@ -12,3 +12,6 @@ dependency-graph.png
 
 # Environment files
 .env
+
+# Coverage
+coverage/

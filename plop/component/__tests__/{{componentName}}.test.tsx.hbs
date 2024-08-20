@@ -2,10 +2,16 @@ import * as React from "react";
 import { render } from "@testing-library/react";
 
 import { {{capitalize componentName}} } from "../src";
+import { MotionWindUIProvider } from "@motionwindui/provider";
+
+const ProviderWrapper = ({ children }) => <MotionWindUIProvider>{children}</MotionWindUIProvider>;
+
+const customRender = (ui: React.ReactElement, options?: any) =>
+  render(ui, { wrapper: ProviderWrapper, ...options });
 
 describe("{{capitalize componentName}}", () => {
   it("should render correctly", () => {
-    const wrapper = render(<{{capitalize componentName}} />);
+    const wrapper = customRender(<{{capitalize componentName}} />);
 
     expect(() => wrapper.unmount()).not.toThrow();
   });

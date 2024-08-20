@@ -1,7 +1,6 @@
-import { cva } from "class-variance-authority";
 import { combineStyles } from "../utils/components";
 import { tv } from "tailwind-variants";
-import { focusRing } from "../utils/focusRing";
+import { dataFocusRing } from "../utils/focusRing";
 import { collapsedBorderStyle } from "../utils/borderStyle";
 
 export interface ButtonVariantStateStyles {
@@ -64,17 +63,18 @@ const buttonVariants: ButtonVariants = {
     faded: {
       default: "text-primary",
       hover: "hover:text-primary-hover hover:bg-primary-subtle",
-      active: "active:text-primary-active active:bg-primary-subtle-hover",
+      active: "aria-pressed:text-primary-active aria-pressed:bg-primary-subtle-hover",
     },
     bordered: {
       default: "border-primary text-primary",
       hover: "hover:border-primary-hover hover:text-primary-hover",
-      active: "active:border-primary-active active:text-primary-active",
+      active: "aria-pressed:border-primary-active aria-pressed:text-primary-active",
     },
     ghost: {
       default: "border-primary text-primary",
       hover: "hover:bg-primary-hover hover:text-on-primary-hover hover:border-primary-hover",
-      active: "active:bg-primary-active active:text-on-primary-hover active:border-primary-active",
+      active:
+        "aria-pressed:bg-primary-active aria-pressed:text-on-primary-hover aria-pressed:border-primary-active",
     },
     light: {
       default: "bg-primary-subtle text-primary",
@@ -86,22 +86,23 @@ const buttonVariants: ButtonVariants = {
     solid: {
       default: "bg-secondary text-on-secondary",
       hover: "hover:bg-secondary-hover hover:text-on-secondary-hover",
-      active: "active:bg-secondary-active active:text-on-secondary-active",
+      active: "aria-pressed:bg-secondary-active aria-pressed:text-on-secondary-active",
     },
     faded: {
       default: "text-secondary",
       hover: "hover:text-secondary-hover hover:bg-secondary-subtle",
-      active: "active:text-secondary-active active:bg-secondary-subtle-hover",
+      active: "aria-pressed:text-secondary-active aria-pressed:bg-secondary-subtle-hover",
     },
     bordered: {
       default: "border-secondary text-secondary",
       hover: "hover:border-secondary-hover hover:text-secondary-hover",
-      active: "active:border-secondary-active active:text-secondary-active",
+      active: "aria-pressed:border-secondary-active aria-pressed:text-secondary-active",
     },
     ghost: {
       default: "border-secondary text-secondary",
-      hover: "hover:bg-secondary-hover hover:text-on-secondary-hover",
-      active: "active:bg-secondary-active active:text-on-secondary-active",
+      hover: "hover:bg-secondary-hover hover:text-on-secondary-hover hover:border-secondary-hover",
+      active:
+        "aria-pressed:bg-secondary-active aria-pressed:text-on-secondary-active aria-pressed:border-secondary-active",
     },
     light: {
       default: "bg-secondary-subtle text-secondary",
@@ -113,22 +114,23 @@ const buttonVariants: ButtonVariants = {
     solid: {
       default: "bg-success text-on-success",
       hover: "hover:bg-success-hover hover:text-on-success-hover",
-      active: "active:bg-success-active active:text-on-success-active",
+      active: "aria-pressed:bg-success-active aria-pressed:text-on-success-active",
     },
     faded: {
       default: "text-success",
       hover: "hover:text-success-hover hover:bg-success-subtle",
-      active: "active:text-success-active active:bg-success-subtle-hover",
+      active: "aria-pressed:text-success-active aria-pressed:bg-success-subtle-hover",
     },
     bordered: {
       default: "border-success text-success",
       hover: "hover:border-success-hover hover:text-success-hover",
-      active: "active:border-success-active active:text-success-active",
+      active: "aria-pressed:border-success-active aria-pressed:text-success-active",
     },
     ghost: {
       default: "border-success text-success",
-      hover: "hover:bg-success-hover hover:text-on-success-hover",
-      active: "active:bg-success-active active:text-on-success-active",
+      hover: "hover:bg-success-hover hover:text-on-success-hover hover:border-success-hover",
+      active:
+        "aria-pressed:bg-success-active aria-pressed:text-on-success-active aria-pressed:border-success-active",
     },
     light: {
       default: "bg-success-subtle text-success",
@@ -140,22 +142,23 @@ const buttonVariants: ButtonVariants = {
     solid: {
       default: "bg-warning text-on-warning",
       hover: "hover:bg-warning-hover hover:text-on-warning-hover",
-      active: "active:bg-warning-active active:text-on-warning-active",
+      active: "aria-pressed:bg-warning-active aria-pressed:text-on-warning-active",
     },
     faded: {
       default: "text-warning",
       hover: "hover:text-warning-hover hover:bg-warning-subtle",
-      active: "active:text-warning-active active:bg-warning-subtle-hover",
+      active: "aria-pressed:text-warning-active aria-pressed:bg-warning-subtle-hover",
     },
     bordered: {
       default: "border-warning text-warning",
       hover: "hover:border-warning-hover hover:text-warning-hover",
-      active: "active:border-warning-active active:text-warning-active",
+      active: "aria-pressed:border-warning-active aria-pressed:text-warning-active",
     },
     ghost: {
       default: "border-warning text-warning",
-      hover: "hover:bg-warning-hover hover:text-on-warning-hover",
-      active: "active:bg-warning-active active:text-on-warning-active",
+      hover: "hover:bg-warning-hover hover:text-on-warning-hover hover:border-warning-hover",
+      active:
+        "aria-pressed:bg-warning-active aria-pressed:text-on-warning-active aria-pressed:border-warning-active",
     },
     light: {
       default: "bg-warning-subtle text-warning",
@@ -167,22 +170,23 @@ const buttonVariants: ButtonVariants = {
     solid: {
       default: "bg-danger text-on-danger",
       hover: "hover:bg-danger-hover hover:text-on-danger-hover",
-      active: "active:bg-danger-active active:text-on-danger-active",
+      active: "aria-pressed:bg-danger-active aria-pressed:text-on-danger-active",
     },
     faded: {
       default: "text-danger",
       hover: "hover:text-danger-hover hover:bg-danger-subtle",
-      active: "active:text-danger-active active:bg-danger-subtle-hover",
+      active: "aria-pressed:text-danger-active aria-pressed:bg-danger-subtle-hover",
     },
     bordered: {
       default: "border-danger text-danger",
       hover: "hover:border-danger-hover hover:text-danger-hover",
-      active: "active:border-danger-active active:text-danger-active",
+      active: "aria-pressed:border-danger-active aria-pressed:text-danger-active",
     },
     ghost: {
       default: "border-danger text-danger",
-      hover: "hover:bg-danger-hover hover:text-on-danger-hover",
-      active: "active:bg-danger-active active:text-on-danger-active",
+      hover: "hover:bg-danger-hover hover:text-on-danger-hover hover:border-danger-hover",
+      active:
+        "aria-pressed:bg-danger-active aria-pressed:text-on-danger-active aria-pressed:border-danger-active",
     },
     light: {
       default: "bg-danger-subtle text-danger",
@@ -207,7 +211,7 @@ export const buttonStyles = tv({
     "text-wrap",
     "overflow-hidden",
     "data-[pressed=true]:scale-95",
-    ...focusRing,
+    ...dataFocusRing,
   ],
   variants: {
     variant: {
@@ -248,7 +252,7 @@ export const buttonStyles = tv({
     isDisabled: {
       true: "opacity-disabled pointer-events-none",
     },
-    animateDisable: {
+    disableAnimations: {
       true: "!transition-none data-[pressed=true]:scale-100",
       false: "motion-reduce:transition-none",
     },

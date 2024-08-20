@@ -19,7 +19,7 @@ export const baseAccentColors: BaseAccentColors = {
   },
   primary: {
     light: "var(--primary-700)",
-    dark: "var(--primary-400)",
+    dark: "var(--primary-300)",
   },
   "primary-negative": {
     light: "var(--primary-400)",
@@ -31,7 +31,7 @@ export const baseAccentColors: BaseAccentColors = {
   },
   secondary: {
     light: "var(--secondary-600)",
-    dark: "var(--secondary-400)",
+    dark: "var(--secondary-300)",
   },
   "secondary-negative": {
     light: "var(--secondary-400)",
@@ -55,7 +55,7 @@ export const baseAccentColors: BaseAccentColors = {
   },
   warning: {
     light: "var(--warning-700)",
-    dark: "var(--warning-400)",
+    dark: "var(--warning-300)",
   },
   "warning-negative": {
     light: "var(--warning-400)",
@@ -67,7 +67,7 @@ export const baseAccentColors: BaseAccentColors = {
   },
   danger: {
     light: "var(--danger-700)",
-    dark: "var(--danger-400)",
+    dark: "var(--danger-300)",
   },
   "danger-negative": {
     light: "var(--danger-400)",
@@ -191,27 +191,27 @@ export const accentColors: AccentColors = {
   },
   "neutral-subtle": {
     light: "var(--neutral-100)",
-    dark: "var(--neutral-950)",
+    dark: "var(--neutral-900)",
   },
   "neutral-subtle-hover": {
     light: "var(--neutral-200)",
-    dark: "var(--neutral-900)",
+    dark: "var(--neutral-800)",
   },
   "neutral-subtle-active": {
     light: "var(--neutral-300)",
-    dark: "var(--neutral-800)",
+    dark: "var(--neutral-700)",
   },
   primary: {
     light: "var(--primary-700)",
-    dark: "var(--primary-400)",
+    dark: "var(--primary-300)",
   },
   "primary-hover": {
     light: "var(--primary-800)",
-    dark: "var(--primary-300)",
+    dark: "var(--primary-200)",
   },
   "primary-active": {
     light: "var(--primary-900)",
-    dark: "var(--primary-200)",
+    dark: "var(--primary-100)",
   },
   "primary-negative": {
     light: "var(--primary-400)",
@@ -239,15 +239,15 @@ export const accentColors: AccentColors = {
   },
   secondary: {
     light: "var(--secondary-600)",
-    dark: "var(--secondary-400)",
+    dark: "var(--secondary-300)",
   },
   "secondary-hover": {
     light: "var(--secondary-700)",
-    dark: "var(--secondary-300)",
+    dark: "var(--secondary-200)",
   },
   "secondary-active": {
     light: "var(--secondary-800)",
-    dark: "var(--secondary-200)",
+    dark: "var(--secondary-100)",
   },
   "secondary-negative": {
     light: "var(--secondary-400)",
@@ -311,15 +311,15 @@ export const accentColors: AccentColors = {
   },
   warning: {
     light: "var(--warning-700)",
-    dark: "var(--warning-400)",
+    dark: "var(--warning-300)",
   },
   "warning-hover": {
     light: "var(--warning-800)",
-    dark: "var(--warning-300)",
+    dark: "var(--warning-200)",
   },
   "warning-active": {
     light: "var(--warning-900)",
-    dark: "var(--warning-200)",
+    dark: "var(--warning-100)",
   },
   "warning-negative": {
     light: "var(--warning-400)",
@@ -347,15 +347,15 @@ export const accentColors: AccentColors = {
   },
   danger: {
     light: "var(--danger-700)",
-    dark: "var(--danger-400)",
+    dark: "var(--danger-300)",
   },
   "danger-hover": {
     light: "var(--danger-800)",
-    dark: "var(--danger-300)",
+    dark: "var(--danger-200)",
   },
   "danger-active": {
     light: "var(--danger-900)",
-    dark: "var(--danger-200)",
+    dark: "var(--danger-100)",
   },
   "danger-negative": {
     light: "var(--danger-400)",

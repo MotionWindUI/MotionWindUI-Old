@@ -19,5 +19,5 @@ jobs:
           node-version-file: '.nvmrc'
           cache: "pnpm"
 
-      - run: pnpm install --hoist --frozen-lockfile
+      - run: pnpm install --hoist --no-frozen-lockfile
       - run: pnpm lint

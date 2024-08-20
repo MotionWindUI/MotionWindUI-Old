@@ -15,7 +15,7 @@
         "allowSyntheticDefaultImports": true,
         "noImplicitAny": false,
         "jsx": "react-jsx",
-        "types": ["jest", "node"]
+        "types": ["jest", "node", "@testing-library/jest-dom", "@types/jest-axe"]
     },
     "include": ["packages"],
     "exclude": ["**/node_modules", "**/dist", "**/turbo"],
