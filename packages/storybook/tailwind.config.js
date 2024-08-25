@@ -10,7 +10,26 @@ module.exports = {
     "./.storybook/preview.jsx",
     "./.storybook/preview-body.html",
   ],
-  theme: {},
+  theme: {
+    extend: {
+      keyframes: {
+        "border-horizontal": {
+          "0%": { width: "0%", height: "2px" },
+          "50%": { width: "100%", height: "2px" }, // Line moves from left to right
+          "100%": { width: "100%", height: "100%" }, // Line moves down the right side
+        },
+        "border-vertical": {
+          "0%": { height: "0%", width: "2px" },
+          "50%": { height: "100%", width: "2px" }, // Line moves from top to bottom
+          "100%": { height: "100%", width: "100%" }, // Line moves right along the bottom
+        },
+      },
+      animation: {
+        "border-horizontal": "border-horizontal 1s forwards",
+        "border-vertical": "border-vertical 1s forwards",
+      },
+    },
+  },
   variants: {},
   plugins: [
     motionWindUIPlugin({

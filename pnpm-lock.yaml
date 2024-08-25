@@ -203,6 +203,9 @@ importers:
         specifier: ^1.3.0
         version: 1.3.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     devDependencies:
+      '@motionwindui/aria-utils':
+        specifier: workspace:*
+        version: link:../../utils/aria-utils
       '@motionwindui/base':
         specifier: workspace:*
         version: link:../../core/base
@@ -221,14 +224,30 @@ importers:
       '@react-stately/radio':
         specifier: ^3.10.7
         version: 3.10.7(react@18.3.1)
+      framer-motion:
+        specifier: ^11.3.30
+        version: 11.3.30(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react:
         specifier: ^18.3.1
         version: 18.3.1
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
+      react-hook-form:
+        specifier: ^7.52.2
+        version: 7.52.2(react@18.3.1)
+      yup:
+        specifier: ^1.4.0
+        version: 1.4.0
 
-  packages/core/base: {}
+  packages/core/base:
+    devDependencies:
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
 
   packages/core/icons:
     dependencies:
@@ -354,6 +373,16 @@ importers:
       vite:
         specifier: ^5.4.0
         version: 5.4.0(@types/node@22.2.0)(terser@5.31.5)
+
+  packages/utils/aria-utils:
+    dependencies:
+      react-aria:
+        specifier: ^3.34.1
+        version: 3.34.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+    devDependencies:
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
 
   packages/utils/dev-utils:
     dependencies:
@@ -4650,6 +4679,20 @@ packages:
 
   fraction.js@4.3.7:
     resolution: {integrity: sha512-ZsDfxO51wGAXREY55a7la9LScWpwv9RxIrYABrlvOFBlH/ShPnrtsXeuUIfXKKOVicNxQ+o8JTbJvjS4M89yew==}
+
+  framer-motion@11.3.30:
+    resolution: {integrity: sha512-9VmqGe9OIjfMoCcs+ZsKXlv6JaG5QagKX2F1uSbkG3Z33wgjnz60Kw+CngC1M49rDYau+Y9aL+8jGagAwrbVyw==}
+    peerDependencies:
+      '@emotion/is-prop-valid': '*'
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    peerDependenciesMeta:
+      '@emotion/is-prop-valid':
+        optional: true
+      react:
+        optional: true
+      react-dom:
+        optional: true
 
   fresh@0.5.2:
     resolution: {integrity: sha512-zJ2mQYM18rEFOudeV4GShTGIQ7RbzA7ozbU9I/XBpm7kqgMywgmylMwXHxZJmkVoYkna9d2pVXVXPdYTP9ej8Q==}
@@ -13023,6 +13066,13 @@ snapshots:
   forwarded@0.2.0: {}
 
   fraction.js@4.3.7: {}
+
+  framer-motion@11.3.30(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      tslib: 2.6.3
+    optionalDependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   fresh@0.5.2: {}
 

@@ -30,6 +30,10 @@ export const radioStyles = tv({
       "box-border",
       "w-4",
       "h-4",
+      "group-data-[hover-unselected=true]:bg-neutral-subtle",
+      "group-data-[hover-unselected=true]:border-neutral-negative-hover",
+      "group-data-[press-unselected=true]:bg-neutral-subtle",
+      "group-data-[press-unselected=true]:border-neutral-negative-active",
       ...groupDataFocusRing,
     ],
     // The radio control element. This is the actual radio input element
@@ -102,6 +106,19 @@ export const radioStyles = tv({
         control: "bg-danger",
       },
     },
+    isInvalid: {
+      true: {
+        wrapper: [
+          "border-danger-negative",
+          "group-data-[selected=true]:border-danger",
+          "group-data-[hover-unselected=true]:border-danger-negative-hover",
+          "group-data-[hover-unselected=true]:bg-danger-subtle",
+          "group-data-[press-unselected=true]:border-danger-negative-active",
+          "group-data-[press-unselected=true]:bg-danger-subtle",
+        ],
+        control: "bg-danger",
+      },
+    },
     isDisabled: {
       true: {
         base: "opacity-disabled pointer-events-none",
@@ -109,7 +126,7 @@ export const radioStyles = tv({
     },
     isReadOnly: {
       true: {
-        base: "pointer-events-none cursor-default",
+        base: "pointer-events-none",
       },
     },
     disableAnimations: {
@@ -119,7 +136,8 @@ export const radioStyles = tv({
       },
       false: {
         control: "transition-all motion-reduce:transition-none",
-        wrapper: "transition-colors motion-reduce:transition-none",
+        wrapper:
+          "transition-colors motion-reduce:transition-none group-data-[pressed=true]:scale-95",
       },
     },
   },
@@ -129,6 +147,7 @@ export const radioGroupStyles = tv({
   slots: {
     base: ["inline-flex", "flex-col", "gap-2"],
     label: ["!text-neutral", "text-base", "font-semibold"],
+    wrapper: ["flex", "flex-col", "flex-wrap", "gap-2", "data-[orientation=horizontal]:flex-row"],
     description: ["!text-subtle", "text-small", "opacity-90"],
     errorMessage: ["!text-danger", "text-small"],
   },
@@ -156,11 +175,6 @@ export const radioGroupStyles = tv({
     isRequired: {
       true: {
         label: 'after:content-["*"] after:text-danger after:ml-0.5',
-      },
-    },
-    isDisabled: {
-      true: {
-        base: "opacity-disabled",
       },
     },
   },

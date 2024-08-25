@@ -1,23 +1,79 @@
-import { useId, useRadioGroup as useRACRadioGroup } from "react-aria";
-import { useRadioGroupState } from "@react-stately/radio";
-import { RadioGroupContextType, RadioGroupProps } from "./RadioGroup";
-import { radioGroupStyles } from "@motionwindui/theme";
-import { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
+import { useRadioGroup as useRACRadioGroup } from "react-aria";
+import { useRadioGroupState, RadioGroupState } from "@react-stately/radio";
+import { radioGroupStyles, RadioGroupSlots, SlotClasses } from "@motionwindui/theme";
 import { clsxMerge, DEV_MODE, warn } from "@motionwindui/dev-utils";
+import { getAriaDescription, getAriaLabel } from "@motionwindui/aria-utils";
+import { MotionWindUIBaseProps } from "@motionwindui/base";
+import { AriaRadioGroupProps } from "react-aria";
+
+export interface RadioGroupProps
+  extends Omit<MotionWindUIBaseProps, "radius">,
+    AriaRadioGroupProps,
+    Pick<HTMLElement, "className"> {
+  ref?: React.Ref<HTMLDivElement>;
+
+  /** A label for the radio group */
+  label?: string;
+
+  /** A description for the radio group */
+  description?: string | React.ReactNode;
+
+  /** The radio group children */
+  children?: React.ReactNode;
+
+  /** The error message content for when the radio group is invalid */
+  errorMessage?: string | React.ReactNode;
+
+  /** The list of classes per slot */
+  classList?: SlotClasses<RadioGroupSlots>;
+}
+
+export type RadioGroupContextType = {
+  /** The state of the radio component */
+  state: RadioGroupState;
+
+  /** The color of the radio group */
+  color?: RadioGroupProps["color"];
+
+  /** The size of the radio group */
+  size?: RadioGroupProps["size"];
+
+  /** Whether or not the group is disabled */
+  isDisabled?: RadioGroupProps["isDisabled"];
+
+  /** Whether or not the group is invalid */
+  isInvalid: boolean;
+
+  /** Whether or not the group is read-only */
+  isReadOnly?: RadioGroupProps["isReadOnly"];
+
+  /** Whether or not the radio group is required in the form */
+  isRequired?: RadioGroupProps["isRequired"];
+
+  /** Disables the radio group animations */
+  disableAnimations?: RadioGroupProps["disableAnimations"];
+};
 
 export const useRadioGroup = (props: RadioGroupProps) => {
   const {
     color = "neutral",
     size = "md",
     isRequired = false,
-    isDisabled,
     isInvalid: isInvalidProp,
-    validationBehavior,
     disableAnimations,
     className,
     classList,
-    labelId: labelIdProp,
+    children,
+    label,
+    description,
+    errorMessage: errorMessageProp,
+    isReadOnly,
+    isDisabled,
+    ref,
   } = props;
+
+  const RootComponent = "div";
 
   const state = useRadioGroupState(props);
   const {
@@ -26,6 +82,7 @@ export const useRadioGroup = (props: RadioGroupProps) => {
     descriptionProps,
     errorMessageProps,
     isInvalid: isInvalidGroup,
+    validationErrors,
   } = useRACRadioGroup(props, state);
 
   const styles = useMemo(
@@ -33,9 +90,8 @@ export const useRadioGroup = (props: RadioGroupProps) => {
       radioGroupStyles({
         size,
         isRequired,
-        isDisabled,
       }),
-    [size, isRequired, isDisabled],
+    [size, isRequired],
   );
 
   // Determine if the group is invalid
@@ -47,7 +103,8 @@ export const useRadioGroup = (props: RadioGroupProps) => {
       color,
       size,
       isInvalid,
-      validationBehavior,
+      isReadOnly,
+      isDisabled,
       disableAnimations,
     }),
     [
@@ -55,7 +112,8 @@ export const useRadioGroup = (props: RadioGroupProps) => {
       color,
       size,
       isInvalid,
-      validationBehavior,
+      isReadOnly,
+      isDisabled,
       disableAnimations,
       state.isInvalid,
       isInvalidGroup,
@@ -64,32 +122,74 @@ export const useRadioGroup = (props: RadioGroupProps) => {
   );
 
   // Warn the developer about accessibility
-  if (
-    !props.label &&
-    labelIdProp &&
-    !props["aria-labelledby"] &&
-    !props["aria-label"] &&
-    DEV_MODE
-  ) {
+  if (!props.label && !props["aria-labelledby"] && !props["aria-label"] && DEV_MODE) {
     warn(
       "Label is not provided, so an aria-labelledby or aria-label needs to be provided for accessibility",
       "RadioGroup",
     );
   }
 
-  // If a label is provided, then generate an ID for it
-  const labelId = props.label ? useId() : undefined;
+  // Get the ARIA description and label properties plus the IDs (if any)
+  const ariaDescription = getAriaDescription(props);
+  const ariaLabel = getAriaLabel(props);
 
   // Set the base div properties
-  const getBaseProps = useCallback(() => {
+  const groupBaseProps = useCallback((): React.HTMLProps<HTMLElement> => {
     return {
-      className: styles.base({ className: clsxMerge(className, classList?.base) }),
+      ref,
+      className: styles.base({ className: clsxMerge(classList?.base, className) }),
       ...radioGroupProps,
-      "aria-labelledby": labelId,
+      "aria-label": ariaLabel["aria-label"],
+      "aria-labelledby": ariaLabel["aria-labelledby"],
+      "aria-description": ariaDescription["aria-description"],
+      "aria-describedby": ariaDescription["aria-describedby"],
     };
   }, [styles, classList?.base, radioGroupProps]);
 
+  // Set the label of the group
+  const groupLabelProps = useCallback((): React.HTMLProps<HTMLElement> => {
+    return {
+      className: styles.label({ className: classList?.label }),
+      ...labelProps,
+      id: ariaLabel.labelId,
+    };
+  }, [styles, classList?.label, labelProps]);
+
+  // Set the description of the group
+  const groupDescriptionProps = useCallback((): React.HTMLProps<HTMLElement> => {
+    return {
+      className: styles.description({ className: classList?.description }),
+      ...descriptionProps,
+      id: ariaDescription.descriptionId,
+    };
+  }, [styles, classList?.description, descriptionProps]);
+
+  const groupWrapperProps = useCallback((): React.HTMLProps<HTMLDivElement> => {
+    return {
+      className: styles.wrapper({ className: classList?.wrapper }),
+    };
+  }, [styles, classList?.wrapper]);
+
+  // Set the error message of the group
+  const groupErrorProps = useCallback((): React.HTMLProps<HTMLElement> => {
+    return {
+      className: styles.errorMessage({ className: classList?.errorMessage }),
+      ...errorMessageProps,
+    };
+  }, [styles, classList?.errorMessage, errorMessageProps]);
+
   return {
-    getBaseProps,
+    RootComponent,
+    children,
+    label,
+    description,
+    context,
+    isInvalid,
+    errorMessage: errorMessageProp || validationErrors.join(" "),
+    groupBaseProps,
+    groupLabelProps,
+    groupDescriptionProps,
+    groupWrapperProps,
+    groupErrorProps,
   };
 };

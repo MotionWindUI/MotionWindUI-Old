@@ -1,0 +1,35 @@
+{
+  "name": "@motionwindui/aria-utils",
+  "version": "1.0.0",
+  "description": "A set of utilities for ARIA React",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "sideEffects": false,
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src --dts",
+    "build:fast": "tsup src",
+    "dev": "pnpm build --watch",
+    "clean": "rm -rf dist",
+    "type-check": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": ">=18"
+  },
+  "keywords": [],
+  "author": "Kyle Gagnon",
+  "license": "ISC",
+  "devDependencies": {
+    "react": "^18.3.1"
+  },
+  "dependencies": {
+    "react-aria": "^3.34.1"
+  }
+}

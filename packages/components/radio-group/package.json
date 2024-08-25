@@ -39,14 +39,18 @@
     "react-dom": ">=18"
   },
   "devDependencies": {
+    "@motionwindui/aria-utils": "workspace:*",
     "@motionwindui/base": "workspace:*",
     "@motionwindui/dev-utils": "workspace:*",
     "@motionwindui/provider": "workspace:*",
     "@motionwindui/react-utils": "workspace:*",
     "@motionwindui/theme": "workspace:*",
     "@react-stately/radio": "^3.10.7",
+    "framer-motion": "^11.3.30",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.52.2",
+    "yup": "^1.4.0"
   },
   "dependencies": {
     "react-aria": "^3.34.1",

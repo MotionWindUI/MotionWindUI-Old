@@ -6,7 +6,7 @@ import {
 } from "react-aria-components";
 import { MotionWindUIBaseProps } from "@motionwindui/base";
 import { CheckboxGroupProvider } from "./CheckboxGroupContext";
-import { CheckboxGroupSlots, checkBoxGroupStyles, SlotClassess } from "@motionwindui/theme";
+import { CheckboxGroupSlots, checkBoxGroupStyles, SlotClasses } from "@motionwindui/theme";
 import { clsxMerge } from "@motionwindui/theme/src/utils/clsxMerge";
 import { useId } from "react-aria";
 import { useMotionWindUI } from "@motionwindui/provider";
@@ -27,7 +27,7 @@ export interface CheckboxGroupProps
   errorMessage?: string | React.ReactNode;
 
   /** The individual slots to apply extra styling to */
-  classNames?: SlotClassess<CheckboxGroupSlots>;
+  classNames?: SlotClasses<CheckboxGroupSlots>;
 }
 
 export type CheckboxContextType = {

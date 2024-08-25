@@ -264,15 +264,13 @@ const corePlugin = (config: MotionWindUIPluginConfig) => {
   });
 
   return plugin(
-    ({ addBase, addVariant }) => {
+    ({ addBase }) => {
       // Add the base colors
       addBase({
         ...baseCssVars,
       });
 
       // Add a variant for when data-selected is false and data-hovered is true
-      addVariant("unselected", "&:[not([data-selected])]");
-      addVariant("group-unselected", ":merge(.group):unselected");
     },
     {
       theme: {
