@@ -107,7 +107,7 @@ export const SelectedValue: Story = {
   ...StoryTemplate,
   args: {
     ...StoryTemplate.args,
-    value: "dog",
+    defaultValue: "dog",
   },
 };
 
@@ -269,7 +269,6 @@ const CustomRadioHook = (props: RadioProps) => {
     labelProps,
     labelWrapperProps,
     descriptionProps,
-    controlProps,
   } = useRadio(props);
 
   return (
@@ -283,38 +282,30 @@ const CustomRadioHook = (props: RadioProps) => {
         "cursor-pointer",
         "flex-row-reverse",
         "max-w-[300px]",
+        "w-full",
         "justify-between",
-        "rounded-full",
+        "rounded-lg",
         "bg-transparent",
+        "p-2",
         "overflow-hidden",
-        "before:absolute",
-        "before:top-0",
-        "before:left-0",
-        "before:h-0.5",
-        "before:w-0",
-        "before:bg-current",
-        "after:absolute",
-        "after:top-0",
-        "after:left-0",
-        "after:w-0.5",
-        "after:h-0",
-        "after:bg-current",
-        "data-[selected=true]:before:animate-border-horizontal",
-        "data-[selected=true]:after:animate-border-vertical",
+        "data-[selected=true]:border-2",
+        "data-[selected=true]:border-primary",
       ].join(" ")}
     >
-      <VisuallyHidden elementType="span">
-        <input {...inputProps()} />
-      </VisuallyHidden>
-      <span {...wrapperProps()} className="w-6 h-6">
-        <CheckCircleIcon
-          filled={true}
-          className="text-primary opacity-0 group-data-[selected=true]:opacity-100 transition-opacity"
-        />
-      </span>
-      <div {...labelWrapperProps()}>
-        {children && <span {...labelProps()}>{children}</span>}
-        {description && <span {...descriptionProps()}>{description}</span>}
+      <div className={["w-full", "relative", "inline-flex", "p-2", "flex-row-reverse"].join(" ")}>
+        <VisuallyHidden elementType="span">
+          <input {...inputProps()} />
+        </VisuallyHidden>
+        <span {...wrapperProps()} className="w-6 h-6">
+          <CheckCircleIcon
+            filled={true}
+            className="text-primary opacity-0 group-data-[selected=true]:opacity-100 transition-opacity"
+          />
+        </span>
+        <div {...labelWrapperProps({ className: "w-full" })}>
+          {children && <span {...labelProps()}>{children}</span>}
+          {description && <span {...descriptionProps()}>{description}</span>}
+        </div>
       </div>
     </RootComponent>
   );

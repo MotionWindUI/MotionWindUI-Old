@@ -13,20 +13,20 @@ module.exports = {
   theme: {
     extend: {
       keyframes: {
-        "border-horizontal": {
-          "0%": { width: "0%", height: "2px" },
-          "50%": { width: "100%", height: "2px" }, // Line moves from left to right
-          "100%": { width: "100%", height: "100%" }, // Line moves down the right side
+        "border-draw-before": {
+          "0%": { width: "0", height: "0" },
+          "50%": { width: "100%", height: "0" }, // Expand right first
+          "100%": { width: "100%", height: "100%" }, // Then expand down
         },
-        "border-vertical": {
-          "0%": { height: "0%", width: "2px" },
-          "50%": { height: "100%", width: "2px" }, // Line moves from top to bottom
-          "100%": { height: "100%", width: "100%" }, // Line moves right along the bottom
+        "border-draw-after": {
+          "0%": { width: "0", height: "0" },
+          "50%": { width: "0", height: "100%" }, // Expand down first
+          "100%": { width: "100%", height: "100%" }, // Then expand right
         },
       },
       animation: {
-        "border-horizontal": "border-horizontal 1s forwards",
-        "border-vertical": "border-vertical 1s forwards",
+        "border-draw-before": "border-draw-before 0.5s ease-out forwards",
+        "border-draw-after": "border-draw-after 0.5s ease-out forwards",
       },
     },
   },

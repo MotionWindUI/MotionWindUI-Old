@@ -10,7 +10,7 @@ import { AriaRadioGroupProps } from "react-aria";
 export interface RadioGroupProps
   extends Omit<MotionWindUIBaseProps, "radius">,
     AriaRadioGroupProps,
-    Pick<HTMLElement, "className"> {
+    Partial<Pick<HTMLElement, "className">> {
   ref?: React.Ref<HTMLDivElement>;
 
   /** A label for the radio group */
@@ -118,6 +118,11 @@ export const useRadioGroup = (props: RadioGroupProps) => {
       state.isInvalid,
       isInvalidGroup,
       isInvalidProp,
+      state.selectedValue,
+      state.lastFocusedValue,
+      state.isReadOnly,
+      state.isDisabled,
+      state.isInvalid,
     ],
   );
 
