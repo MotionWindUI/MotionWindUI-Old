@@ -1,5 +1,12 @@
 {
     "yaml.schemas": {
         "https://coderabbit.ai/integrations/schema.v2.json": "file:///workspaces/MotionWindUI/.coderabbit.yml"
-    }
+    },
+    "tailwindCSS.classAttributes": [
+        "class",
+        "className",
+        "ngClass",
+        "class:list",
+        "[\\s\\S]*Classes[\\s\\S]*"
+    ]
 }

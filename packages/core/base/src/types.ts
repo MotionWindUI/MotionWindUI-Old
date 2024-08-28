@@ -1,3 +1,5 @@
+import React from "react";
+
 /**
  * The various options of color styles of a component.
  */
@@ -14,9 +16,21 @@ export type SizeVariants = "sm" | "md" | "lg";
 export type RadiusSizeVariants = "none" | "sm" | "md" | "lg" | "full";
 
 /**
+ * A generic component type that can be used to render any HTML element.
+ */
+export type AsRoot<Props = any> = React.ElementType<Props>;
+
+/**
+ * The props of a component based on the HTML element it is rendering.
+ */
+export type PropsOf<T extends AsRoot> = React.ComponentPropsWithoutRef<T> & {
+  asRoot?: AsRoot;
+};
+
+/**
  * The base props that apply to all MotionWindUI components.
  */
-export interface MotionWindUIBaseProps {
+export type MotionWindUIBaseProps = {
   /** The color style of the component */
   color?: ColorVariants;
 
@@ -31,4 +45,7 @@ export interface MotionWindUIBaseProps {
 
   /* Disables all animation */
   disableAnimations?: boolean;
-}
+
+  /** The HTML DOM element that the component is */
+  asRoot?: AsRoot;
+};

@@ -1,0 +1,59 @@
+{
+  "name": "@motionwindui/radio-group",
+  "version": "1.0.0",
+  "description": "A radio group is used when a single selection is needed (compared to a checkbox which can support multiple)",
+  "keywords": [
+    "radio-group"
+  ],
+  "author": "Kyle Gagnon <kmgagnon99@gmail.com>",
+  "license": "ISC",
+  "sideEffects": false,
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MotionWindUI/MotionWindUI",
+    "directory": "packages/components/radio-group"
+  },
+  "bugs": {
+    "url": "https://github.com/MotionWindUI/MotionWindUI/issues"
+  },
+  "scripts": {
+    "build": "tsup src --dts",
+    "build:fast": "tsup src",
+    "dev": "pnpm build --watch",
+    "clean": "rimraf dist .turbo",
+    "type-check": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@motionwindui/provider": ">=1.1.0",
+    "@motionwindui/theme": ">=1.0.0",
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@motionwindui/aria-utils": "workspace:*",
+    "@motionwindui/base": "workspace:*",
+    "@motionwindui/dev-utils": "workspace:*",
+    "@motionwindui/provider": "workspace:*",
+    "@motionwindui/react-utils": "workspace:*",
+    "@motionwindui/theme": "workspace:*",
+    "@react-stately/radio": "^3.10.7",
+    "framer-motion": "^11.3.30",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.52.2",
+    "yup": "^1.4.0"
+  },
+  "dependencies": {
+    "react-aria": "^3.34.1",
+    "react-aria-components": "^1.3.0"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "@motionwindui/dev-utils",
+  "version": "1.0.0",
+  "description": "Development utilities for Motion Wind UI",
+  "private": "true",
+  "main": "src/index.ts",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup src --dts",
+    "build:fast": "tsup src",
+    "dev": "pnpm build --watch",
+    "clean": "rm -rf dist/"
+  },
+  "keywords": [],
+  "author": "Kyle Gagnon",
+  "license": "ISC",
+  "dependencies": {
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.4.0"
+  },
+  "tsup": {
+    "clean": true,
+    "target": "es2019",
+    "format": [
+      "cjs",
+      "esm"
+    ]
+  }
+}

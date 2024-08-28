@@ -10,7 +10,26 @@ module.exports = {
     "./.storybook/preview.jsx",
     "./.storybook/preview-body.html",
   ],
-  theme: {},
+  theme: {
+    extend: {
+      keyframes: {
+        "border-draw-before": {
+          "0%": { width: "0", height: "0" },
+          "50%": { width: "100%", height: "0" }, // Expand right first
+          "100%": { width: "100%", height: "100%" }, // Then expand down
+        },
+        "border-draw-after": {
+          "0%": { width: "0", height: "0" },
+          "50%": { width: "0", height: "100%" }, // Expand down first
+          "100%": { width: "100%", height: "100%" }, // Then expand right
+        },
+      },
+      animation: {
+        "border-draw-before": "border-draw-before 0.5s ease-out forwards",
+        "border-draw-after": "border-draw-after 0.5s ease-out forwards",
+      },
+    },
+  },
   variants: {},
   plugins: [
     motionWindUIPlugin({

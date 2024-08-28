@@ -269,6 +269,8 @@ const corePlugin = (config: MotionWindUIPluginConfig) => {
       addBase({
         ...baseCssVars,
       });
+
+      // Add a variant for when data-selected is false and data-hovered is true
     },
     {
       theme: {

@@ -9,7 +9,7 @@ import {
   useContextProps,
 } from "react-aria-components";
 import { CheckboxIcon, CheckboxIconProps } from "./CheckboxIcon";
-import { SlotClassess } from "@motionwindui/theme";
+import { SlotClasses } from "@motionwindui/theme";
 import { clsxMerge } from "@motionwindui/theme/src/utils/clsxMerge";
 import { useMotionWindUI } from "@motionwindui/provider";
 import { useCheckboxGroup } from "./CheckboxGroupContext";
@@ -29,7 +29,7 @@ export interface CheckboxProps extends MotionWindUIBaseProps, Omit<RACCheckboxPr
   errorMessage?: React.ReactNode | string;
 
   /* The individual slots to apply extra styling to */
-  classNames?: SlotClassess<CheckboxSlots>;
+  classNames?: SlotClasses<CheckboxSlots>;
 
   /* If a custom label is provided, then the label ID to use for aria-labledby */
   labelId?: string;
