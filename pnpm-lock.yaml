@@ -194,6 +194,40 @@ importers:
         specifier: ^1.4.0
         version: 1.4.0
 
+  packages/components/input:
+    dependencies:
+      react-aria:
+        specifier: ^3.34.1
+        version: 3.34.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+    devDependencies:
+      '@motionwindui/aria-utils':
+        specifier: workspace:*
+        version: link:../../utils/aria-utils
+      '@motionwindui/base':
+        specifier: workspace:*
+        version: link:../../core/base
+      '@motionwindui/dev-utils':
+        specifier: workspace:*
+        version: link:../../utils/dev-utils
+      '@motionwindui/provider':
+        specifier: workspace:*
+        version: link:../../core/provider
+      '@motionwindui/theme':
+        specifier: workspace:*
+        version: link:../../core/theme
+      '@motionwindui/use-breakpoint':
+        specifier: workspace:*
+        version: link:../../hooks/use-breakpoint
+      '@react-stately/utils':
+        specifier: ^3.10.3
+        version: 3.10.3(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
+
   packages/components/radio-group:
     dependencies:
       react-aria:
@@ -294,6 +328,12 @@ importers:
       yaml:
         specifier: ^2.4.5
         version: 2.5.0
+
+  packages/hooks/use-breakpoint:
+    devDependencies:
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
 
   packages/storybook:
     dependencies:
@@ -2218,11 +2258,6 @@ packages:
 
   '@react-stately/tree@3.8.3':
     resolution: {integrity: sha512-9sRQOxkK7ZMdtSTGHx0sMabHC39PEM4tMl+IdJKkmcp60bfsm3p6LHXhha3E58jwnZaemBfUrlQmTP/E26BbGw==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0
-
-  '@react-stately/utils@3.10.2':
-    resolution: {integrity: sha512-fh6OTQtbeQC0ywp6LJuuKs6tKIgFvt/DlIZEcIpGho6/oZG229UnIk6TUekwxnDbumuYyan6D9EgUtEMmT8UIg==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0
 
@@ -9867,7 +9902,7 @@ snapshots:
       '@react-aria/label': 3.7.10(react@18.3.1)
       '@react-aria/utils': 3.25.1(react@18.3.1)
       '@react-stately/form': 3.0.5(react@18.3.1)
-      '@react-stately/utils': 3.10.2(react@18.3.1)
+      '@react-stately/utils': 3.10.3(react@18.3.1)
       '@react-types/shared': 3.24.1(react@18.3.1)
       '@react-types/textfield': 3.9.5(react@18.3.1)
       '@swc/helpers': 0.5.12
@@ -9920,7 +9955,7 @@ snapshots:
   '@react-aria/utils@3.25.1(react@18.3.1)':
     dependencies:
       '@react-aria/ssr': 3.9.5(react@18.3.1)
-      '@react-stately/utils': 3.10.2(react@18.3.1)
+      '@react-stately/utils': 3.10.3(react@18.3.1)
       '@react-types/shared': 3.24.1(react@18.3.1)
       '@swc/helpers': 0.5.12
       clsx: 2.1.1
@@ -9948,7 +9983,7 @@ snapshots:
   '@react-stately/calendar@3.5.3(react@18.3.1)':
     dependencies:
       '@internationalized/date': 3.5.5
-      '@react-stately/utils': 3.10.2(react@18.3.1)
+      '@react-stately/utils': 3.10.3(react@18.3.1)
       '@react-types/calendar': 3.4.8(react@18.3.1)
       '@react-types/shared': 3.24.1(react@18.3.1)
       '@swc/helpers': 0.5.12
@@ -9957,7 +9992,7 @@ snapshots:
   '@react-stately/checkbox@3.6.7(react@18.3.1)':
     dependencies:
       '@react-stately/form': 3.0.5(react@18.3.1)
-      '@react-stately/utils': 3.10.2(react@18.3.1)
+      '@react-stately/utils': 3.10.3(react@18.3.1)
       '@react-types/checkbox': 3.8.3(react@18.3.1)
       '@react-types/shared': 3.24.1(react@18.3.1)
       '@swc/helpers': 0.5.12
@@ -9977,7 +10012,7 @@ snapshots:
       '@react-stately/form': 3.0.5(react@18.3.1)
       '@react-stately/numberfield': 3.9.5(react@18.3.1)
       '@react-stately/slider': 3.5.6(react@18.3.1)
-      '@react-stately/utils': 3.10.2(react@18.3.1)
+      '@react-stately/utils': 3.10.3(react@18.3.1)
       '@react-types/color': 3.0.0-rc.1(react@18.3.1)
       '@react-types/shared': 3.24.1(react@18.3.1)
       '@swc/helpers': 0.5.12
@@ -9990,7 +10025,7 @@ snapshots:
       '@react-stately/list': 3.10.7(react@18.3.1)
       '@react-stately/overlays': 3.6.9(react@18.3.1)
       '@react-stately/select': 3.6.6(react@18.3.1)
-      '@react-stately/utils': 3.10.2(react@18.3.1)
+      '@react-stately/utils': 3.10.3(react@18.3.1)
       '@react-types/combobox': 3.12.1(react@18.3.1)
       '@react-types/shared': 3.24.1(react@18.3.1)
       '@swc/helpers': 0.5.12
@@ -10008,7 +10043,7 @@ snapshots:
       '@internationalized/string': 3.2.3
       '@react-stately/form': 3.0.5(react@18.3.1)
       '@react-stately/overlays': 3.6.9(react@18.3.1)
-      '@react-stately/utils': 3.10.2(react@18.3.1)
+      '@react-stately/utils': 3.10.3(react@18.3.1)
       '@react-types/datepicker': 3.8.1(react@18.3.1)
       '@react-types/shared': 3.24.1(react@18.3.1)
       '@swc/helpers': 0.5.12
@@ -10055,7 +10090,7 @@ snapshots:
     dependencies:
       '@react-stately/collections': 3.10.9(react@18.3.1)
       '@react-stately/selection': 3.16.1(react@18.3.1)
-      '@react-stately/utils': 3.10.2(react@18.3.1)
+      '@react-stately/utils': 3.10.3(react@18.3.1)
       '@react-types/shared': 3.24.1(react@18.3.1)
       '@swc/helpers': 0.5.12
       react: 18.3.1
@@ -10072,14 +10107,14 @@ snapshots:
     dependencies:
       '@internationalized/number': 3.5.3
       '@react-stately/form': 3.0.5(react@18.3.1)
-      '@react-stately/utils': 3.10.2(react@18.3.1)
+      '@react-stately/utils': 3.10.3(react@18.3.1)
       '@react-types/numberfield': 3.8.5(react@18.3.1)
       '@swc/helpers': 0.5.12
       react: 18.3.1
 
   '@react-stately/overlays@3.6.9(react@18.3.1)':
     dependencies:
-      '@react-stately/utils': 3.10.2(react@18.3.1)
+      '@react-stately/utils': 3.10.3(react@18.3.1)
       '@react-types/overlays': 3.8.9(react@18.3.1)
       '@swc/helpers': 0.5.12
       react: 18.3.1
@@ -10095,7 +10130,7 @@ snapshots:
 
   '@react-stately/searchfield@3.5.5(react@18.3.1)':
     dependencies:
-      '@react-stately/utils': 3.10.2(react@18.3.1)
+      '@react-stately/utils': 3.10.3(react@18.3.1)
       '@react-types/searchfield': 3.5.7(react@18.3.1)
       '@swc/helpers': 0.5.12
       react: 18.3.1
@@ -10113,14 +10148,14 @@ snapshots:
   '@react-stately/selection@3.16.1(react@18.3.1)':
     dependencies:
       '@react-stately/collections': 3.10.9(react@18.3.1)
-      '@react-stately/utils': 3.10.2(react@18.3.1)
+      '@react-stately/utils': 3.10.3(react@18.3.1)
       '@react-types/shared': 3.24.1(react@18.3.1)
       '@swc/helpers': 0.5.12
       react: 18.3.1
 
   '@react-stately/slider@3.5.6(react@18.3.1)':
     dependencies:
-      '@react-stately/utils': 3.10.2(react@18.3.1)
+      '@react-stately/utils': 3.10.3(react@18.3.1)
       '@react-types/shared': 3.24.1(react@18.3.1)
       '@react-types/slider': 3.7.5(react@18.3.1)
       '@swc/helpers': 0.5.12
@@ -10132,7 +10167,7 @@ snapshots:
       '@react-stately/flags': 3.0.3
       '@react-stately/grid': 3.9.1(react@18.3.1)
       '@react-stately/selection': 3.16.1(react@18.3.1)
-      '@react-stately/utils': 3.10.2(react@18.3.1)
+      '@react-stately/utils': 3.10.3(react@18.3.1)
       '@react-types/grid': 3.2.8(react@18.3.1)
       '@react-types/shared': 3.24.1(react@18.3.1)
       '@react-types/table': 3.10.1(react@18.3.1)
@@ -10149,7 +10184,7 @@ snapshots:
 
   '@react-stately/toggle@3.7.6(react@18.3.1)':
     dependencies:
-      '@react-stately/utils': 3.10.2(react@18.3.1)
+      '@react-stately/utils': 3.10.3(react@18.3.1)
       '@react-types/checkbox': 3.8.3(react@18.3.1)
       '@swc/helpers': 0.5.12
       react: 18.3.1
@@ -10165,13 +10200,8 @@ snapshots:
     dependencies:
       '@react-stately/collections': 3.10.9(react@18.3.1)
       '@react-stately/selection': 3.16.1(react@18.3.1)
-      '@react-stately/utils': 3.10.2(react@18.3.1)
+      '@react-stately/utils': 3.10.3(react@18.3.1)
       '@react-types/shared': 3.24.1(react@18.3.1)
-      '@swc/helpers': 0.5.12
-      react: 18.3.1
-
-  '@react-stately/utils@3.10.2(react@18.3.1)':
-    dependencies:
       '@swc/helpers': 0.5.12
       react: 18.3.1
 
@@ -15198,7 +15228,7 @@ snapshots:
       '@react-stately/layout': 4.0.1(react@18.3.1)
       '@react-stately/menu': 3.8.1(react@18.3.1)
       '@react-stately/table': 3.12.1(react@18.3.1)
-      '@react-stately/utils': 3.10.2(react@18.3.1)
+      '@react-stately/utils': 3.10.3(react@18.3.1)
       '@react-stately/virtualizer': 4.0.1(react@18.3.1)
       '@react-types/color': 3.0.0-rc.1(react@18.3.1)
       '@react-types/form': 3.7.6(react@18.3.1)
