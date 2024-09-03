@@ -2,7 +2,7 @@ import plugin from "tailwindcss/plugin";
 import deepmerge from "deepmerge";
 import { BaseColors, ModeValue, MotionWindUIPluginConfig } from "./types";
 import { themeColors } from "./colors/colors";
-import { ColorShadeKeys, ColorShades, CSSColorVarScale } from "./colors/types";
+import { ColorShadeKeys, CSSColorVarScale } from "./colors/types";
 import { colorScaleToCssVars } from "./utils/colors";
 import { ThemeMode } from "../../provider/src/MotionWindUIProvider";
 import {
@@ -187,18 +187,15 @@ const corePlugin = (config: MotionWindUIPluginConfig) => {
   const colorShadeKeys: ColorShadeKeys[] = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
 
   // Generate the TailwindCSS colors to use in the theme
-  const tailwindColors = colorKeys.reduce(
-    (acc, key) => {
-      acc[key] = colorShadeKeys.reduce((scale, shade) => {
-        scale[shade] = `var(--${key}-${shade})`;
+  const tailwindColors: { [key: string]: string } = {};
 
-        return scale;
-      }, {} as Partial<ColorShades>);
+  colorKeys.forEach((color) => {
+    colorShadeKeys.forEach((shade) => {
+      const key = `${color}-${shade}`;
 
-      return acc;
-    },
-    {} as { [key: string]: Partial<ColorShades> },
-  );
+      tailwindColors[key] = `var(--${key})`;
+    });
+  });
 
   // Group the CSS variables for the plugin (the default theme and any user themes)
   const baseCssVars = {};
@@ -287,6 +284,7 @@ const corePlugin = (config: MotionWindUIPluginConfig) => {
             ...textColorsPlugin,
           },
           backgroundColor: {
+            ...tailwindColors,
             ...backgroundColorsPlugin,
             ...accentColorsPlugin,
             ...surfaceColorsPlugin,

@@ -77,6 +77,30 @@ export const baseAccentColors: BaseAccentColors = {
     light: "var(--danger-50)",
     dark: "var(--danger-950)",
   },
+  "input-neutral-subtle": {
+    light: "var(--neutral-200)",
+    dark: "var(--neutral-700)",
+  },
+  "input-primary-subtle": {
+    light: "var(--primary-200)",
+    dark: "var(--primary-900)",
+  },
+  "input-secondary-subtle": {
+    light: "var(--secondary-200)",
+    dark: "var(--secondary-800)",
+  },
+  "input-success-subtle": {
+    light: "var(--success-200)",
+    dark: "var(--success-800)",
+  },
+  "input-warning-subtle": {
+    light: "var(--warning-200)",
+    dark: "var(--warning-800)",
+  },
+  "input-danger-subtle": {
+    light: "var(--danger-200)",
+    dark: "var(--danger-800)",
+  },
 };
 
 /**
@@ -381,6 +405,78 @@ export const accentColors: AccentColors = {
     light: "var(--danger-200)",
     dark: "var(--danger-800)",
   },
+  "input-neutral-subtle": {
+    light: "var(--neutral-200)",
+    dark: "var(--neutral-700)",
+  },
+  "input-neutral-subtle-hover": {
+    light: "var(--neutral-300)",
+    dark: "var(--neutral-600)",
+  },
+  "input-neutral-subtle-active": {
+    light: "var(--neutral-400)",
+    dark: "var(--neutral-500)",
+  },
+  "input-primary-subtle": {
+    light: "var(--primary-200)",
+    dark: "var(--primary-900)",
+  },
+  "input-primary-subtle-hover": {
+    light: "var(--primary-300)",
+    dark: "var(--primary-800)",
+  },
+  "input-primary-subtle-active": {
+    light: "var(--primary-400)",
+    dark: "var(--primary-700)",
+  },
+  "input-secondary-subtle": {
+    light: "var(--secondary-200)",
+    dark: "var(--secondary-800)",
+  },
+  "input-secondary-subtle-hover": {
+    light: "var(--secondary-300)",
+    dark: "var(--secondary-700)",
+  },
+  "input-secondary-subtle-active": {
+    light: "var(--secondary-400)",
+    dark: "var(--secondary-600)",
+  },
+  "input-success-subtle": {
+    light: "var(--success-200)",
+    dark: "var(--success-800)",
+  },
+  "input-success-subtle-hover": {
+    light: "var(--success-300)",
+    dark: "var(--success-700)",
+  },
+  "input-success-subtle-active": {
+    light: "var(--success-400)",
+    dark: "var(--success-600)",
+  },
+  "input-warning-subtle": {
+    light: "var(--warning-200)",
+    dark: "var(--warning-800)",
+  },
+  "input-warning-subtle-hover": {
+    light: "var(--warning-300)",
+    dark: "var(--warning-700)",
+  },
+  "input-warning-subtle-active": {
+    light: "var(--warning-400)",
+    dark: "var(--warning-600)",
+  },
+  "input-danger-subtle": {
+    light: "var(--danger-200)",
+    dark: "var(--danger-800)",
+  },
+  "input-danger-subtle-hover": {
+    light: "var(--danger-300)",
+    dark: "var(--danger-700)",
+  },
+  "input-danger-subtle-active": {
+    light: "var(--danger-400)",
+    dark: "var(--danger-700)",
+  },
 };
 
 export const accentColorsPlugin: AccentColorsPlugin = {
@@ -438,4 +534,22 @@ export const accentColorsPlugin: AccentColorsPlugin = {
   "danger-subtle": `var(--${ACCENT_CONSTANT}-danger-subtle)`,
   "danger-subtle-hover": `var(--${ACCENT_CONSTANT}-danger-subtle-hover)`,
   "danger-subtle-active": `var(--${ACCENT_CONSTANT}-danger-subtle-active)`,
+  "input-neutral-subtle": `var(--${ACCENT_CONSTANT}-input-neutral-subtle)`,
+  "input-neutral-subtle-hover": `var(--${ACCENT_CONSTANT}-input-neutral-subtle-hover)`,
+  "input-neutral-subtle-active": `var(--${ACCENT_CONSTANT}-input-neutral-subtle-active)`,
+  "input-primary-subtle": `var(--${ACCENT_CONSTANT}-input-primary-subtle)`,
+  "input-primary-subtle-hover": `var(--${ACCENT_CONSTANT}-input-primary-subtle-hover)`,
+  "input-primary-subtle-active": `var(--${ACCENT_CONSTANT}-input-primary-subtle-active)`,
+  "input-secondary-subtle": `var(--${ACCENT_CONSTANT}-input-secondary-subtle)`,
+  "input-secondary-subtle-hover": `var(--${ACCENT_CONSTANT}-input-secondary-subtle-hover)`,
+  "input-secondary-subtle-active": `var(--${ACCENT_CONSTANT}-input-secondary-subtle-active)`,
+  "input-success-subtle": `var(--${ACCENT_CONSTANT}-input-success-subtle)`,
+  "input-success-subtle-hover": `var(--${ACCENT_CONSTANT}-input-success-subtle-hover)`,
+  "input-success-subtle-active": `var(--${ACCENT_CONSTANT}-input-success-subtle-active)`,
+  "input-warning-subtle": `var(--${ACCENT_CONSTANT}-input-warning-subtle)`,
+  "input-warning-subtle-hover": `var(--${ACCENT_CONSTANT}-input-warning-subtle-hover)`,
+  "input-warning-subtle-active": `var(--${ACCENT_CONSTANT}-input-warning-subtle-active)`,
+  "input-danger-subtle": `var(--${ACCENT_CONSTANT}-input-danger-subtle)`,
+  "input-danger-subtle-hover": `var(--${ACCENT_CONSTANT}-input-danger-subtle-hover)`,
+  "input-danger-subtle-active": `var(--${ACCENT_CONSTANT}-input-danger-subtle-active)`,
 };

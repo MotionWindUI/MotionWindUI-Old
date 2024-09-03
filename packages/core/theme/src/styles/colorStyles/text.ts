@@ -77,6 +77,18 @@ export const textColors: TextColors = {
     light: "var(--neutral-400)",
     dark: "var(--neutral-700)",
   },
+  "on-neutral-negative": {
+    light: "var(--neutral-900)",
+    dark: "var(--neutral-100)",
+  },
+  "on-neutral-negative-hover": {
+    light: "var(--neutral-950)",
+    dark: "var(--neutral-100)",
+  },
+  "on-neutral-negative-active": {
+    light: "var(--neutral-950)",
+    dark: "var(--neutral-200)",
+  },
   primary: {
     light: "var(--primary-700)",
     dark: "var(--primary-400)",
@@ -112,6 +124,18 @@ export const textColors: TextColors = {
   "on-primary-subtle-subtle": {
     light: "var(--primary-400)",
     dark: "var(--primary-700)",
+  },
+  "on-primary-negative": {
+    light: "var(--primary-900)",
+    dark: "var(--primary-100)",
+  },
+  "on-primary-negative-hover": {
+    light: "var(--primary-950)",
+    dark: "var(--primary-100)",
+  },
+  "on-primary-negative-active": {
+    light: "var(--primary-950)",
+    dark: "var(--primary-200)",
   },
   secondary: {
     light: "var(--secondary-700)",
@@ -149,6 +173,18 @@ export const textColors: TextColors = {
     light: "var(--secondary-400)",
     dark: "var(--secondary-700)",
   },
+  "on-secondary-negative": {
+    light: "var(--secondary-900)",
+    dark: "var(--secondary-100)",
+  },
+  "on-secondary-negative-hover": {
+    light: "var(--secondary-950)",
+    dark: "var(--secondary-100)",
+  },
+  "on-secondary-negative-active": {
+    light: "var(--secondary-950)",
+    dark: "var(--secondary-200)",
+  },
   success: {
     light: "var(--success-700)",
     dark: "var(--success-400)",
@@ -184,6 +220,18 @@ export const textColors: TextColors = {
   "on-success-subtle-subtle": {
     light: "var(--success-400)",
     dark: "var(--success-700)",
+  },
+  "on-success-negative": {
+    light: "var(--success-900)",
+    dark: "var(--success-100)",
+  },
+  "on-success-negative-hover": {
+    light: "var(--success-950)",
+    dark: "var(--success-100)",
+  },
+  "on-success-negative-active": {
+    light: "var(--success-950)",
+    dark: "var(--success-200)",
   },
   warning: {
     light: "var(--warning-700)",
@@ -221,6 +269,18 @@ export const textColors: TextColors = {
     light: "var(--warning-400)",
     dark: "var(--warning-700)",
   },
+  "on-warning-negative": {
+    light: "var(--warning-900)",
+    dark: "var(--warning-100)",
+  },
+  "on-warning-negative-hover": {
+    light: "var(--warning-950)",
+    dark: "var(--warning-100)",
+  },
+  "on-warning-negative-active": {
+    light: "var(--warning-950)",
+    dark: "var(--warning-200)",
+  },
   danger: {
     light: "var(--danger-700)",
     dark: "var(--danger-400)",
@@ -256,6 +316,18 @@ export const textColors: TextColors = {
   "on-danger-subtle-subtle": {
     light: "var(--danger-400)",
     dark: "var(--danger-700)",
+  },
+  "on-danger-negative": {
+    light: "var(--danger-900)",
+    dark: "var(--danger-100)",
+  },
+  "on-danger-negative-hover": {
+    light: "var(--danger-950)",
+    dark: "var(--danger-100)",
+  },
+  "on-danger-negative-active": {
+    light: "var(--danger-950)",
+    dark: "var(--danger-200)",
   },
 };
 
@@ -409,6 +481,9 @@ export const textColorsPlugin: TextColorsPlugin = {
   "on-neutral-disabled": `var(--${TEXT_CONSTANT}-on-neutral-disabled)`,
   "on-neutral-subtle": `var(--${TEXT_CONSTANT}-on-neutral-subtle)`,
   "on-neutral-subtle-subtle": `var(--${TEXT_CONSTANT}-on-neutral-subtle-subtle)`,
+  "on-neutral-negative": `var(--${TEXT_CONSTANT}-on-neutral-negative)`,
+  "on-neutral-negative-hover": `var(--${TEXT_CONSTANT}-on-neutral-negative-hover)`,
+  "on-neutral-negative-active": `var(--${TEXT_CONSTANT}-on-neutral-negative-active)`,
   primary: `var(--${TEXT_CONSTANT}-primary)`,
   "primary-hover": `var(--${TEXT_CONSTANT}-primary-hover)`,
   "primary-active": `var(--${TEXT_CONSTANT}-primary-active)`,
@@ -418,6 +493,9 @@ export const textColorsPlugin: TextColorsPlugin = {
   "on-primary-disabled": `var(--${TEXT_CONSTANT}-on-primary-disabled)`,
   "on-primary-subtle": `var(--${TEXT_CONSTANT}-on-primary-subtle)`,
   "on-primary-subtle-subtle": `var(--${TEXT_CONSTANT}-on-primary-subtle-subtle)`,
+  "on-primary-negative": `var(--${TEXT_CONSTANT}-on-primary-negative)`,
+  "on-primary-negative-hover": `var(--${TEXT_CONSTANT}-on-primary-negative-hover)`,
+  "on-primary-negative-active": `var(--${TEXT_CONSTANT}-on-primary-negative-active)`,
   secondary: `var(--${TEXT_CONSTANT}-secondary)`,
   "secondary-hover": `var(--${TEXT_CONSTANT}-secondary-hover)`,
   "secondary-active": `var(--${TEXT_CONSTANT}-secondary-active)`,
@@ -427,6 +505,9 @@ export const textColorsPlugin: TextColorsPlugin = {
   "on-secondary-disabled": `var(--${TEXT_CONSTANT}-on-secondary-disabled)`,
   "on-secondary-subtle": `var(--${TEXT_CONSTANT}-on-secondary-subtle)`,
   "on-secondary-subtle-subtle": `var(--${TEXT_CONSTANT}-on-secondary-subtle-subtle)`,
+  "on-secondary-negative": `var(--${TEXT_CONSTANT}-on-secondary-negative)`,
+  "on-secondary-negative-hover": `var(--${TEXT_CONSTANT}-on-secondary-negative-hover)`,
+  "on-secondary-negative-active": `var(--${TEXT_CONSTANT}-on-secondary-negative-active)`,
   success: `var(--${TEXT_CONSTANT}-success)`,
   "success-hover": `var(--${TEXT_CONSTANT}-success-hover)`,
   "success-active": `var(--${TEXT_CONSTANT}-success-active)`,
@@ -436,6 +517,9 @@ export const textColorsPlugin: TextColorsPlugin = {
   "on-success-disabled": `var(--${TEXT_CONSTANT}-on-success-disabled)`,
   "on-success-subtle": `var(--${TEXT_CONSTANT}-on-success-subtle)`,
   "on-success-subtle-subtle": `var(--${TEXT_CONSTANT}-on-success-subtle-subtle)`,
+  "on-success-negative": `var(--${TEXT_CONSTANT}-on-success-negative)`,
+  "on-success-negative-hover": `var(--${TEXT_CONSTANT}-on-success-negative-hover)`,
+  "on-success-negative-active": `var(--${TEXT_CONSTANT}-on-success-negative-active)`,
   warning: `var(--${TEXT_CONSTANT}-warning)`,
   "warning-hover": `var(--${TEXT_CONSTANT}-warning-hover)`,
   "warning-active": `var(--${TEXT_CONSTANT}-warning-active)`,
@@ -445,6 +529,9 @@ export const textColorsPlugin: TextColorsPlugin = {
   "on-warning-disabled": `var(--${TEXT_CONSTANT}-on-warning-disabled)`,
   "on-warning-subtle": `var(--${TEXT_CONSTANT}-on-warning-subtle)`,
   "on-warning-subtle-subtle": `var(--${TEXT_CONSTANT}-on-warning-subtle-subtle)`,
+  "on-warning-negative": `var(--${TEXT_CONSTANT}-on-warning-negative)`,
+  "on-warning-negative-hover": `var(--${TEXT_CONSTANT}-on-warning-negative-hover)`,
+  "on-warning-negative-active": `var(--${TEXT_CONSTANT}-on-warning-negative-active)`,
   danger: `var(--${TEXT_CONSTANT}-danger)`,
   "danger-hover": `var(--${TEXT_CONSTANT}-danger-hover)`,
   "danger-active": `var(--${TEXT_CONSTANT}-danger-active)`,
@@ -454,4 +541,7 @@ export const textColorsPlugin: TextColorsPlugin = {
   "on-danger-disabled": `var(--${TEXT_CONSTANT}-on-danger-disabled)`,
   "on-danger-subtle": `var(--${TEXT_CONSTANT}-on-danger-subtle)`,
   "on-danger-subtle-subtle": `var(--${TEXT_CONSTANT}-on-danger-subtle-subtle)`,
+  "on-danger-negative": `var(--${TEXT_CONSTANT}-on-danger-negative)`,
+  "on-danger-negative-hover": `var(--${TEXT_CONSTANT}-on-danger-negative-hover)`,
+  "on-danger-negative-active": `var(--${TEXT_CONSTANT}-on-danger-negative-active)`,
 };

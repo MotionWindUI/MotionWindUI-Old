@@ -1,9 +1,47 @@
 /** @type { import('@storybook/react').Preview } */
 import React from "react";
 import "./styles.css";
-import { withThemeByDataAttribute } from "@storybook/addon-themes";
+import { MINIMAL_VIEWPORTS } from "@storybook/addon-viewport";
 import { MotionWindUIProvider, useMotionWindUI } from "@motionwindui/provider";
 import { useEffect } from "react";
+
+const customViewports = {
+  sm: {
+    name: "Small (sm)",
+    styles: {
+      width: "640px",
+      height: "1000px", // Sensible height for small devices
+    },
+  },
+  md: {
+    name: "Medium (md)",
+    styles: {
+      width: "768px",
+      height: "1000px", // Sensible height for medium devices
+    },
+  },
+  lg: {
+    name: "Large (lg)",
+    styles: {
+      width: "1024px",
+      height: "1100px", // Slightly taller for larger devices
+    },
+  },
+  xl: {
+    name: "Extra Large (xl)",
+    styles: {
+      width: "1280px",
+      height: "1200px", // Taller height for extra large devices
+    },
+  },
+  "2xl": {
+    name: "2X Large (2xl)",
+    styles: {
+      width: "1536px",
+      height: "1300px", // Even taller for 2X large devices
+    },
+  },
+};
 
 const preview = {
   parameters: {
@@ -12,6 +50,12 @@ const preview = {
       matchers: {
         color: /(background|color)$/i,
         date: /Date$/i,
+      },
+    },
+    viewport: {
+      viewports: {
+        ...MINIMAL_VIEWPORTS,
+        ...customViewports,
       },
     },
   },

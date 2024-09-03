@@ -3,11 +3,11 @@ export type MediaQueryMap = { [key: string]: string };
 
 // Type for useBreakpoint hook props
 export type UseBreakpointProps = {
-  mediaMap?: MediaQueryMap; // Allow custom media map with any key
-  size?: string; // Optional: Check if at least this size
+  mediaMap?: MediaQueryMap;
+  size?: string;
 };
 
-export const MediaSize = {
+export const MediaSize: MediaQueryMap = {
   SM: "sm",
   MD: "md",
   LG: "lg",

@@ -1,17 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
+import { Input } from "../src";
+import { iconList } from "../../../core/icons/src";
+import IconWrapper from "../../../storybook/.storybook/IconWrapper";
 
-import { Input, InputProps } from "../src";
+const iconOptions = {
+  None: null,
+  ...iconList,
+};
 
 const meta = {
   title: "Components/Input",
   component: Input,
   parameters: {
     controls: {
-      exclude: /ref$|className$/,
+      exclude:
+        /ref$|className$|isStartContentStyled$|isEndContentStyled$|startContentProps$|endContentProps$/,
     },
   },
   argTypes: {
+    variant: {
+      control: { type: "select" },
+      options: ["flat", "outline"],
+      description: "Variant for the input",
+    },
     label: {
       control: { type: "text" },
       description: "Label for the input",
@@ -60,6 +72,30 @@ const meta = {
         type: "boolean",
       },
     },
+    startContent: {
+      options: Object.keys(iconOptions),
+      mapping: Object.fromEntries(
+        Object.entries(iconOptions).map(([key, Icon]) => [
+          key,
+          <IconWrapper key={key} icon={Icon} height={24} width={24} />,
+        ]),
+      ),
+      control: {
+        type: "select",
+      },
+    },
+    endContent: {
+      options: Object.keys(iconOptions),
+      mapping: Object.fromEntries(
+        Object.entries(iconOptions).map(([key, Icon]) => [
+          key,
+          <IconWrapper key={key} icon={Icon} height={24} width={24} />,
+        ]),
+      ),
+      control: {
+        type: "select",
+      },
+    },
   },
 } satisfies Meta<typeof Input>;
 
@@ -77,3 +113,82 @@ const StoryTemplate: Story = {
 };
 
 export const Default: Story = StoryTemplate;
+
+export const Controlled: Story = {
+  ...StoryTemplate,
+  args: {
+    ...StoryTemplate.args,
+  },
+  render: (args) => {
+    const [value, setValue] = useState("");
+
+    return (
+      <>
+        <Input {...args} value={value} onChange={setValue} />
+        <p>Value: {value}</p>
+      </>
+    );
+  },
+};
+
+export const Clearable: Story = {
+  ...StoryTemplate,
+  args: {
+    ...StoryTemplate.args,
+    label: "First Name",
+  },
+  render: (args) => {
+    const [value, setValue] = useState("");
+    const endContentProps = args.endContentProps || {
+      onPress: () => {
+        setValue("");
+      },
+    };
+
+    return (
+      <Input
+        {...args}
+        value={value}
+        onChange={setValue}
+        isEndContentButton={true}
+        endContentProps={endContentProps}
+        endContent={
+          value !== "" ? <IconWrapper icon={iconList.XCircleIcon} height={24} width={24} /> : null
+        }
+      />
+    );
+  },
+};
+
+export const PasswordVisible: Story = {
+  ...StoryTemplate,
+  args: {
+    ...StoryTemplate.args,
+    type: "password",
+    label: "Password",
+  },
+  render: (args) => {
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const endContentProps = args.endContentProps || {
+      onPress: () => {
+        setIsPasswordVisible(!isPasswordVisible);
+      },
+    };
+
+    return (
+      <Input
+        {...args}
+        type={isPasswordVisible ? "text" : "password"}
+        isEndContentButton={true}
+        endContentProps={endContentProps}
+        endContent={
+          <IconWrapper
+            icon={isPasswordVisible ? iconList.EyeSlashIcon : iconList.EyeIcon}
+            height={24}
+            width={24}
+          />
+        }
+      />
+    );
+  },
+};

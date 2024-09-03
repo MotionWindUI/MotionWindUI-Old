@@ -1,7 +1,7 @@
 import React from "react";
 import { InputProps, useInput } from "./useInput";
 
-const Input = React.forwardRef((props: InputProps, ref: React.ForwardedRef<HTMLLabelElement>) => {
+const Input = React.forwardRef((props: InputProps, ref: React.ForwardedRef<HTMLInputElement>) => {
   const {
     RootComponent,
     InputElement,
@@ -9,6 +9,8 @@ const Input = React.forwardRef((props: InputProps, ref: React.ForwardedRef<HTMLL
     description,
     errorMessage,
     isInvalid,
+    startContent,
+    endContent,
     rootProps,
     labelProps,
     labelWrapperProps,
@@ -18,7 +20,7 @@ const Input = React.forwardRef((props: InputProps, ref: React.ForwardedRef<HTMLL
     descriptionProps,
     errorMessageProps,
     inputProps,
-  } = useInput({
+  } = useInput<HTMLInputElement>({
     ...props,
     ref,
   });
@@ -29,7 +31,9 @@ const Input = React.forwardRef((props: InputProps, ref: React.ForwardedRef<HTMLL
         <label {...labelProps()}>{label}</label>
         <div {...inputWrapperProps()}>
           <div {...inputContentWrapperProps()}>
+            {startContent}
             <InputElement {...inputProps()} />
+            {endContent}
           </div>
           <div {...helpContentWrapperProps()}>
             {description && <span {...descriptionProps()}>{description}</span>}

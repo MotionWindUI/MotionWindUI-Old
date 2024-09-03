@@ -1,12 +1,13 @@
 import { MotionWindUIBaseProps } from "@motionwindui/base";
-import { useMotionWindUI } from "@motionwindui/provider";
-import React, { useCallback, useMemo, useRef } from "react";
+import React, { createElement, useCallback, useMemo, useRef } from "react";
 import { AriaTextFieldProps, useFocusRing, useHover, useTextField } from "react-aria";
 import { Booleanish, dataAttr, getAriaDescription, getAriaLabel } from "@motionwindui/aria-utils";
 import { clsxMerge, DEV_MODE, warn } from "@motionwindui/dev-utils";
 import { InputSlots, inputStyles, SlotClasses } from "@motionwindui/theme";
+import { Button, ButtonProps } from "@motionwindui/button";
 import { useControlledState } from "@react-stately/utils";
-import { useBreakpoint } from "@motionwindui/use-breakpoint";
+import { useSafeLayoutEffect } from "@motionwindui/use-safe-layout-effect";
+import { mergeRefs } from "@motionwindui/react-utils";
 
 type Props = React.HTMLProps<HTMLElement> & {
   mergeClassNames?: boolean;
@@ -29,12 +30,15 @@ type InputType<IsMultiLine extends boolean> = IsMultiLine extends true
 
 export type InputLabelPlacement = "top" | "left";
 
-export interface InputProps
+export interface InputProps<T extends HTMLInputElement | HTMLTextAreaElement = HTMLInputElement>
   extends MotionWindUIBaseProps,
     Omit<AriaTextFieldProps, "children">,
     Partial<Pick<HTMLElement, "className">> {
+  /** The variant of the input */
+  variant?: "flat" | "outline";
+
   /** The reference to the label of the input */
-  ref?: React.Ref<HTMLLabelElement>;
+  ref?: React.Ref<T>;
 
   /** The label of the input */
   label?: string | React.ReactNode;
@@ -63,6 +67,9 @@ export interface InputProps
   /** Use the pre-defined styles for the start content */
   isStartContentStyled?: boolean;
 
+  /** The properties of the start content button */
+  startContentProps?: ButtonProps;
+
   /** Content that comes after the input */
   endContent?: React.ReactNode;
 
@@ -72,14 +79,11 @@ export interface InputProps
   /** Use the pre-defined styles for the end content */
   isEndContentStyled?: boolean;
 
+  /** The properties of the end content button */
+  endContentProps?: ButtonProps;
+
   /** The list of slots */
   classList?: SlotClasses<InputSlots>;
-
-  /** Whether or not to use a responsive layout for the label. Depending on the media break, if the label shrinks past that and it is on the left, it will adjust to the top position */
-  useResponsiveLabel?: boolean;
-
-  /** The media break at which the label will adjust to the top position if it is on the left and shrinks past that break */
-  responsiveLabelBreak?: "sm" | "md" | "lg" | "xl";
 }
 
 /**
@@ -94,13 +98,15 @@ type RootComponentProps = Partial<React.HTMLProps<HTMLElement>> & {
   "data-readonly": Booleanish;
   "data-required": Booleanish;
   "data-label-placement": InputLabelPlacement;
+  "data-hidden"?: Booleanish;
 };
 
-export const useInput = (props: InputProps) => {
-  const globalContext = useMotionWindUI();
-
+export const useInput = <T extends HTMLInputElement | HTMLTextAreaElement = HTMLInputElement>(
+  props: InputProps<T>,
+) => {
   const {
     color = "neutral",
+    variant = "flat",
     size = "md",
     radius = "md",
     label,
@@ -112,22 +118,27 @@ export const useInput = (props: InputProps) => {
     isRequired: isRequiredProp = false,
     isInvalid: isInvalidProp,
     isMultiLine = false,
-    disableAnimations = globalContext.disableAnimations ?? false,
     labelPlacement = "top",
     className,
     startContent: startContentProp,
-    isStartContentButton,
-    isStartContentStyled,
+    isStartContentButton = false,
+    isStartContentStyled = true,
+    startContentProps,
     endContent: endContentProp,
-    isEndContentButton,
-    isEndContentStyled,
+    isEndContentButton = false,
+    isEndContentStyled = true,
+    endContentProps,
     classList,
     ref,
-    useResponsiveLabel = !!label,
-    responsiveLabelBreak = "sm",
+    validationBehavior,
     asRoot = "div",
-    ...rest
   } = props;
+
+  const [inputValue, setInputValue] = useControlledState(
+    props.value,
+    props.defaultValue ?? "",
+    props.onChange,
+  );
 
   // Determine the input element type
   const inputElementType = isMultiLine ? "textarea" : "input";
@@ -149,21 +160,13 @@ export const useInput = (props: InputProps) => {
   const ariaLabel = getAriaLabel(props);
 
   // Create a ref for the input element
-  const inputRef = useRef<InputElementType>(null);
+  const inputRef = useRef<T>(null);
 
-  // Determine if the breakpoint is at least the responsive label break
-  const isAtLeastAtBreakpoint = useBreakpoint({ size: responsiveLabelBreak });
+  useSafeLayoutEffect(() => {
+    if (!inputRef.current) return;
 
-  // Determine the final label placement by checking if the responsive label is enabled and if the label placement is left
-  // If the responsive label is enabled and the label placement is left, and we are not at least at the breakpoint, then the label placement will be top
-  // Otherwise, the label placement will be the same as the label placement prop
-  const labelPlacementFinal = useMemo(() => {
-    if (useResponsiveLabel && labelPlacement === "left" && !isAtLeastAtBreakpoint) {
-      return "top";
-    }
-
-    return labelPlacement;
-  }, [useResponsiveLabel, labelPlacement, isAtLeastAtBreakpoint]);
+    setInputValue(inputRef.current.value);
+  }, [inputRef.current]);
 
   const {
     labelProps: labelPropsRAC,
@@ -174,10 +177,13 @@ export const useInput = (props: InputProps) => {
   } = useTextField(
     {
       ...props,
+      validationBehavior,
+      value: inputValue,
       inputElementType,
       "aria-label": ariaLabel["aria-label"],
       "aria-labelledby": ariaLabel["aria-labelledby"],
       "aria-describedby": ariaDescription["aria-describedby"],
+      onChange: setInputValue,
     },
     inputRef,
   );
@@ -201,6 +207,8 @@ export const useInput = (props: InputProps) => {
     [isReadOnlyProp, inputPropsRAC.readOnly],
   );
 
+  const isHidden = props.type === "hidden";
+
   // Determines if the element is interactive
   const isInteractive = !isDisabled || !isReadOnly;
 
@@ -215,7 +223,7 @@ export const useInput = (props: InputProps) => {
     isDisabled: !isInteractive,
   });
 
-  const styles = useMemo(() => inputStyles({ radius, color }), [radius, color]);
+  const styles = useMemo(() => inputStyles({ radius, color, variant }), [radius, color, variant]);
 
   const rootProps = useCallback(
     (props?: Props): RootComponentProps => {
@@ -235,7 +243,8 @@ export const useInput = (props: InputProps) => {
         "data-disabled": dataAttr(isDisabled),
         "data-readonly": dataAttr(isReadOnly),
         "data-required": dataAttr(isRequired),
-        "data-label-placement": labelPlacementFinal,
+        "data-label-placement": labelPlacement,
+        "data-hidden": dataAttr(isHidden),
       };
     },
     [
@@ -262,6 +271,7 @@ export const useInput = (props: InputProps) => {
       return {
         ...otherProps,
         ...labelPropsRAC,
+        ...hoverProps,
         className: classNameProp,
       };
     },
@@ -297,7 +307,7 @@ export const useInput = (props: InputProps) => {
         ...inputPropsRAC,
         ...focusProps,
         ...hoverProps,
-        ref: inputRef,
+        ref: mergeRefs(inputRef, ref),
         className: classNameProp,
         placeholder,
       };
@@ -391,13 +401,59 @@ export const useInput = (props: InputProps) => {
     [classList?.errorMessage],
   );
 
+  const renderContent = (
+    content: React.ReactNode,
+    isButton: boolean,
+    isStyled: boolean,
+    props?: ButtonProps,
+  ): React.ReactNode => {
+    if (isButton && !!content) {
+      const buttonProps: ButtonProps = {
+        color,
+        size,
+        radius,
+        variant: "faded",
+        isIconOnly: true,
+        startContent: content,
+        ...props,
+      };
+
+      return createElement(Button, buttonProps);
+    }
+
+    if (isStyled && !isButton && !!content) {
+      return createElement("span", { className: styles.startContent }, content);
+    }
+
+    return content;
+  };
+
+  const startContent = useMemo(
+    () =>
+      renderContent(
+        startContentProp,
+        isStartContentButton,
+        isStartContentStyled,
+        startContentProps,
+      ),
+    [startContentProp, isStartContentButton, isStartContentStyled],
+  );
+
+  const endContent = useMemo(
+    () => renderContent(endContentProp, isEndContentButton, isEndContentStyled, endContentProps),
+    [endContentProp, isEndContentButton, isEndContentStyled],
+  );
+
   return {
     RootComponent,
     InputElement,
     label,
     description,
     errorMessage,
+    startContent,
+    endContent,
     isInvalid,
+    inputRef,
     rootProps,
     labelProps,
     labelWrapperProps,
