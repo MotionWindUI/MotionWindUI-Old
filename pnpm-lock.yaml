@@ -134,16 +134,19 @@ importers:
       react-aria:
         specifier: ^3.34.1
         version: 3.34.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      react-aria-components:
-        specifier: ^1.3.0
-        version: 1.3.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     devDependencies:
+      '@motionwindui/aria-utils':
+        specifier: workspace:*
+        version: link:../../utils/aria-utils
       '@motionwindui/base':
         specifier: workspace:*
         version: link:../../core/base
       '@motionwindui/provider':
         specifier: workspace:*
         version: link:../../core/provider
+      '@motionwindui/react-utils':
+        specifier: workspace:*
+        version: link:../../utils/react-utils
       '@motionwindui/theme':
         specifier: workspace:*
         version: link:../../core/theme

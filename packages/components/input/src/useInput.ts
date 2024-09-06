@@ -99,6 +99,8 @@ type RootComponentProps = Partial<React.HTMLProps<HTMLElement>> & {
   "data-required": Booleanish;
   "data-label-placement": InputLabelPlacement;
   "data-hidden"?: Booleanish;
+  "data-has-start-content"?: Booleanish;
+  "data-has-end-content"?: Booleanish;
 };
 
 export const useInput = <T extends HTMLInputElement | HTMLTextAreaElement = HTMLInputElement>(
@@ -245,6 +247,8 @@ export const useInput = <T extends HTMLInputElement | HTMLTextAreaElement = HTML
         "data-required": dataAttr(isRequired),
         "data-label-placement": labelPlacement,
         "data-hidden": dataAttr(isHidden),
+        "data-has-start-content": dataAttr(!!startContentProp),
+        "data-has-end-content": dataAttr(!!endContentProp),
       };
     },
     [
@@ -415,6 +419,11 @@ export const useInput = <T extends HTMLInputElement | HTMLTextAreaElement = HTML
         variant: "faded",
         isIconOnly: true,
         startContent: content,
+        // We are using a custom class to remove the background color
+        // This is because we don't want the button to have a background color
+        // But instead just let the icon (text color) do the work
+        // !bg-transparent will propagate all states because of the ! prefix
+        className: "!bg-transparent",
         ...props,
       };
 

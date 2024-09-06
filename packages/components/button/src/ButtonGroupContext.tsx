@@ -1,5 +1,5 @@
 import React from "react";
-import { ButtonProps } from "./Button";
+import { ButtonProps } from "./useButton";
 
 /**
  * Properties of the ButtonGroup component.

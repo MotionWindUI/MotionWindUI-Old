@@ -4,12 +4,11 @@ import { groupDataFocusRing } from "../utils/focusRing";
 export const inputStyles = tv({
   slots: {
     root: ["group", "inline-flex", "flex-col", "data-[hidden=true]:hidden"],
-    label: ["block", "font-medium", "text-neutral", "cursor-pointer"],
+    label: ["block", "font-medium", "text-neutral", "cursor-pointer", "pb-2"],
     labelWrapper: [
       "grid",
       "items-start",
       "grid-rows-[auto_1fr]",
-      "gap-2",
       "group-data-[label-placement='left']:grid-cols-[auto_1fr]",
       "group-data-[label-placement='left']:items-center",
       "group-data-[label-placement='left']:gap-4",
@@ -28,23 +27,25 @@ export const inputStyles = tv({
     inputContentWrapper: [
       "flex",
       "items-center",
-      "gap-2",
       "justify-between",
       "border-none",
+      "bg-transparent",
+      "group-data-[has-start-content=true]:pl-2",
+      "group-data-[has-end-content=true]:pr-2",
       ...groupDataFocusRing,
     ],
     inputWrapper: ["flex", "flex-col"],
     input: [
       "w-full",
       "min-w-48",
-      "min-h-9",
+      "min-h-10",
       "bg-transparent",
       "outline-none",
       "border-none",
       "p-2",
     ],
-    startContent: [],
-    endContent: [],
+    startContent: ["pl-2"],
+    endContent: ["pr-2"],
   },
   variants: {
     radius: {
@@ -67,7 +68,7 @@ export const inputStyles = tv({
     variant: {
       flat: {},
       outline: {
-        inputContentWrapper: ["border", "border-md", "border-solid"],
+        inputContentWrapper: ["border", "border-solid"],
       },
     },
     color: {
@@ -191,14 +192,110 @@ export const inputStyles = tv({
         input: [
           "text-on-neutral-negative",
           "group-data-[hover=true]:text-on-neutral-negative-hover",
-          "group-data-[focus=true]:text-on-neutral-negative",
+          "group-data-[focus=true]:!text-on-neutral-negative",
           "placeholder-neutral",
         ],
         inputContentWrapper: [
           "bg-input-neutral-subtle",
           "border-neutral-subtle",
           "group-data-[hover=true]:border-neutral-subtle-hover",
-          "group-data-[focus=true]:border-neutral-subtle",
+          "group-data-[focus=true]:!border-neutral-subtle",
+          "border-opacity-95",
+        ],
+      },
+    },
+    {
+      color: "primary",
+      variant: "outline",
+      className: {
+        input: [
+          "text-on-primary-negative",
+          "group-data-[hover=true]:text-on-primary-negative-hover",
+          "group-data-[focus=true]:!text-on-primary-negative",
+          "placeholder-primary",
+        ],
+        inputContentWrapper: [
+          "bg-input-primary-subtle",
+          "border-primary-subtle",
+          "group-data-[hover=true]:border-primary-subtle-hover",
+          "group-data-[focus=true]:!border-primary-subtle",
+          "border-opacity-95",
+        ],
+      },
+    },
+    {
+      color: "secondary",
+      variant: "outline",
+      className: {
+        input: [
+          "text-on-secondary-negative",
+          "group-data-[hover=true]:text-on-secondary-negative-hover",
+          "group-data-[focus=true]:!text-on-secondary-negative",
+          "placeholder-secondary",
+        ],
+        inputContentWrapper: [
+          "bg-input-secondary-subtle",
+          "border-secondary-subtle",
+          "group-data-[hover=true]:border-secondary-subtle-hover",
+          "group-data-[focus=true]:!border-secondary-subtle",
+          "border-opacity-95",
+        ],
+      },
+    },
+    {
+      color: "success",
+      variant: "outline",
+      className: {
+        input: [
+          "text-on-success-negative",
+          "group-data-[hover=true]:text-on-success-negative-hover",
+          "group-data-[focus=true]:!text-on-success-negative",
+          "placeholder-success",
+        ],
+        inputContentWrapper: [
+          "bg-input-success-subtle",
+          "border-success-subtle",
+          "group-data-[hover=true]:border-success-subtle-hover",
+          "group-data-[focus=true]:!border-success-subtle",
+          "border-opacity-95",
+        ],
+      },
+    },
+    {
+      color: "warning",
+      variant: "outline",
+      className: {
+        input: [
+          "text-on-warning-negative",
+          "group-data-[hover=true]:text-on-warning-negative-hover",
+          "group-data-[focus=true]:!text-on-warning-negative",
+          "placeholder-warning",
+        ],
+        inputContentWrapper: [
+          "bg-input-warning-subtle",
+          "border-warning-subtle",
+          "group-data-[hover=true]:border-warning-subtle-hover",
+          "group-data-[focus=true]:!border-warning-subtle",
+          "border-opacity-95",
+        ],
+      },
+    },
+    {
+      color: "danger",
+      variant: "outline",
+      className: {
+        input: [
+          "text-on-danger-negative",
+          "group-data-[hover=true]:text-on-danger-negative-hover",
+          "group-data-[focus=true]:!text-on-danger-negative",
+          "placeholder-danger",
+        ],
+        inputContentWrapper: [
+          "bg-input-danger-subtle",
+          "border-danger-subtle",
+          "group-data-[hover=true]:border-danger-subtle-hover",
+          "group-data-[focus=true]:!border-danger-subtle",
+          "border-opacity-95",
         ],
       },
     },

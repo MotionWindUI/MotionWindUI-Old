@@ -256,16 +256,12 @@ export const buttonStyles = tv({
       true: "!transition-none data-[pressed=true]:scale-100",
       false: "motion-reduce:transition-none",
     },
-    shadow: {
-      true: "shadow-md drop-shadow-xl",
-      false: "shadow-none",
-    },
   },
   compoundVariants: [
     {
       color: "neutral",
       variant: "solid",
-      className: combineStyles(
+      class: combineStyles(
         buttonVariants.neutral.solid.default,
         buttonVariants.neutral.solid.hover,
         buttonVariants.neutral.solid.active,
@@ -274,7 +270,7 @@ export const buttonStyles = tv({
     {
       color: "neutral",
       variant: "faded",
-      className: combineStyles(
+      class: combineStyles(
         buttonVariants.neutral.faded.default,
         buttonVariants.neutral.faded.hover,
         buttonVariants.neutral.faded.active,
@@ -283,7 +279,7 @@ export const buttonStyles = tv({
     {
       color: "neutral",
       variant: "bordered",
-      className: combineStyles(
+      class: combineStyles(
         buttonVariants.neutral.bordered.default,
         buttonVariants.neutral.bordered.hover,
         buttonVariants.neutral.bordered.active,
@@ -292,7 +288,7 @@ export const buttonStyles = tv({
     {
       color: "neutral",
       variant: "ghost",
-      className: combineStyles(
+      class: combineStyles(
         buttonVariants.neutral.ghost.default,
         buttonVariants.neutral.ghost.hover,
         buttonVariants.neutral.ghost.active,
@@ -301,7 +297,7 @@ export const buttonStyles = tv({
     {
       color: "neutral",
       variant: "light",
-      className: combineStyles(
+      class: combineStyles(
         buttonVariants.neutral.light.default,
         buttonVariants.neutral.light.hover,
         buttonVariants.neutral.light.active,
@@ -310,7 +306,7 @@ export const buttonStyles = tv({
     {
       color: "primary",
       variant: "solid",
-      className: combineStyles(
+      class: combineStyles(
         buttonVariants.primary.solid.default,
         buttonVariants.primary.solid.hover,
         buttonVariants.primary.solid.active,
@@ -319,7 +315,7 @@ export const buttonStyles = tv({
     {
       color: "primary",
       variant: "faded",
-      className: combineStyles(
+      class: combineStyles(
         buttonVariants.primary.faded.default,
         buttonVariants.primary.faded.hover,
         buttonVariants.primary.faded.active,
@@ -328,7 +324,7 @@ export const buttonStyles = tv({
     {
       color: "primary",
       variant: "bordered",
-      className: combineStyles(
+      class: combineStyles(
         buttonVariants.primary.bordered.default,
         buttonVariants.primary.bordered.hover,
         buttonVariants.primary.bordered.active,
@@ -337,7 +333,7 @@ export const buttonStyles = tv({
     {
       color: "primary",
       variant: "ghost",
-      className: combineStyles(
+      class: combineStyles(
         buttonVariants.primary.ghost.default,
         buttonVariants.primary.ghost.hover,
         buttonVariants.primary.ghost.active,
@@ -346,7 +342,7 @@ export const buttonStyles = tv({
     {
       color: "primary",
       variant: "light",
-      className: combineStyles(
+      class: combineStyles(
         buttonVariants.primary.light.default,
         buttonVariants.primary.light.hover,
         buttonVariants.primary.light.active,
@@ -355,7 +351,7 @@ export const buttonStyles = tv({
     {
       color: "secondary",
       variant: "solid",
-      className: combineStyles(
+      class: combineStyles(
         buttonVariants.secondary.solid.default,
         buttonVariants.secondary.solid.hover,
         buttonVariants.secondary.solid.active,
@@ -364,7 +360,7 @@ export const buttonStyles = tv({
     {
       color: "secondary",
       variant: "faded",
-      className: combineStyles(
+      class: combineStyles(
         buttonVariants.secondary.faded.default,
         buttonVariants.secondary.faded.hover,
         buttonVariants.secondary.faded.active,
@@ -373,7 +369,7 @@ export const buttonStyles = tv({
     {
       color: "secondary",
       variant: "bordered",
-      className: combineStyles(
+      class: combineStyles(
         buttonVariants.secondary.bordered.default,
         buttonVariants.secondary.bordered.hover,
         buttonVariants.secondary.bordered.active,
@@ -382,7 +378,7 @@ export const buttonStyles = tv({
     {
       color: "secondary",
       variant: "ghost",
-      className: combineStyles(
+      class: combineStyles(
         buttonVariants.secondary.ghost.default,
         buttonVariants.secondary.ghost.hover,
         buttonVariants.secondary.ghost.active,
@@ -391,7 +387,7 @@ export const buttonStyles = tv({
     {
       color: "secondary",
       variant: "light",
-      className: combineStyles(
+      class: combineStyles(
         buttonVariants.secondary.light.default,
         buttonVariants.secondary.light.hover,
         buttonVariants.secondary.light.active,
@@ -400,7 +396,7 @@ export const buttonStyles = tv({
     {
       color: "success",
       variant: "solid",
-      className: combineStyles(
+      class: combineStyles(
         buttonVariants.success.solid.default,
         buttonVariants.success.solid.hover,
         buttonVariants.success.solid.active,
@@ -409,7 +405,7 @@ export const buttonStyles = tv({
     {
       color: "success",
       variant: "faded",
-      className: combineStyles(
+      class: combineStyles(
         buttonVariants.success.faded.default,
         buttonVariants.success.faded.hover,
         buttonVariants.success.faded.active,
@@ -418,7 +414,7 @@ export const buttonStyles = tv({
     {
       color: "success",
       variant: "bordered",
-      className: combineStyles(
+      class: combineStyles(
         buttonVariants.success.bordered.default,
         buttonVariants.success.bordered.hover,
         buttonVariants.success.bordered.active,
@@ -427,7 +423,7 @@ export const buttonStyles = tv({
     {
       color: "success",
       variant: "ghost",
-      className: combineStyles(
+      class: combineStyles(
         buttonVariants.success.ghost.default,
         buttonVariants.success.ghost.hover,
         buttonVariants.success.ghost.active,
@@ -436,7 +432,7 @@ export const buttonStyles = tv({
     {
       color: "success",
       variant: "light",
-      className: combineStyles(
+      class: combineStyles(
         buttonVariants.success.light.default,
         buttonVariants.success.light.hover,
         buttonVariants.success.light.active,
@@ -445,7 +441,7 @@ export const buttonStyles = tv({
     {
       color: "warning",
       variant: "solid",
-      className: combineStyles(
+      class: combineStyles(
         buttonVariants.warning.solid.default,
         buttonVariants.warning.solid.hover,
         buttonVariants.warning.solid.active,
@@ -454,7 +450,7 @@ export const buttonStyles = tv({
     {
       color: "warning",
       variant: "faded",
-      className: combineStyles(
+      class: combineStyles(
         buttonVariants.warning.faded.default,
         buttonVariants.warning.faded.hover,
         buttonVariants.warning.faded.active,
@@ -463,7 +459,7 @@ export const buttonStyles = tv({
     {
       color: "warning",
       variant: "bordered",
-      className: combineStyles(
+      class: combineStyles(
         buttonVariants.warning.bordered.default,
         buttonVariants.warning.bordered.hover,
         buttonVariants.warning.bordered.active,
@@ -472,7 +468,7 @@ export const buttonStyles = tv({
     {
       color: "warning",
       variant: "ghost",
-      className: combineStyles(
+      class: combineStyles(
         buttonVariants.warning.ghost.default,
         buttonVariants.warning.ghost.hover,
         buttonVariants.warning.ghost.active,
@@ -481,7 +477,7 @@ export const buttonStyles = tv({
     {
       color: "warning",
       variant: "light",
-      className: combineStyles(
+      class: combineStyles(
         buttonVariants.warning.light.default,
         buttonVariants.warning.light.hover,
         buttonVariants.warning.light.active,
@@ -490,7 +486,7 @@ export const buttonStyles = tv({
     {
       color: "danger",
       variant: "solid",
-      className: combineStyles(
+      class: combineStyles(
         buttonVariants.danger.solid.default,
         buttonVariants.danger.solid.hover,
         buttonVariants.danger.solid.active,
@@ -499,7 +495,7 @@ export const buttonStyles = tv({
     {
       color: "danger",
       variant: "faded",
-      className: combineStyles(
+      class: combineStyles(
         buttonVariants.danger.faded.default,
         buttonVariants.danger.faded.hover,
         buttonVariants.danger.faded.active,
@@ -508,7 +504,7 @@ export const buttonStyles = tv({
     {
       color: "danger",
       variant: "bordered",
-      className: combineStyles(
+      class: combineStyles(
         buttonVariants.danger.bordered.default,
         buttonVariants.danger.bordered.hover,
         buttonVariants.danger.bordered.active,
@@ -517,7 +513,7 @@ export const buttonStyles = tv({
     {
       color: "danger",
       variant: "ghost",
-      className: combineStyles(
+      class: combineStyles(
         buttonVariants.danger.ghost.default,
         buttonVariants.danger.ghost.hover,
         buttonVariants.danger.ghost.active,
@@ -526,7 +522,7 @@ export const buttonStyles = tv({
     {
       color: "danger",
       variant: "light",
-      className: combineStyles(
+      class: combineStyles(
         buttonVariants.danger.light.default,
         buttonVariants.danger.light.hover,
         buttonVariants.danger.light.active,
@@ -535,83 +531,83 @@ export const buttonStyles = tv({
     {
       isInGroup: true,
       radius: "none",
-      className: "rounded-none",
+      class: "rounded-none",
     },
     {
       isInGroup: true,
       radius: "sm",
-      className: "rounded-none first:rounded-s-small last:rounded-e-small",
+      class: "rounded-none first:rounded-s-small last:rounded-e-small",
     },
     {
       isInGroup: true,
       radius: "md",
-      className: "rounded-none first:rounded-s-medium last:rounded-e-medium",
+      class: "rounded-none first:rounded-s-medium last:rounded-e-medium",
     },
     {
       isInGroup: true,
       radius: "lg",
-      className: "rounded-none first:rounded-s-large last:rounded-e-large",
+      class: "rounded-none first:rounded-s-large last:rounded-e-large",
     },
     {
       isInGroup: true,
       radius: "xl",
-      className: "rounded-none first:rounded-s-xlarge last:rounded-e-xlarge",
+      class: "rounded-none first:rounded-s-xlarge last:rounded-e-xlarge",
     },
     {
       isInGroup: true,
       radius: "full",
-      className: "rounded-none first:rounded-s-full last:rounded-e-full",
+      class: "rounded-none first:rounded-s-full last:rounded-e-full",
     },
     {
       isInGroup: true,
       variant: ["bordered", "ghost"],
       color: "neutral",
-      className: collapsedBorderStyle.neutral,
+      class: collapsedBorderStyle.neutral,
     },
     {
       isInGroup: true,
       variant: ["bordered", "ghost"],
       color: "primary",
-      className: "[&+.border.border-primary]:ms-[calc(theme(borderWidth.md)*-1)]",
+      class: "[&+.border.border-primary]:ms-[calc(theme(borderWidth.md)*-1)]",
     },
     {
       isInGroup: true,
       variant: ["bordered", "ghost"],
       color: "secondary",
-      className: "[&+.border.border-secondary]:ms-[calc(theme(borderWidth.md)*-1)]",
+      class: "[&+.border.border-secondary]:ms-[calc(theme(borderWidth.md)*-1)]",
     },
     {
       isInGroup: true,
       variant: ["bordered", "ghost"],
       color: "success",
-      className: "[&+.border.border-success]:ms-[calc(theme(borderWidth.md)*-1)]",
+      class: "[&+.border.border-success]:ms-[calc(theme(borderWidth.md)*-1)]",
     },
     {
       isInGroup: true,
       variant: ["bordered", "ghost"],
       color: "warning",
-      className: "[&+.border.border-warning]:ms-[calc(theme(borderWidth.md)*-1)]",
+      class: "[&+.border.border-warning]:ms-[calc(theme(borderWidth.md)*-1)]",
     },
     {
       isInGroup: true,
       variant: ["bordered", "ghost"],
       color: "danger",
-      className: "[&+.border.border-danger]:ms-[calc(theme(borderWidth.md)*-1)]",
+      class: "[&+.border.border-danger]:ms-[calc(theme(borderWidth.md)*-1)]",
     },
     {
       isIconOnly: true,
       size: "sm",
-      className: "min-w-8 w-8 h-8",
+      class: "min-w-8 w-8 h-8",
     },
     {
       isIconOnly: true,
       size: "md",
-      className: "min-w-10 w-10 h-10",
+      class: "min-w-10 w-10 h-10",
     },
     {
       isIconOnly: true,
       size: "lg",
-      className: "min-w-12 w-12 h-12",
+      class: "min-w-12 w-12 h-12",
     },
   ],
   defaultVariants: {
