@@ -1,0 +1,59 @@
+{
+  "name": "@motionwindui/input",
+  "version": "1.0.0",
+  "description": "Allows for user input.",
+  "keywords": [
+    "input"
+  ],
+  "author": "Kyle Gagnon <kmgagnon99@gmail.com>",
+  "license": "ISC",
+  "sideEffects": false,
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MotionWindUI/MotionWindUI",
+    "directory": "packages/components/input"
+  },
+  "bugs": {
+    "url": "https://github.com/MotionWindUI/MotionWindUI/issues"
+  },
+  "scripts": {
+    "build": "tsup src --dts",
+    "build:fast": "tsup src",
+    "dev": "pnpm build --watch",
+    "clean": "rimraf dist .turbo",
+    "type-check": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "@motionwindui/provider": ">=1.1.0",
+    "@motionwindui/theme": ">=1.0.0",
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@motionwindui/aria-utils": "workspace:*",
+    "@motionwindui/base": "workspace:*",
+    "@motionwindui/dev-utils": "workspace:*",
+    "@motionwindui/provider": "workspace:*",
+    "@motionwindui/react-utils": "workspace:*",
+    "@motionwindui/theme": "workspace:*",
+    "@motionwindui/use-breakpoint": "workspace:*",
+    "@motionwindui/use-safe-layout-effect": "workspace:*",
+    "@react-stately/utils": "^3.10.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwind-variants": "^0.2.1"
+  },
+  "dependencies": {
+    "react-aria": "^3.34.1",
+    "@motionwindui/button": "workspace:*"
+  }
+}

@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "../src";
 import { AcademicCapIcon, iconList } from "../../../core/icons/src";
 import IconWrapper from "../../../storybook/.storybook/IconWrapper";
+import React from "react";
 
 const iconOptions = {
   None: null,
@@ -108,6 +109,15 @@ export const IconOnly: Story = {
   args: {
     ...StoryTemplate.args,
     isIconOnly: true,
+    children: null,
     startContent: <IconWrapper icon={AcademicCapIcon} height={24} width={24} />,
+  },
+};
+
+export const CustomClass: Story = {
+  ...StoryTemplate,
+  args: {
+    ...StoryTemplate.args,
+    className: "!bg-transparent text-primary-500",
   },
 };

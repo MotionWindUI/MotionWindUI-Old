@@ -32,6 +32,18 @@ export const borderColors: BorderColors = {
     light: "var(--neutral-500)",
     dark: "var(--neutral-500)",
   },
+  "neutral-subtle": {
+    light: "var(--neutral-300)",
+    dark: "var(--neutral-500)",
+  },
+  "neutral-subtle-hover": {
+    light: "var(--neutral-400)",
+    dark: "var(--neutral-400)",
+  },
+  "neutral-subtle-active": {
+    light: "var(--neutral-500)",
+    dark: "var(--neutral-300)",
+  },
   primary: {
     light: "var(--primary-700)",
     dark: "var(--primary-400)",
@@ -55,6 +67,18 @@ export const borderColors: BorderColors = {
   "primary-negative-active": {
     light: "var(--primary-200)",
     dark: "var(--primary-900)",
+  },
+  "primary-subtle": {
+    light: "var(--primary-400)",
+    dark: "var(--primary-500)",
+  },
+  "primary-subtle-hover": {
+    light: "var(--primary-500)",
+    dark: "var(--primary-400)",
+  },
+  "primary-subtle-active": {
+    light: "var(--primary-600)",
+    dark: "var(--primary-300)",
   },
   secondary: {
     light: "var(--secondary-600)",
@@ -80,6 +104,18 @@ export const borderColors: BorderColors = {
     light: "var(--secondary-200)",
     dark: "var(--secondary-800)",
   },
+  "secondary-subtle": {
+    light: "var(--secondary-400)",
+    dark: "var(--secondary-500)",
+  },
+  "secondary-subtle-hover": {
+    light: "var(--secondary-500)",
+    dark: "var(--secondary-400)",
+  },
+  "secondary-subtle-active": {
+    light: "var(--secondary-600)",
+    dark: "var(--secondary-300)",
+  },
   success: {
     light: "var(--success-600)",
     dark: "var(--success-400)",
@@ -103,6 +139,18 @@ export const borderColors: BorderColors = {
   "success-negative-active": {
     light: "var(--success-200)",
     dark: "var(--success-800)",
+  },
+  "success-subtle": {
+    light: "var(--success-400)",
+    dark: "var(--success-500)",
+  },
+  "success-subtle-hover": {
+    light: "var(--success-500)",
+    dark: "var(--success-400)",
+  },
+  "success-subtle-active": {
+    light: "var(--success-600)",
+    dark: "var(--success-300)",
   },
   warning: {
     light: "var(--warning-700)",
@@ -128,6 +176,18 @@ export const borderColors: BorderColors = {
     light: "var(--warning-200)",
     dark: "var(--warning-900)",
   },
+  "warning-subtle": {
+    light: "var(--warning-400)",
+    dark: "var(--warning-500)",
+  },
+  "warning-subtle-hover": {
+    light: "var(--warning-500)",
+    dark: "var(--warning-400)",
+  },
+  "warning-subtle-active": {
+    light: "var(--warning-600)",
+    dark: "var(--warning-300)",
+  },
   danger: {
     light: "var(--danger-700)",
     dark: "var(--danger-400)",
@@ -151,6 +211,18 @@ export const borderColors: BorderColors = {
   "danger-negative-active": {
     light: "var(--danger-200)",
     dark: "var(--danger-900)",
+  },
+  "danger-subtle": {
+    light: "var(--danger-400)",
+    dark: "var(--danger-500)",
+  },
+  "danger-subtle-hover": {
+    light: "var(--danger-500)",
+    dark: "var(--danger-400)",
+  },
+  "danger-subtle-active": {
+    light: "var(--danger-600)",
+    dark: "var(--danger-300)",
   },
 };
 
@@ -284,34 +356,52 @@ export const borderColorsPlugin: BorderColorsPlugin = {
   "neutral-negative": `var(--${BORDER_CONSTANT}-neutral-negative)`,
   "neutral-negative-hover": `var(--${BORDER_CONSTANT}-neutral-negative-hover)`,
   "neutral-negative-active": `var(--${BORDER_CONSTANT}-neutral-negative-active)`,
+  "neutral-subtle": `var(--${BORDER_CONSTANT}-neutral-subtle)`,
+  "neutral-subtle-hover": `var(--${BORDER_CONSTANT}-neutral-subtle-hover)`,
+  "neutral-subtle-active": `var(--${BORDER_CONSTANT}-neutral-subtle-active)`,
   primary: `var(--${BORDER_CONSTANT}-primary)`,
   "primary-hover": `var(--${BORDER_CONSTANT}-primary-hover)`,
   "primary-active": `var(--${BORDER_CONSTANT}-primary-active)`,
   "primary-negative": `var(--${BORDER_CONSTANT}-primary-negative)`,
   "primary-negative-hover": `var(--${BORDER_CONSTANT}-primary-negative-hover)`,
   "primary-negative-active": `var(--${BORDER_CONSTANT}-primary-negative-active)`,
+  "primary-subtle": `var(--${BORDER_CONSTANT}-primary-subtle)`,
+  "primary-subtle-hover": `var(--${BORDER_CONSTANT}-primary-subtle-hover)`,
+  "primary-subtle-active": `var(--${BORDER_CONSTANT}-primary-subtle-active)`,
   secondary: `var(--${BORDER_CONSTANT}-secondary)`,
   "secondary-hover": `var(--${BORDER_CONSTANT}-secondary-hover)`,
   "secondary-active": `var(--${BORDER_CONSTANT}-secondary-active)`,
   "secondary-negative": `var(--${BORDER_CONSTANT}-secondary-negative)`,
   "secondary-negative-hover": `var(--${BORDER_CONSTANT}-secondary-negative-hover)`,
   "secondary-negative-active": `var(--${BORDER_CONSTANT}-secondary-negative-active)`,
+  "secondary-subtle": `var(--${BORDER_CONSTANT}-secondary-subtle)`,
+  "secondary-subtle-hover": `var(--${BORDER_CONSTANT}-secondary-subtle-hover)`,
+  "secondary-subtle-active": `var(--${BORDER_CONSTANT}-secondary-subtle-active)`,
   success: `var(--${BORDER_CONSTANT}-success)`,
   "success-hover": `var(--${BORDER_CONSTANT}-success-hover)`,
   "success-active": `var(--${BORDER_CONSTANT}-success-active)`,
   "success-negative": `var(--${BORDER_CONSTANT}-success-negative)`,
   "success-negative-hover": `var(--${BORDER_CONSTANT}-success-negative-hover)`,
   "success-negative-active": `var(--${BORDER_CONSTANT}-success-negative-active)`,
+  "success-subtle": `var(--${BORDER_CONSTANT}-success-subtle)`,
+  "success-subtle-hover": `var(--${BORDER_CONSTANT}-success-subtle-hover)`,
+  "success-subtle-active": `var(--${BORDER_CONSTANT}-success-subtle-active)`,
   warning: `var(--${BORDER_CONSTANT}-warning)`,
   "warning-hover": `var(--${BORDER_CONSTANT}-warning-hover)`,
   "warning-active": `var(--${BORDER_CONSTANT}-warning-active)`,
   "warning-negative": `var(--${BORDER_CONSTANT}-warning-negative)`,
   "warning-negative-hover": `var(--${BORDER_CONSTANT}-warning-negative-hover)`,
   "warning-negative-active": `var(--${BORDER_CONSTANT}-warning-negative-active)`,
+  "warning-subtle": `var(--${BORDER_CONSTANT}-warning-subtle)`,
+  "warning-subtle-hover": `var(--${BORDER_CONSTANT}-warning-subtle-hover)`,
+  "warning-subtle-active": `var(--${BORDER_CONSTANT}-warning-subtle-active)`,
   danger: `var(--${BORDER_CONSTANT}-danger)`,
   "danger-hover": `var(--${BORDER_CONSTANT}-danger-hover)`,
   "danger-active": `var(--${BORDER_CONSTANT}-danger-active)`,
   "danger-negative": `var(--${BORDER_CONSTANT}-danger-negative)`,
   "danger-negative-hover": `var(--${BORDER_CONSTANT}-danger-negative-hover)`,
   "danger-negative-active": `var(--${BORDER_CONSTANT}-danger-negative-active)`,
+  "danger-subtle": `var(--${BORDER_CONSTANT}-danger-subtle)`,
+  "danger-subtle-hover": `var(--${BORDER_CONSTANT}-danger-subtle-hover)`,
+  "danger-subtle-active": `var(--${BORDER_CONSTANT}-danger-subtle-active)`,
 };

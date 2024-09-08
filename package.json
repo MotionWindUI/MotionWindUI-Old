@@ -31,6 +31,7 @@
 		"clean:lock": "rimraf ./pnpm-lock.yaml",
 		"clean:jest": "jest --clearCache",
 		"create:component": "plop component",
+    "create:hook": "plop hook",
 		"prepare": "husky",
 		"validate-branch": "chmod +x ./hooks/branch_name_validation.sh && chmod 755 ./hooks/branch_name_validation.sh && ./hooks/branch_name_validation.sh",
 		"release": "changeset publish"

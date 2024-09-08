@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { I18nProvider, I18nProviderProps } from "react-aria";
 
 export type ThemeMode = "light" | "dark";
 export type ValidationBehavior = "native" | "aria";
@@ -49,6 +50,11 @@ interface MotionWindUIProviderProps {
    * The validation behavior to use. Defaults to "aria"
    */
   validationBehavior?: ValidationBehavior;
+
+  /**
+   * The locale to use for i18n
+   */
+  locale?: I18nProviderProps["locale"];
 }
 
 export const MotionWindUIProvider = ({
@@ -56,6 +62,7 @@ export const MotionWindUIProvider = ({
   theme = "default",
   validationBehavior: validationBehaviorProp = "aria",
   disableAnimations: disableAnimationsProp = false,
+  locale = "en-us",
 }: MotionWindUIProviderProps) => {
   const [currentTheme, setCurrentTheme] = useState<string>(() => {
     const storedTheme = localStorage.getItem("theme");
@@ -103,7 +110,7 @@ export const MotionWindUIProvider = ({
         setValidationBehavior,
       }}
     >
-      {children}
+      <I18nProvider locale={locale}>{children}</I18nProvider>
     </MotionWindUIContext.Provider>
   );
 };

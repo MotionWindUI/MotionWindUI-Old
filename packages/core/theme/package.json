@@ -34,7 +34,7 @@
   "scripts": {
     "build": "tsup src --dts",
     "build:fast": "tsup src",
-    "dev": "pnpm build --watch",
+    "dev": "tsup src --dts --watch",
     "clean": "rm -rf dist",
     "type-check": "tsc --noEmit",
     "lint": "eslint . --ext .ts"
