@@ -1,8 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { MediaSize, useBreakpoint } from "@motionwindui/use-breakpoint";
-
-type MediaMap = keyof typeof MediaSize;
+import { I18nProvider, I18nProviderProps } from "react-aria";
 
 export type ThemeMode = "light" | "dark";
 export type ValidationBehavior = "native" | "aria";
@@ -16,7 +14,6 @@ export interface MotionWindUIContextProps {
   setDisableAnimations: (value: boolean) => void;
   validationBehavior: ValidationBehavior;
   setValidationBehavior: (value: ValidationBehavior) => void;
-  currentBreakpoint: MediaMap;
 }
 
 export const MotionWindUIContext = createContext<MotionWindUIContextProps | null>(null);
@@ -53,6 +50,11 @@ interface MotionWindUIProviderProps {
    * The validation behavior to use. Defaults to "aria"
    */
   validationBehavior?: ValidationBehavior;
+
+  /**
+   * The locale to use for i18n
+   */
+  locale?: I18nProviderProps["locale"];
 }
 
 export const MotionWindUIProvider = ({
@@ -60,6 +62,7 @@ export const MotionWindUIProvider = ({
   theme = "default",
   validationBehavior: validationBehaviorProp = "aria",
   disableAnimations: disableAnimationsProp = false,
+  locale = "en-us",
 }: MotionWindUIProviderProps) => {
   const [currentTheme, setCurrentTheme] = useState<string>(() => {
     const storedTheme = localStorage.getItem("theme");
@@ -94,8 +97,6 @@ export const MotionWindUIProvider = ({
     localStorage.setItem("mode", currentMode);
   }, [currentMode]);
 
-  const currentBreakpoint = useBreakpoint() as MediaMap;
-
   return (
     <MotionWindUIContext.Provider
       value={{
@@ -107,10 +108,9 @@ export const MotionWindUIProvider = ({
         setDisableAnimations,
         validationBehavior,
         setValidationBehavior,
-        currentBreakpoint,
       }}
     >
-      {children}
+      <I18nProvider locale={locale}>{children}</I18nProvider>
     </MotionWindUIContext.Provider>
   );
 };

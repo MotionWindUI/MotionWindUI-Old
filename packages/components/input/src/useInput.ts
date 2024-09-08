@@ -1,6 +1,6 @@
 import { MotionWindUIBaseProps } from "@motionwindui/base";
 import React, { createElement, useCallback, useMemo, useRef } from "react";
-import { AriaTextFieldProps, useFocusRing, useHover, useTextField } from "react-aria";
+import { AriaTextFieldProps, mergeProps, useFocusRing, useHover, useTextField } from "react-aria";
 import { Booleanish, dataAttr, getAriaDescription, getAriaLabel } from "@motionwindui/aria-utils";
 import { clsxMerge, DEV_MODE, warn } from "@motionwindui/dev-utils";
 import { InputSlots, inputStyles, SlotClasses } from "@motionwindui/theme";
@@ -8,6 +8,7 @@ import { Button, ButtonProps } from "@motionwindui/button";
 import { useControlledState } from "@react-stately/utils";
 import { useSafeLayoutEffect } from "@motionwindui/use-safe-layout-effect";
 import { mergeRefs } from "@motionwindui/react-utils";
+import { useMotionWindUI } from "@motionwindui/provider";
 
 type Props = React.HTMLProps<HTMLElement> & {
   mergeClassNames?: boolean;
@@ -35,7 +36,7 @@ export interface InputProps<T extends HTMLInputElement | HTMLTextAreaElement = H
     Omit<AriaTextFieldProps, "children">,
     Partial<Pick<HTMLElement, "className">> {
   /** The variant of the input */
-  variant?: "flat" | "outline";
+  variant?: "flat" | "outline" | "underlined" | "bordered";
 
   /** The reference to the label of the input */
   ref?: React.Ref<T>;
@@ -101,11 +102,18 @@ type RootComponentProps = Partial<React.HTMLProps<HTMLElement>> & {
   "data-hidden"?: Booleanish;
   "data-has-start-content"?: Booleanish;
   "data-has-end-content"?: Booleanish;
+  "data-has-help-content"?: Booleanish;
+};
+
+type InputComponentProps<T extends HTMLInputElement | HTMLTextAreaElement> = React.HTMLProps<T> & {
+  "data-hide-scrollbar"?: Booleanish;
 };
 
 export const useInput = <T extends HTMLInputElement | HTMLTextAreaElement = HTMLInputElement>(
   props: InputProps<T>,
 ) => {
+  const globalContext = useMotionWindUI();
+
   const {
     color = "neutral",
     variant = "flat",
@@ -115,6 +123,7 @@ export const useInput = <T extends HTMLInputElement | HTMLTextAreaElement = HTML
     description,
     placeholder,
     errorMessage,
+    disableAnimations = globalContext.disableAnimations ?? false,
     isDisabled: isDisabledProp = false,
     isReadOnly: isReadOnlyProp = false,
     isRequired: isRequiredProp = false,
@@ -151,8 +160,9 @@ export const useInput = <T extends HTMLInputElement | HTMLTextAreaElement = HTML
   // Determine the typescript type for the input element
   type InputElementType = InputType<typeof isMultiLine>;
 
+  // Warn the developer if a label is not provided and an aria-label or aria-labelledby is not passed
   if (!props.label && !props["aria-label"] && !props["aria-labelledby"] && DEV_MODE) {
-    warn("Input", "Label is not provided, so an aria-label or an aria-labelledby must be passed");
+    warn("Label is not provided, so an aria-label or an aria-labelledby must be passed", "Input");
   }
 
   /**
@@ -190,12 +200,12 @@ export const useInput = <T extends HTMLInputElement | HTMLTextAreaElement = HTML
     inputRef,
   );
 
-  const isInvalid = useMemo(() => isInvalidProp || isInvalidRAC, [isInvalidProp, isInvalidRAC]);
-
   // Set the RootComponent to the div element type (the div wraps the whole component)
   const RootComponent = asRoot || "div";
 
-  // Determines if the input is disabled, required, or read-only
+  // Determines if the input is invalid, disabled, required, or read-only
+  const isInvalid = useMemo(() => isInvalidProp || isInvalidRAC, [isInvalidProp, isInvalidRAC]);
+
   const isDisabled = useMemo(
     () => isDisabledProp || inputPropsRAC.disabled,
     [isDisabledProp, inputPropsRAC.disabled],
@@ -209,10 +219,11 @@ export const useInput = <T extends HTMLInputElement | HTMLTextAreaElement = HTML
     [isReadOnlyProp, inputPropsRAC.readOnly],
   );
 
+  // Determines if the element is hidden
   const isHidden = props.type === "hidden";
 
   // Determines if the element is interactive
-  const isInteractive = !isDisabled || !isReadOnly;
+  const isInteractive = !isDisabled && !isReadOnly;
 
   /**
    * Set up interactions for the input element
@@ -225,10 +236,46 @@ export const useInput = <T extends HTMLInputElement | HTMLTextAreaElement = HTML
     isDisabled: !isInteractive,
   });
 
-  const styles = useMemo(() => inputStyles({ radius, color, variant }), [radius, color, variant]);
+  /**
+   * Set up the styles for the input element
+   */
+  const styles = useMemo(
+    () =>
+      inputStyles({
+        radius,
+        color,
+        variant,
+        size,
+        labelPlacement,
+        disableAnimations,
+        isInvalid,
+        isDisabled,
+        isReadOnly,
+        isRequired,
+        isMultiLine,
+      }),
+    [
+      radius,
+      color,
+      variant,
+      size,
+      labelPlacement,
+      disableAnimations,
+      isInvalid,
+      isInteractive,
+      isDisabled,
+      isReadOnly,
+      isRequired,
+      isMultiLine,
+    ],
+  );
 
+  /**
+   * Returns the properties of the root of the component (a div element)
+   */
   const rootProps = useCallback(
     (props?: Props): RootComponentProps => {
+      // Allow the developer to pass in even more specific classes if using the useInput hook
       const { className: customClasses, mergeClassNames = true, ...otherProps } = props || {};
 
       const classNameProp = mergeClassNames
@@ -249,6 +296,7 @@ export const useInput = <T extends HTMLInputElement | HTMLTextAreaElement = HTML
         "data-hidden": dataAttr(isHidden),
         "data-has-start-content": dataAttr(!!startContentProp),
         "data-has-end-content": dataAttr(!!endContentProp),
+        "data-has-help-content": dataAttr(!!description || (isInvalid && !!errorMessage)),
       };
     },
     [
@@ -261,9 +309,18 @@ export const useInput = <T extends HTMLInputElement | HTMLTextAreaElement = HTML
       isDisabled,
       isReadOnly,
       labelPlacement,
+      description,
+      isInvalid,
+      errorMessage,
+      startContentProp,
+      endContentProp,
+      isHidden,
     ],
   );
 
+  /**
+   * Returns the properties of the label element
+   */
   const labelProps = useCallback(
     (props?: LabelProps): React.HTMLProps<HTMLLabelElement> => {
       const { className: customClasses, mergeClassNames = true, ...otherProps } = props || {};
@@ -279,9 +336,12 @@ export const useInput = <T extends HTMLInputElement | HTMLTextAreaElement = HTML
         className: classNameProp,
       };
     },
-    [classList?.label, label, labelPlacement],
+    [classList?.label, label, labelPlacement, labelPropsRAC, hoverProps],
   );
 
+  /**
+   * Returns the properties of the label wrapper element. This is the div that wraps the label and the input element
+   */
   const labelWrapperProps = useCallback(
     (props?: PropsDiv): React.HTMLProps<HTMLDivElement> => {
       const { className: customClasses, mergeClassNames = true, ...otherProps } = props || {};
@@ -298,8 +358,11 @@ export const useInput = <T extends HTMLInputElement | HTMLTextAreaElement = HTML
     [classList?.labelWrapper],
   );
 
+  /**
+   * Returns the properties of the input element. This is the input element itself.
+   */
   const inputProps = useCallback(
-    (props?: Props): React.HTMLProps<InputElementType> => {
+    (props?: Props): InputComponentProps<InputElementType> => {
       const { className: customClasses, mergeClassNames = true, ...otherProps } = props || {};
 
       const classNameProp = mergeClassNames
@@ -307,18 +370,19 @@ export const useInput = <T extends HTMLInputElement | HTMLTextAreaElement = HTML
         : customClasses;
 
       return {
-        ...otherProps,
-        ...inputPropsRAC,
-        ...focusProps,
-        ...hoverProps,
+        "data-hide-scrollbar": isMultiLine,
+        ...mergeProps(otherProps, inputPropsRAC, focusProps, hoverProps),
         ref: mergeRefs(inputRef, ref),
         className: classNameProp,
         placeholder,
       };
     },
-    [inputPropsRAC, classList?.input, placeholder],
+    [inputPropsRAC, classList?.input, placeholder, focusProps, hoverProps, isMultiLine],
   );
 
+  /**
+   * Returns the properties of the input content wrapper element. This is the div that wraps the input element and the start and end content.
+   */
   const inputContentWrapperProps = useCallback(
     (props?: PropsDiv): React.HTMLProps<HTMLDivElement> => {
       const { className: customClasses, mergeClassNames = true, ...otherProps } = props || {};
@@ -337,6 +401,9 @@ export const useInput = <T extends HTMLInputElement | HTMLTextAreaElement = HTML
     [classList?.inputContentWrapper],
   );
 
+  /**
+   * Returns the properties of the input wrapper element. This is the div that wraps the input content wrapper and the help content wrapper.
+   */
   const inputWrapperProps = useCallback(
     (props?: PropsDiv): React.HTMLProps<HTMLDivElement> => {
       const { className: customClasses, mergeClassNames = true, ...otherProps } = props || {};
@@ -353,6 +420,9 @@ export const useInput = <T extends HTMLInputElement | HTMLTextAreaElement = HTML
     [classList?.inputWrapper, isDisabled, isReadOnly],
   );
 
+  /**
+   * Returns the properties of the help content wrapper element. This is the div that wraps the description and error message.
+   */
   const helpContentWrapperProps = useCallback(
     (props?: PropsDiv): React.HTMLProps<HTMLDivElement> => {
       const { className: customClasses, mergeClassNames = true, ...otherProps } = props || {};
@@ -368,9 +438,18 @@ export const useInput = <T extends HTMLInputElement | HTMLTextAreaElement = HTML
         className: classNameProp,
       };
     },
-    [classList?.helpContentWrapper],
+    [
+      classList?.helpContentWrapper,
+      description,
+      errorMessage,
+      descriptionPropsRAC,
+      errorMessagePropsRAC,
+    ],
   );
 
+  /**
+   * Returns the properties of the description element. This is the span element that contains the description of the input.
+   */
   const descriptionProps = useCallback(
     (props?: Props): React.HTMLProps<HTMLElement> => {
       const { className: customClasses, mergeClassNames = true, ...otherProps } = props || {};
@@ -385,9 +464,12 @@ export const useInput = <T extends HTMLInputElement | HTMLTextAreaElement = HTML
         className: classNameProp,
       };
     },
-    [classList?.description],
+    [classList?.description, descriptionPropsRAC, description],
   );
 
+  /**
+   * Returns the properties of the error message element. This is the span element that contains the error message of the input.
+   */
   const errorMessageProps = useCallback(
     (props?: Props): React.HTMLProps<HTMLElement> => {
       const { className: customClasses, mergeClassNames = true, ...otherProps } = props || {};
@@ -402,13 +484,24 @@ export const useInput = <T extends HTMLInputElement | HTMLTextAreaElement = HTML
         className: classNameProp,
       };
     },
-    [classList?.errorMessage],
+    [classList?.errorMessage, errorMessagePropsRAC, errorMessage],
   );
 
+  /**
+   * Renders the content based on the type of content it is (button, styled, or neither).
+   *
+   * @param content The React node to render
+   * @param isButton Whether the content is a button
+   * @param isStyled Whether the content is styled
+   * @param style The style to apply to the content
+   * @param props If the content is a button, the props to apply to the button
+   * @returns A React element that is either a button, span, or the content itself
+   */
   const renderContent = (
     content: React.ReactNode,
     isButton: boolean,
     isStyled: boolean,
+    style: string,
     props?: ButtonProps,
   ): React.ReactNode => {
     if (isButton && !!content) {
@@ -431,25 +524,39 @@ export const useInput = <T extends HTMLInputElement | HTMLTextAreaElement = HTML
     }
 
     if (isStyled && !isButton && !!content) {
-      return createElement("span", { className: styles.startContent }, content);
+      return createElement("span", { className: style }, content);
     }
 
     return content;
   };
 
+  /**
+   * The start content of the input (if any)
+   */
   const startContent = useMemo(
     () =>
       renderContent(
         startContentProp,
         isStartContentButton,
         isStartContentStyled,
+        clsxMerge(styles.startContent(), classList?.startContent),
         startContentProps,
       ),
     [startContentProp, isStartContentButton, isStartContentStyled],
   );
 
+  /**
+   * The end content of the input (if any)
+   */
   const endContent = useMemo(
-    () => renderContent(endContentProp, isEndContentButton, isEndContentStyled, endContentProps),
+    () =>
+      renderContent(
+        endContentProp,
+        isEndContentButton,
+        isEndContentStyled,
+        clsxMerge(styles.endContent(), classList?.endContent),
+        endContentProps,
+      ),
     [endContentProp, isEndContentButton, isEndContentStyled],
   );
 

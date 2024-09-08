@@ -21,7 +21,7 @@ const meta = {
   argTypes: {
     variant: {
       control: { type: "select" },
-      options: ["flat", "outline"],
+      options: ["flat", "outline", "underlined", "bordered"],
       description: "Variant for the input",
     },
     label: {
@@ -56,6 +56,11 @@ const meta = {
     size: {
       control: { type: "select" },
       options: ["sm", "md", "lg"],
+    },
+    isRequired: {
+      control: {
+        type: "boolean",
+      },
     },
     isDisabled: {
       control: {
@@ -123,11 +128,19 @@ export const Controlled: Story = {
     const [value, setValue] = useState("");
 
     return (
-      <>
+      <div className="space-y-4">
         <Input {...args} value={value} onChange={setValue} />
         <p>Value: {value}</p>
-      </>
+      </div>
     );
+  },
+};
+
+export const WithDescription: Story = {
+  ...StoryTemplate,
+  args: {
+    ...StoryTemplate.args,
+    description: "Description",
   },
 };
 
@@ -189,6 +202,137 @@ export const PasswordVisible: Story = {
           />
         }
       />
+    );
+  },
+};
+
+export const StartAndEndContent: Story = {
+  ...StoryTemplate,
+  args: {
+    ...StoryTemplate.args,
+  },
+  render: (args) => {
+    return (
+      <div className="flex flex-col gap-4">
+        <div className="flex w-full flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4">
+          <Input
+            {...args}
+            startContent={<IconWrapper icon={iconList.EnvelopeIcon} height={24} width={24} />}
+            isStartContentButton={true}
+            startContentProps={{
+              onPress: () => {
+                alert("Start content pressed");
+              },
+            }}
+            type="email"
+            label="Email"
+            placeholder="user@example.com"
+            classList={{
+              root: "w-80",
+            }}
+          />
+          <Input
+            {...args}
+            endContent={<IconWrapper icon={iconList.LockClosedIcon} height={24} width={24} />}
+            isEndContentButton={true}
+            endContentProps={{
+              onPress: () => {
+                alert("End content pressed");
+              },
+            }}
+            type="password"
+            label="Password"
+            placeholder="Password"
+            classList={{
+              root: "w-80",
+            }}
+          />
+          <Input
+            {...args}
+            label="Price"
+            type="number"
+            startContent="$"
+            endContent=".00"
+            classList={{
+              root: "w-80",
+            }}
+          />
+        </div>
+        <div className="flex w-full flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4">
+          <Input
+            {...args}
+            startContent="https://"
+            label="URL"
+            placeholder="example.com"
+            classList={{
+              root: "w-80",
+            }}
+          />
+          <Input
+            {...args}
+            endContent=".com"
+            label="Domain"
+            placeholder="example"
+            classList={{
+              root: "w-80",
+            }}
+          />
+          <Input
+            {...args}
+            startContent="+"
+            endContent="1"
+            label="Phone"
+            placeholder="1234567890"
+            classList={{
+              root: "w-80",
+            }}
+          />
+        </div>
+        <div className="flex w-full flex-wrap md:flex-nowrap mb-6 md:mb-0 gap-4">
+          <Input
+            {...args}
+            startContent="https://"
+            endContent=".org/"
+            label="Website"
+            placeholder="example"
+            classList={{
+              root: "w-80",
+            }}
+          />
+          <Input
+            {...args}
+            startContent={<IconWrapper icon={iconList.UserIcon} height={24} width={24} />}
+            endContent={<IconWrapper icon={iconList.UserIcon} height={24} width={24} />}
+            label="Username"
+            placeholder="username"
+            classList={{
+              root: "w-80",
+            }}
+          />
+          <Input
+            {...args}
+            startContent={<IconWrapper icon={iconList.UserIcon} height={24} width={24} />}
+            endContent={<IconWrapper icon={iconList.UserIcon} height={24} width={24} />}
+            label="Username"
+            placeholder="username"
+            isStartContentButton={true}
+            startContentProps={{
+              onPress: () => {
+                alert("Start content pressed");
+              },
+            }}
+            isEndContentButton={true}
+            endContentProps={{
+              onPress: () => {
+                alert("End content pressed");
+              },
+            }}
+            classList={{
+              root: "w-80",
+            }}
+          />
+        </div>
+      </div>
     );
   },
 };

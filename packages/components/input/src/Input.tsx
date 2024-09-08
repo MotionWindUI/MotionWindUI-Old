@@ -5,7 +5,7 @@ const Input = React.forwardRef((props: InputProps, ref: React.ForwardedRef<HTMLI
   const {
     RootComponent,
     InputElement,
-    label,
+    label: labelProp,
     description,
     errorMessage,
     isInvalid,
@@ -25,10 +25,12 @@ const Input = React.forwardRef((props: InputProps, ref: React.ForwardedRef<HTMLI
     ref,
   });
 
+  const label = labelProp ? <label {...labelProps()}>{labelProp}</label> : null;
+
   return (
     <RootComponent {...rootProps()}>
       <div {...labelWrapperProps()}>
-        <label {...labelProps()}>{label}</label>
+        {label}
         <div {...inputWrapperProps()}>
           <div {...inputContentWrapperProps()}>
             {startContent}

@@ -37,6 +37,6 @@
     "react-dom": "^18.3.1"
   },
   "dependencies": {
-    "@motionwindui/use-breakpoint": "workspace:*"
+    "react-aria": "^3.34.1"
   }
 }
