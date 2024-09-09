@@ -77,6 +77,11 @@ const meta = {
         type: "boolean",
       },
     },
+    isFullWidth: {
+      control: {
+        type: "boolean",
+      },
+    },
     startContent: {
       options: Object.keys(iconOptions),
       mapping: Object.fromEntries(

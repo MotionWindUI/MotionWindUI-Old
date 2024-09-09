@@ -56,6 +56,9 @@ export interface InputProps<T extends HTMLInputElement | HTMLTextAreaElement = H
   /** Whether or not this input is a multi-line input. By default it is false */
   isMultiLine?: boolean;
 
+  /** Whether or not the input should use the full width of it's parent element */
+  isFullWidth?: boolean;
+
   /** The placement of the label */
   labelPlacement?: InputLabelPlacement;
 
@@ -140,6 +143,7 @@ export const useInput = <T extends HTMLInputElement | HTMLTextAreaElement = HTML
     isEndContentStyled = true,
     endContentProps,
     classList,
+    isFullWidth = false,
     ref,
     validationBehavior,
     asRoot = "div",
@@ -253,6 +257,7 @@ export const useInput = <T extends HTMLInputElement | HTMLTextAreaElement = HTML
         isReadOnly,
         isRequired,
         isMultiLine,
+        isFullWidth,
       }),
     [
       radius,
@@ -267,6 +272,7 @@ export const useInput = <T extends HTMLInputElement | HTMLTextAreaElement = HTML
       isReadOnly,
       isRequired,
       isMultiLine,
+      isFullWidth,
     ],
   );
 
