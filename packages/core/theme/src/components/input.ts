@@ -195,7 +195,14 @@ export const inputStyles = tv({
     isMultiLine: {
       true: {
         inputWrapper: ["!h-auto"],
+        inputContentWrapper: ["!h-auto"],
         input: ["resize-none", "data-[hide-scrollbar=true]:!scrollbar-none"],
+      },
+    },
+    isFullWidth: {
+      true: {
+        root: ["w-full"],
+        inputWrapper: ["w-full"],
       },
     },
   },
