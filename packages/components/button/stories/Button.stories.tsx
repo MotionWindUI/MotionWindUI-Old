@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "../src";
-import { AcademicCapIcon, iconList } from "../../../core/icons/src";
-import IconWrapper from "../../../storybook/.storybook/IconWrapper";
+import { AcademicCapIcon, iconList, IconWrapper } from "@motionwindui/heroicons-icons";
 import React from "react";
 
 const iconOptions = {

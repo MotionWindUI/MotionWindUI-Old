@@ -1,8 +1,8 @@
-import { Meta, StoryObj } from "@storybook/react/*";
+import React from "react";
+import { Meta, StoryObj } from "@storybook/react";
 import ButtonGroup from "../src/ButtonGroup";
 import { Button } from "../src";
-import IconWrapper from "../../../storybook/.storybook/IconWrapper";
-import { ChevronDownIcon } from "../../../core/icons/src";
+import { ChevronDownIcon, IconWrapper } from "@motionwindui/heroicons-icons";
 
 const meta = {
   title: "Components/Button Group",

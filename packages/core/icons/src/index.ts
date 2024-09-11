@@ -285,3 +285,5 @@ export * from "./x-circle";
 export * from "./x-mark";
 
 export * from "./iconList";
+
+export * from "./IconWrapper";
