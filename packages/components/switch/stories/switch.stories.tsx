@@ -59,6 +59,11 @@ const meta = {
         type: "select",
       },
     },
+    description: {
+      control: {
+        type: "text",
+      },
+    },
   },
 } satisfies Meta<typeof Switch>;
 
@@ -76,3 +81,11 @@ const StoryTemplate: Story = {
 };
 
 export const Default: Story = StoryTemplate;
+
+export const WithDescription: Story = {
+  ...StoryTemplate,
+  args: {
+    ...StoryTemplate.args,
+    description: "This is a description",
+  },
+};

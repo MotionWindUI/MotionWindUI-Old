@@ -9,6 +9,7 @@ const Switch = React.forwardRef((props: SwitchProps, ref: React.ForwardedRef<HTM
     startContent,
     endContent,
     thumbContent,
+    description,
     rootProps,
     inputProps,
     wrapperProps,
@@ -32,6 +33,7 @@ const Switch = React.forwardRef((props: SwitchProps, ref: React.ForwardedRef<HTM
           {endContent && <span>{endContent}</span>}
         </div>
         {children && <span {...labelProps()}>{children}</span>}
+        {description}
       </div>
     </RootComponent>
   );

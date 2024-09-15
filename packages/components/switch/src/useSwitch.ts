@@ -58,6 +58,9 @@ export interface SwitchProps
 
   /** The content to go in the thumb */
   thumbContent?: React.ReactNode;
+
+  /** The description of the input */
+  description?: string | React.ReactNode;
 }
 
 export const useSwitch = (props: SwitchProps) => {
@@ -78,6 +81,7 @@ export const useSwitch = (props: SwitchProps) => {
     startContent: startContentProp,
     endContent: endContentProp,
     thumbContent: thumbContentProp,
+    description: descriptionProp,
   } = props;
 
   // Warn the developer if a label is not provided
@@ -207,7 +211,7 @@ export const useSwitch = (props: SwitchProps) => {
         : customClasses;
 
       return {
-        ...otherProps,
+        ...mergeProps(otherProps, hoverProps, pressProps),
         className: classNameProp,
       };
     },
@@ -227,7 +231,7 @@ export const useSwitch = (props: SwitchProps) => {
         : customClasses;
 
       return {
-        ...otherProps,
+        ...mergeProps(otherProps, pressProps, hoverProps),
         className: classNameProp,
       };
     },
@@ -270,6 +274,20 @@ export const useSwitch = (props: SwitchProps) => {
         })
       : null;
 
+  const cloneDescription = (description?: string | React.ReactNode) => {
+    if (!description) return null;
+
+    return typeof description === "string"
+      ? React.createElement(
+          "span",
+          { className: styles.description({ className: classList?.description }) },
+          description,
+        )
+      : description;
+  };
+
+  const description = useMemo(() => cloneDescription(descriptionProp), [descriptionProp]);
+
   const startContent = useMemo(
     () => iconClone(startContentProp, styles.startContent()),
     [startContentProp],
@@ -289,6 +307,7 @@ export const useSwitch = (props: SwitchProps) => {
     startContent,
     endContent,
     thumbContent,
+    description,
     rootProps,
     inputProps,
     wrapperProps,
