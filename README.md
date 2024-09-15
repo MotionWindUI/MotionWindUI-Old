@@ -1,5 +1,7 @@
 # MotionWindUI
 
+This is the old read only repository. I am starting again (and using this), but I just want to archive this for now.
+
 MotionWindUI library is a collection of React UI components that are designed to be simple, easy to use, and customizable. The library is built with TypeScript, React, TailwindCSS, Framer Motion, and React Aria.
 
 ## Inspiration
